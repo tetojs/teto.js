@@ -1,2 +1,3 @@
 # tetojs
-tetojs
+
+![](teto.png)
