@@ -1,8 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
+var webpack = require('webpack')
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
@@ -14,7 +14,13 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development')
+      },
+      '__DEVTOOLS__': true
+    })
   ],
   module: {
     loaders: [{
@@ -23,5 +29,8 @@ module.exports = {
       exclude: /node_modules/,
       include: __dirname
     }]
+  },
+  cssnext: {
+    browsers: 'last 2 versions'
   }
-};
+}
