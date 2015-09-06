@@ -1,6 +1,6 @@
 import React from 'react'
 // Redux utility functions
-import { compose, createStore, applyMiddleware } from 'redux'
+import { compose, createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider, connect } from 'react-redux'
 // Redux DevTools store enhancers
 import { devTools, persistState } from 'redux-devtools'
@@ -27,13 +27,30 @@ const createStoreWithMiddleware = compose(
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore)
 
-// Store:
-let store = createStoreWithMiddleware((state={}, action) => {
+// reducers:
+let count = (state={count: 0}, action) => {
   switch(action.type) {
     default:
-      return state;
+      return {
+        count: state.count
+      };
   }
-})
+}
+
+// reducers:
+let about = (state={name: 'Jim'}, action) => {
+  switch(action.type) {
+    default:
+      return {
+        name: state.name
+      };
+  }
+}
+
+let reducer = combineReducers({count, about})
+
+// Store:
+let store = createStoreWithMiddleware(reducer)
 
 let App = connect(
   (state) => {
@@ -50,7 +67,7 @@ let App = connect(
   render () {
     return (
       <div>
-        <h1>App</h1>
+        <h1><Link to="/">App</Link></h1>
         {/* change the <a>s to <Links>s */}
         <ul>
           <li><Link to="/about">About</Link></li>
@@ -75,8 +92,8 @@ React.render((
     {
       () => <Router history={history}>
         <Route path="/" component={App}>
-          <Route path="about" component={About}/>
-          <Route path="count" component={Count}/>
+          <Route path="about" component={About} />
+          <Route path="count" component={Count} />
         </Route>
       </Router>
     }
