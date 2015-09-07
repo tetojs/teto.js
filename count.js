@@ -4,20 +4,18 @@ import { connect } from 'react-redux'
 export default connect(
   (state) => {
     return {
-      count: state.count.count
-    }
-  },
-  (dispatch) => {
-    return {
-      // onIncreaseClick: () => dispatch(increaseAction)
+      count: state.count
     }
   }
 )(class Count extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {count: props.count};
   }
   tick() {
+    this.props.dispatch({
+      type: 'INCREASE'
+    })
     this.setState({count: this.state.count + 1});
   }
   render() {
