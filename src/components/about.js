@@ -13,7 +13,7 @@ export default class About extends React.Component {
 
   static propTypes = {
     profile: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    actions: PropTypes.object.isRequired
   }
 
   // constructor(props, context) {

@@ -13,7 +13,7 @@ export default class Bonus extends React.Component {
 
   static propTypes = {
     counter: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    actions: PropTypes.object.isRequired
   }
 
   // constructor(props, context) {
