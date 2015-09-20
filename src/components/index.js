@@ -21,6 +21,7 @@ export default class Index extends Component {
           <p>Bonus: {this.props.counter.bonus}</p>
         </div>
         <ul>
+          <li><Link to="/todos">Todos</Link></li>
           <li><Link to="/about">About</Link></li>
           <li><Link to="/bonus">Bonus</Link></li>
         </ul>
