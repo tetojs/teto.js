@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <title>Demo</title>
   <link href="favicon.png" rel="icon">
-  <link href="style.css" rel="stylesheet">
+  {{#each css}}
+  <link href="{{this}}" rel="stylesheet">
+  {{/each}}
   </head>
   <body>
     <div id="app">{{{html}}}</div>
-    {{#each assets as asset}}
-    <script src="{{asset}}"></script>
+    {{#each js}}
+    <script src="{{this}}"></script>
     {{/each}}
   </body>
 </html>

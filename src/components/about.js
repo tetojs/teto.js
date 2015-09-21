@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import * as aboutAtions from '../actions/about'
 
+import styles from './about.css'
+
 @connect(state => ({
   profile: state.profile
 }), dispatch => ({
@@ -23,10 +25,14 @@ export default class About extends React.Component {
   render () {
     const { profile, actions } = this.props
     return (
-      <div>
-        <input placeholder="name" type="text" value={profile.name} onChange={actions.modifyName} />
-        <input placeholder="mobile" type="text" value={profile.mobile} onChange={actions.modifyMobile} />
-      </div>
+      <ul>
+        <li className={styles.name}>
+          <input placeholder="name" type="text" value={profile.name} onChange={actions.modifyName} />
+        </li>
+        <li className={styles.mobile}>
+          <input placeholder="mobile" type="text" value={profile.mobile} onChange={actions.modifyMobile} />
+        </li>
+      </ul>
     )
   }
 }

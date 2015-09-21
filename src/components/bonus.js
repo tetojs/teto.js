@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import * as bonusAtions from '../actions/bonus'
 
+import styles from './bonus.css'
+
 @connect(state => ({
   counter: state.counter
 }), dispatch => ({
@@ -25,10 +27,10 @@ export default class Bonus extends React.Component {
     return (
       <div>
         <span>Bonus: </span>
-        <button onClick={actions.increaseBonus}>+</button>
+        <button type="button" onClick={actions.increaseBonus}>+</button>
         <span> {counter.bonus} </span>
-        <button onClick={actions.decreaseBonus}>-</button>
-        <button onClick={actions.resetBonus}>0</button>
+        <button type="button" onClick={actions.decreaseBonus}>-</button>
+        <button type="reset" onClick={actions.resetBonus}>0</button>
       </div>
     )
   }

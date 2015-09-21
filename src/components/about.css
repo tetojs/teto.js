@@ -1,0 +1,7 @@
+.name {
+  border: 1px solid red;
+}
+.mobile {
+  /*composes*/
+  border: 1px solid green;
+}

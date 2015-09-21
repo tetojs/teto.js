@@ -1,17 +1,8 @@
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var ReactToHtmlPlugin = require('react-to-html-webpack-plugin')
-
-var Handlebars = require('handlebars')['default']
+var HtmlPlugin = require('html-webpack-plugin')
 
 var path = require('path')
-var fs = require('fs')
-
-function MyPlugin() {
-}
-
-MyPlugin.prototype.apply = function(compiler) {
-}
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -19,8 +10,8 @@ module.exports = {
   // devtool: 'eval',
 
   entry: [
-    // 'webpack-dev-server/client?http://localhost:3000',
-    // 'webpack/hot/only-dev-server',
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
     './src/index'
   ],
 
@@ -38,15 +29,14 @@ module.exports = {
       },
       '__DEVTOOLS__': true
     }),
-    new ExtractTextPlugin('dist/style.css', {
+    new ExtractTextPlugin('style.css', {
       allChunks: true
     }),
-    // new ReactToHtmlPlugin('index.html', 'bundle.js', {
-    //   template: Handlebars.compile(
-    //     fs.readFileSync(__dirname + '/src/templates/index.handlebars', 'utf-8')
-    //   )
-    // }),
-    new MyPlugin()
+    new HtmlPlugin({
+      templateContent: function (data) {
+        return require('./src/templates/index.handlebars')(data.htmlWebpackPlugin.files)
+      }
+    })
   ],
 
   module: {
