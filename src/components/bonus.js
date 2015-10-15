@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import * as bonusAtions from '../actions/bonus'
 
-import styles from './bonus.css'
+// import styles from './bonus.css'
 
 @connect(state => ({
   counter: state.counter
@@ -18,12 +18,13 @@ export default class Bonus extends React.Component {
     actions: PropTypes.object.isRequired
   }
 
-  // constructor(props, context) {
+  // constructor (props, context) {
   //   super(props, context);
   // }
 
-  render() {
-    const { counter, actions } = this.props
+  render () {
+    let { counter, actions } = this.props
+
     return (
       <div>
         <span>Bonus: </span>
@@ -34,4 +35,5 @@ export default class Bonus extends React.Component {
       </div>
     )
   }
+
 }

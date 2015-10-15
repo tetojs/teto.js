@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+
 import styles from './todo.css'
 
 export default class Todo extends React.Component {
@@ -32,19 +33,24 @@ export default class Todo extends React.Component {
   render () {
     let { todo, editTodo, completeTodo } = this.props
     return (
-        this.state.editing ?
-        <li>
-          <input
-            type="text"
-            value={todo.text} />
-        </li> :
-        <li className={todo.completed ? styles.completed : ''}>
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => completeTodo(todo.id)} />
-          <label>{todo.text}</label>
-        </li>
+      this.state.editing ?
+      <li>
+        <input
+          type="text"
+          value={todo.text}
+          onBlur={this.onBlur.bind(this)}
+          onChange={(event) => editTodo(todo.id, {
+            text: event.target.value.trim()
+          })} />
+      </li> :
+      <li className={todo.completed ? styles.completed : ''}>
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onClick={this.onClick.bind(this)}
+          onChange={() => completeTodo(todo.id)} />
+        <label>{todo.text}</label>
+      </li>
     )
   }
 }

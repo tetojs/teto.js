@@ -29,7 +29,6 @@
     "handlebars": "^4.0.2",
     "handlebars-loader": "^1.1.4",
     "html-webpack-plugin": "^1.6.1",
-    "node-libs-browser": "^0.5.3",
     "postcss-color-rebeccapurple": "^1.1.0",
     "postcss-loader": "^0.4.3",
     "raw-loader": "^0.5.1",

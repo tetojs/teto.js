@@ -13,11 +13,11 @@ export default class Routes extends Component {
   //   dispatch: PropTypes.func.isRequired
   // }
 
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
   }
 
-  render() {
+  render () {
     return (
       <Router>
         <Route path="/" component={Index}>

@@ -1,8 +1,10 @@
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlPlugin = require('html-webpack-plugin')
+var Handlebars = require('handlebars')['default']
 
 var path = require('path')
+var fs = require('fs')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -34,7 +36,12 @@ module.exports = {
     }),
     new HtmlPlugin({
       templateContent: function (data) {
-        return require('./src/templates/index.handlebars')(data.htmlWebpackPlugin.files)
+        return Handlebars.compile(
+          fs.readFileSync(
+            path.resolve(__dirname + '/src/templates/index.handlebars'), 'utf-8'
+          )
+        )(data.htmlWebpackPlugin.files)
+        // return require('./src/templates/index.handlebars')(data.htmlWebpackPlugin.files)
       }
     })
   ],

@@ -24,8 +24,9 @@ export default class Todos extends React.Component {
   // }
 
   render () {
-    const { todos, actions } = this.props
+    let { todos, actions } = this.props
     let placeholder = 'input here'
+
     return (
       <div>
         <TodoAdd placeholder={placeholder} addTodo={actions.addTodo} />
@@ -39,4 +40,5 @@ export default class Todos extends React.Component {
       </div>
     )
   }
+
 }
