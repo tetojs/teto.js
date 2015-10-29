@@ -17,7 +17,7 @@ export default class App extends Component {
         <Provider key="provider" store={store}>
           <Routes />
         </Provider>
-        { __DEVTOOLS__ && <Debugger key="debugger" store={store} /> }
+        { __DEV__ && <Debugger key="debugger" store={store} /> }
       </div>
     )
   }

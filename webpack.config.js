@@ -29,7 +29,7 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
       },
-      '__DEVTOOLS__': false
+      '__DEV__': false
     }),
     new ExtractTextPlugin('style.css', {
       allChunks: true

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react'
+import LogMonitor from 'redux-devtools-log-monitor'
 
 export default class Debugger extends Component {
 
@@ -10,9 +10,7 @@ export default class Debugger extends Component {
   render () {
     let { store } = this.props
     return (
-      <DebugPanel key="debug" top right bottom>
-        <DevTools store={store} monitor={LogMonitor} />
-      </DebugPanel>
+      <LogMonitor store={store.devToolsStore} />
     )
   }
 
