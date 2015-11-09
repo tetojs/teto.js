@@ -14,7 +14,8 @@ if (__DEV__) {
   finalCreateStore = compose(
     // Provides support for DevTools:
     devTools(),
-    // Lets you write ?debug_session=<name> in address bar to persist debug sessions
+    // Lets you write ?debug_session=<name>
+    // in address bar to persist debug sessions
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )(finalCreateStore)
 }

@@ -1,10 +1,19 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export default class TodoAdd extends React.Component {
+import { todoAtions } from '../../../../../../actions'
+console.log(todoAtions)
+@connect(state => ({
+  todos: state.todos
+}), dispatch => ({
+  actions: bindActionCreators(todoAtions, dispatch)
+}))
+export default class Index extends Component {
 
   static propTypes = {
-    placeholder: PropTypes.string.isRequired,
-    addTodo: PropTypes.func.isRequired
+    // placeholder: PropTypes.string.isRequired,
+    // addTodo: PropTypes.func.isRequired
   }
 
   constructor (props, context) {
@@ -38,10 +47,8 @@ export default class TodoAdd extends React.Component {
   }
 
   render () {
-    let { placeholder } = this.props
     return (
       <input type="text"
-          placeholder={placeholder}
           value={this.state.value}
           onChange={this.onChange.bind(this)}
           onBlur={this.onBlur.bind(this)} />

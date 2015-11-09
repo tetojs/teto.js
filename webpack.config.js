@@ -18,11 +18,14 @@ module.exports = {
   ],
 
   output: {
-    filename: 'bundle.js',
+    // filename: 'bundle.js',
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
     path: path.resolve('./dist')
   },
 
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin('shared.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -48,7 +51,7 @@ module.exports = {
 
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx?$/,
       loaders: ['react-hot', 'babel'],
       exclude: /node_modules/,
       include: __dirname
@@ -76,6 +79,7 @@ module.exports = {
   ],
 
   resolve: {
+    extensions: ['', '.jsx', '.js'],
     modulesDirectories: ['node_modules']
   },
 
