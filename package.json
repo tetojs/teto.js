@@ -4,7 +4,9 @@
   "description": "tetojs",
   "main": "index.js",
   "dependencies": {
+    "autobind-decorator": "^1.3.2",
     "babel-runtime": "5.8.20",
+    "core-decorators": "^0.8.1",
     "history": "^1.13.0",
     "react-dom": "^0.14.1",
     "react-redux": "^4.0.0",
@@ -32,7 +34,7 @@
     "postcss-color-rebeccapurple": "^1.1.0",
     "postcss-loader": "^0.4.3",
     "raw-loader": "^0.5.1",
-    "react-hot-loader": "^1.3.0",
+    "react-hot-loader": "^2.0.0-alpha-4",
     "redux-devtools": "^3.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "style-loader": "0.12.3",
