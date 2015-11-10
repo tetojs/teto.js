@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { todoAtions } from '../../../../../../actions'
-console.log(todoAtions)
+
 @connect(state => ({
   todos: state.todos
 }), dispatch => ({
