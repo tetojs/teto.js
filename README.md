@@ -1,3 +1,7 @@
+[![Build Status](https://img.shields.io/travis/tetojs/teto.js.svg?style=flat-square)](https://travis-ci.org/tetojs/teto.js)
+[![David](http://img.shields.io/david/tetojs/teto.js.svg?style=flat-square)](https://npmjs.org/package/teto.js)
+[![David](http://img.shields.io/david/dev/tetojs/teto.js.svg?style=flat-square)](https://npmjs.org/package/teto.js)
+
 ## Installation
 
 ```
