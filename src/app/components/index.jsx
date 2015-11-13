@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 
 import { default as Nav } from './nav'
 
+import './styles/index.scss'
+
 const navs = [
   {
     route: '/todos',

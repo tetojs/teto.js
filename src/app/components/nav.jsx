@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
+import styles from './styles/nav.scss'
+
 export default class Index extends Component {
 
   static propTypes = {
@@ -15,7 +17,7 @@ export default class Index extends Component {
     let { navs } = this.props
 
     return (
-      <div>
+      <div className={styles.ns}>
         <h1><Link to="/">home</Link></h1>
         <ul>
           {navs.map((nav, i) =>

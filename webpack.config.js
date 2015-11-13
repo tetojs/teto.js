@@ -1,10 +1,10 @@
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlPlugin = require('html-webpack-plugin')
-var Handlebars = require('handlebars')['default']
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlPlugin = require('html-webpack-plugin')
+const Handlebars = require('handlebars')['default']
 
-var path = require('path')
-var fs = require('fs')
+const path = require('path')
+const fs = require('fs')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -52,30 +52,34 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel-loader?stage=0'],
+      loaders: ['react-hot', 'babel?stage=0'],
+      exclude: /node_modules/,
+      include: __dirname
+    }, {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass!postcss'),
       exclude: /node_modules/,
       include: __dirname
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'),
+      loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'),
       exclude: /node_modules/,
       include: __dirname
     }, {
       test: /\.handlebars$/,
-      loader: 'handlebars-loader',
+      loader: 'handlebars',
       exclude: /node_modules/,
       include: __dirname
     }, {
       test: /\.svg$/,
-      loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
+      loader: 'url?limit=10000&mimetype=image/svg+xml',
       exclude: /node_modules/,
       include: __dirname
     }]
   },
 
   postcss: [
-    require('autoprefixer-core'),
-    require('postcss-color-rebeccapurple')
+    require('autoprefixer')
   ],
 
   resolve: {

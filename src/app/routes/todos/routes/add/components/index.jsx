@@ -25,14 +25,14 @@ export default class Index extends Component {
     }
   }
 
-  // @autobind
+  @autobind
   onChange (event) {
     this.setState({
       value: event.target.value.trim()
     })
   }
 
-  // @autobind
+  @autobind
   onBlur (event) {
     let value = event.target.value.trim()
 
@@ -50,7 +50,6 @@ export default class Index extends Component {
   }
 
   render () {
-    console.log(this.onBlur)
     return (
       <input type="text"
           value={this.state.value}

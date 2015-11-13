@@ -6,6 +6,8 @@ import { default as store } from './store'
 import { default as App } from './app'
 import { default as Debugger } from './debugger'
 
+import './styles/app.scss'
+
 render(
   <div>
     <Provider key="provider" store={store}>
