@@ -1,0 +1,71 @@
+.ui-multi-select {
+  overflow: hidden;
+}
+
+.ui-multi-select-container-item {
+}
+
+.ui-multi-select-list {
+  background-color: white;
+  border: 1px solid #a8a8a8;
+  box-sizing: border-box;
+  height: rem(20.5);
+  overflow-y: auto;
+}
+
+.ui-multi-select-count {
+  text-align: center;
+  color: blue;
+  padding: 2px;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+}
+
+.ui-multi-select-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.ui-multi-select-container-item {
+  -ms-flex: 1;
+  flex: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.ui-multi-select-buttons {
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  overflow: hidden;
+  width: rem(5);
+  text-align: center;
+  margin-top: rem(0.5);
+}
+
+.ui-multi-select-button {
+  margin-bottom: rem(0.5);
+  button {
+    width: rem(3);
+    height: rem(3);
+    line-height: rem(2);
+  }
+}
+
+.ui-multi-select-item {
+  padding: 4px 16px 4px 6px;
+  cursor: pointer;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.ui-multi-item-selected {
+  background-color: #00538a;
+  color: $white;
+}

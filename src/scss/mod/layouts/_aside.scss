@@ -1,0 +1,304 @@
+.iconfont-dashboard {
+  &:before {
+    content: '\e60b';
+  }
+}
+
+.iconfont-goods {
+  &:before {
+    content: '\e60d';
+  }
+}
+
+.iconfont-log {
+  &:before {
+    content: '\e609';
+  }
+}
+
+.iconfont-gift {
+  &:before {
+    content: '\e608';
+  }
+}
+
+.iconfont-business {
+  &:before {
+    content: '\e600';
+  }
+}
+
+.iconfont-config {
+  &:before {
+    content: '\e60a';
+  }
+}
+
+.iconfont-policy {
+  &:before {
+    content: '\e604';
+  }
+}
+
+.iconfont-group {
+  &:before {
+    content: '\e617';
+  }
+}
+
+.iconfont-friend {
+  &:before {
+    content: '\e619';
+  }
+}
+
+.iconfont-pool {
+  &:before {
+    content: '\e60d';
+  }
+}
+
+.iconfont-agent {
+  &:before {
+    content: '\e61a';
+  }
+}
+
+.iconfont-psp {
+  &:before {
+    content: '\e61c';
+  }
+}
+
+.iconfont-tool {
+  &:before {
+    content: '\e61d';
+  }
+}
+
+.iconfont-smiley {
+  &:before {
+    content: '\e61b';
+  }
+}
+
+.iconfont-p2p {
+  &:before {
+    content: '\e61f';
+  }
+}
+
+.iconfont-microblog,
+.iconfont-post {
+  &:before {
+    content: '\e626';
+  }
+}
+
+.iconfont-forum {
+  &:before {
+    content: '\e639';
+  }
+}
+
+.iconfont-keyword {
+  &:before {
+    content: '\e613';
+  }
+}
+
+.iconfont-user {
+  &:before {
+    content: '\e614';
+  }
+}
+
+.iconfont-comment {
+  &:before {
+    content: '\e615';
+  }
+}
+
+.iconfont-service {
+  &:before {
+    content: '\e616';
+  }
+}
+
+.iconfont-rbac {
+  &:before {
+    content: '\e621';
+  }
+}
+
+.iconfont-demo {
+  &:before {
+    content: '\e62a';
+  }
+}
+
+.iconfont-category {
+  &:before {
+    content: '\e610';
+  }
+}
+
+.iconfont-prize {
+  &:before {
+    content: '\e60e';
+  }
+}
+
+.iconfont-jackpot {
+  &:before {
+    content: '\e629';
+  }
+}
+
+.iconfont-plogs {
+  &:before {
+    content: '\e611';
+  }
+}
+
+.iconfont-blacklist {
+  &:before {
+    content: '\e60c';
+  }
+}
+
+.iconfont-page {
+  &:before {
+    content: '\e64a';
+  }
+}
+
+.iconfont-news {
+  &:before {
+    content: '\e644';
+  }
+}
+
+.iconfont-classification {
+  &:before {
+    content: '\e64b';
+  }
+}
+
+.iconfont-guest {
+  &:before {
+    content: '\e650';
+  }
+}
+
+.iconfont-activity {
+  &:before {
+    content: '\e648';
+  }
+}
+
+.collapsed {
+  #aside {
+    width: rem(4.5);
+    overflow: visible;
+    .iconfont {
+      &:after {
+        content: '';
+      }
+      span {
+        display: none;
+      }
+      + .routes {
+        display: none;
+        position: fixed;
+        width: $aside_width;
+        margin-top: -#{rem(4.5)};
+        margin-left: rem(4.5);
+        background-color: rgba($dark_blue, 0.98);
+      }
+    }
+    .folder:hover {
+      .routes {
+        display: block;
+      }
+    }
+  }
+}
+
+#aside {
+  position: absolute;
+  left: 0;
+  top: $header_height;
+  width: $aside_width;
+  height: 100%;
+  background-color: $dark_blue;
+  overflow: auto;
+  // transition: all 0.2s;
+  padding-bottom: $header_height + $footer_height;
+  box-sizing: border-box;
+  @include transition(width 200ms linear);
+  a {
+    display: block;
+    padding-left: rem(1.5);
+    box-sizing: border-box;
+    color: darken($white, 20);
+    text-decoration: none;
+    &:hover {
+      color: $white;
+    }
+    span {
+      @include transition(opacity 100ms linear 100ms);
+      white-space: nowrap;
+    }
+  }
+  .folder {
+    > a {
+      height: rem(4.5);
+      line-height: rem(4.5);
+      background-color: lighten($dark_blue, 5);
+      border-top: 1px solid lighten($dark_blue, 10);
+      border-bottom: 1px solid darken($dark_blue, 5);
+      position: relative;
+      &:after {
+        content: '＋';
+        position: absolute;
+        top: 0;
+        right: rem(1);
+        font-size: 120%;
+        font-weight: bold;
+      }
+    }
+  }
+  .routes {
+    display: none;
+    a {
+      height: rem(4.5);
+      line-height: rem(4.5);
+      border-bottom: 1px solid rgba($black, 0.1);
+      &:before {
+        content: '－';
+        font-size: 120%;
+        font-weight: bold;
+        margin-right: rem(0.3);
+      }
+    }
+  }
+  .folder-active {
+    > a {
+      padding-left: rem(1.5)-1;
+      border-left: 1px solid $orange;
+      &:after {
+        content: '－';
+      }
+    }
+    .routes {
+      display: block;
+    }
+  }
+  .route-active {
+    a {
+      color: $white;
+      background-color: fade-out($black, 0.9);
+    }
+  }
+}

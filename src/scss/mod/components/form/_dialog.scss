@@ -1,0 +1,75 @@
+.ui-form.ui-view-dialog,
+.ui-form-dialog {
+  padding: rem(0.5) rem(1) rem(1);
+
+  .ui-form-items {
+    label {
+      width: auto;
+      text-align: left;
+      position: static;
+      margin: 0;
+      color: darken($white, 50);
+    }
+  }
+
+  .ui-form-item,
+  .ui-form-group {
+    margin: 0 0 rem(1);
+
+    &.required {
+      > label {
+        &:before {
+          float: right;
+        }
+      }
+    }
+
+    &.sep {
+      margin: 0 rem(0.5) rem(1);
+    }
+  }
+
+  .ui-form-items-inline {
+    display: flex;
+    margin-right: -#{rem(0.5)};
+    margin-left: -#{rem(0.5)};
+
+    .ui-form-item {
+      flex: 1;
+      margin-right: rem(0.5);
+      margin-left: rem(0.5);
+
+      &.sep {
+        flex: 0 auto;
+      }
+
+      &.no-flex {
+        flex: initial;
+      }
+    }
+  }
+
+  .ui-form-buttons {
+    margin-top: rem(2);
+    padding: rem(2) 0 0 0;
+    text-align: center;
+    border-top: 1px solid darken($white, 6);
+  }
+
+  .ui-form-button {
+    margin: 0 rem(0.5);
+  }
+
+  .ui-form-explain {
+    padding-right: 0;
+  }
+
+  .radio-group,
+  .checkbox-group {
+
+    label {
+      margin: 0 5px 0 0;
+    }
+  }
+
+}

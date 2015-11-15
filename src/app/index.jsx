@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Router } from 'react-router'
-import { createHashHistory } from 'history'
 
-const history = createHashHistory()
+import { history } from '../utils'
 
 const routes = {
   component: 'div',
@@ -14,15 +13,24 @@ const routes = {
       require.ensure([], (require) => {
         cb(null, [
           require('./routes/about'),
+          require('./routes/blogs'),
           require('./routes/todos'),
           require('./routes/error')
         ])
       })
     },
 
+    getIndexRoute (location, cb) {
+      require.ensure([], (require) => {
+        cb(null, {
+          component: require('./components')
+        })
+      })
+    },
+
     getComponent (location, cb) {
       require.ensure([], (require) => {
-        cb(null, require('./components'))
+        cb(null, require('./components/main'))
       })
     }
 

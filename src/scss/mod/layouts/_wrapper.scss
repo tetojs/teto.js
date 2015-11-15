@@ -1,0 +1,8 @@
+#wrapper {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding-top: $header_height;
+  padding-bottom: $footer_height;
+  height: 100%;
+}

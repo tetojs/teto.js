@@ -1,5 +1,7 @@
-import * as todoAtions from './todo'
+import * as blogActions from './blog'
+import * as todoActions from './todo'
 
 export default {
-  todoAtions
+  blogActions,
+  todoActions
 }

@@ -1,0 +1,19 @@
+.ui-form-explain {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  padding: rem(0.4) rem(0.6) rem(0.4) rem(0.4);
+  line-height: 22px;
+}
+
+.ui-form-item-error {
+  .ui-form-input,
+  .ui-form-textarea {
+    border-color: $red;
+  }
+
+  .ui-form-explain {
+    color: $red;
+    background-color: $white;
+  }
+}

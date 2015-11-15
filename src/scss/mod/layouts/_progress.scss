@@ -1,0 +1,36 @@
+#progress {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: rem(0.3);
+  background-color: $orange;
+  background-size: rem(4) rem(4);
+  @include gradient-striped(rgba(255, 255, 255, .5));
+  @include animation(progress-msg-stripes 2s linear infinite);
+
+  &.active {
+    @include transition(width 0.6s ease);
+  }
+}
+
+// WebKit
+@-webkit-keyframes progress-msg-stripes {
+  from {
+    background-position: rem(4) 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+// Spec and IE10+
+@keyframes progress-msg-stripes {
+  from {
+    background-position: rem(4) 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}

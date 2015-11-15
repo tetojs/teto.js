@@ -1,0 +1,68 @@
+.ui-smiley {
+  -webkit-user-select: none;
+  box-shadow: 0 0 rem(0.3) darken($white, 33);
+
+  .ui-tabs-panel {
+    font-size: 0;
+    padding: rem(0.3);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: $white;
+    height: 169px;
+    width: 361px;
+  }
+
+  .ui-tip-shadow {
+    padding: 1px;
+  }
+
+  .ui-tip-container {
+    padding: 0;
+  }
+}
+
+.ui-smiley-trigger {
+  @include inline-block();
+  margin-top: -#{rem(1)};
+  font-size: rem(2);
+  color: darken($white, 20);
+  cursor: pointer;
+
+  &:hover {
+    color: darken($white, 33);
+  }
+}
+
+.ui-smiley-trigger-active {
+  color: $orange;
+
+  &:hover {
+    color: $orange;
+  }
+}
+
+.ui-selector {
+  border-top: 1px solid darken($white, 10);
+  border-left: 1px solid darken($white, 10);
+  width: 360px;
+
+  &.ui-selector-nmoji {
+    background: url($image_url + 'nmoji-face.png') no-repeat;
+  }
+  &.ui-selector-emoji {
+    background: url($image_url + 'emoji-face.png') no-repeat;
+  }
+}
+
+.ui-selector-option {
+  width: 23px;
+  height: 23px;
+  border-right: 1px solid darken($white, 10);
+  border-bottom: 1px solid darken($white, 10);
+  @include inline-block();
+  cursor: pointer;
+
+  &:hover {
+    background-color: fade-out($orange, 0.8);
+  }
+}

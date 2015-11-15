@@ -1,0 +1,42 @@
+/* URIs */
+
+$image_url: '../img/';
+
+// --------------------------------------
+
+/* Colors */
+// base
+$white: #FFFFFF;
+$black: #000000;
+$red: #DF3B3B;
+$orange: #E7604A;
+$dark_blue: #293541;
+$light_blue: #0c5aa9;
+
+// bg
+$bg_success: #DFF0D8;
+$bg_info: #D9EDF7;
+$bg_warning: #FCF8E3;
+$bg_danger: #F2DEDE;
+
+// text
+$text_success: #3C763D;
+$text_info: #31708F;
+$text_warning: #8A6D3B;
+$text_danger: #A94442;
+
+// scrollbar
+$scrollbar_color: #ECECEC;
+$scrollbar_thumb_color: $orange;
+
+// --------------------------------------
+
+/* Sizes */
+
+$base_size: 10px;
+$header_height: 50px;
+$footer_height: 0;
+$aside_width: 210px;
+$page_min_width: 980px;
+
+// --------------------------------------

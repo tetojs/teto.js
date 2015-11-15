@@ -1,0 +1,87 @@
+//trigger
+.tab-select-trigger {
+  display: block;
+  background-color: $white;
+  padding: 4px 16px 4px 6px;
+  height: rem(3.2);
+  line-height: rem(2.2);
+  border: 1px solid lighten($black, 80);
+  cursor: pointer;
+  position: relative;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+
+  &:after {
+    position: absolute;
+    right: 1px;
+    top: 7px;
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: sprite($icon, down);
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    border-color: lighten($black, 60);
+  }
+}
+
+.tab-select {
+  a {
+    @include inline-block();
+    padding: rem(0.7) rem(2);
+    text-align: center;
+    text-decoration: none;
+    outline: 0;
+  }
+}
+
+//tab
+.tab-select-tab {
+  border: 1px solid lighten($black, 80);
+  border-left: none;
+  height: 35px;
+  background: darken($white, 6);
+
+  a {
+    float: left;
+    border-left: 1px solid lighten($black, 80);
+    color: lighten($black, 20);
+  }
+}
+
+a.tab-select-active {
+  background: $white;
+  border-bottom: 1px solid $white;
+  color: $orange;
+}
+
+//content
+.tab-select-content {
+  border: 1px solid lighten($black, 80);
+  border-top: 0;
+  padding: rem(1);
+  background: $white;
+  font-size: rem(1.2);
+  overflow: auto;
+  max-height: rem(11.8);
+}
+
+//selected
+
+.tab-select-selected {
+  color: $white;
+  background-color: $orange;
+}
+
+.tab-select-item-hover {
+  color: $orange;
+  background-color: fade-out($orange, 0.7);
+}
+

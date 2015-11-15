@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import { IndexLink, Link } from 'react-router'
 
 import styles from './styles/nav.scss'
 
@@ -17,14 +17,14 @@ export default class Index extends Component {
     let { navs } = this.props
 
     return (
-      <div className={styles.ns}>
-        <h1><Link to="/">home</Link></h1>
+      <nav className={styles.ns}>
+        <h1><IndexLink to="/">TeTo.js</IndexLink></h1>
         <ul>
           {navs.map((nav, i) =>
-            <li key={i}><Link to={nav.route}>{nav.title}</Link></li>
+            <li key={i}><Link to={nav.route} activeClassName="active">{nav.title}</Link></li>
           )}
         </ul>
-      </div>
+      </nav>
     )
   }
 

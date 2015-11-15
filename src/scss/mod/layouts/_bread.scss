@@ -1,0 +1,21 @@
+#bread {
+  color: darken($white, 20);
+  min-height: 1em;
+  margin: -#{rem(1)} -#{rem(1)} rem(1);
+  padding: rem(1);
+  background-color: darken($white, 5);
+  border-bottom: 1px solid darken($white, 10);
+
+  a {
+    color: darken($white, 60);
+
+    &:hover {
+      color: invert($orange);
+      text-decoration: none;
+    }
+  }
+
+  span {
+    color: darken($white, 40);
+  }
+}

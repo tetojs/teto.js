@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { todoAtions } from '../../../../../../actions'
+import { todoActions } from '../../../../../../actions'
 
 @connect(state => ({
   todos: state.todos
 }), dispatch => ({
-  ...bindActionCreators(todoAtions, dispatch)
+  ...bindActionCreators(todoActions, dispatch)
 }))
 export default class Index extends Component {
 

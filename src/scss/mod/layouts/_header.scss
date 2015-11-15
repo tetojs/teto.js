@@ -1,0 +1,160 @@
+.iconfont-toggle {
+  &:before {
+    content: '\e640';
+  }
+}
+
+.iconfont-global {
+  &:before {
+    content: '\e642';
+    position: absolute;
+    margin-left: -#{rem(2.5)};
+  }
+}
+
+.collapsed {
+  #header {
+    h1 {
+      width: rem(4.5);
+      overflow: hidden;
+    }
+    .wrapper {
+      margin-left: rem(4.5);
+    }
+  }
+}
+
+.ui-select-dark {
+  background-color: darken($dark_blue, 3);
+  border-color: transparent;
+  color: $white;
+
+  .ui-select-hover {
+    background-color: $dark_blue;
+  }
+
+  .ui-select-selected {
+    background-color: $dark_blue;
+  }
+}
+
+#header {
+  position: fixed;
+  z-index: 2;
+  // box-sizing: border-box;
+  width: 100%;
+  background-color: $dark_blue;
+  a, span, em, label {
+    color: $white;
+    text-decoration: none;
+  }
+  h1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: $aside_width;
+    overflow: hidden;
+    background-color: $orange;
+    @include transition(width 200ms linear);
+    a {
+      white-space: nowrap;
+      display: block;
+      height: $header_height;
+      font-size: rem(1.8);
+      font-weight: normal;
+      line-height: $header_height;
+      padding-left: rem(4.7);
+      background: url($image_url + 'logo.png') rem(0.6) 50% no-repeat;
+    }
+  }
+  button {
+    float: left;
+    color: $white;
+    line-height: $header_height;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0 rem(1);
+    &:hover {
+      background-color: rgba($black, 0.1);
+    }
+    &:before {
+      margin-right: 0;
+    }
+  }
+  .wrapper {
+    margin-left: $aside_width;
+    height: $header_height;
+    @include transition(margin-left 200ms linear);
+    ul {
+      float: right;
+    }
+    li {
+      float: left;
+      line-height: $header_height;
+      a {
+        display: block;
+      }
+    }
+  }
+  .route-i18n {
+    padding: rem(0.9);
+
+    a {
+      background-color: transparent;
+      border-color: transparent;
+      overflow: visible;
+
+      &:hover {
+        background-color: darken($dark_blue, 3);
+      }
+    }
+
+    .ui-select-opened {
+      background-color: darken($dark_blue, 3);
+    }
+
+    // see L19 .ui-select-dark
+  }
+  .route-me {
+    a {
+      display: block;
+      padding: 0 rem(3);
+      &:hover {
+        background-color: darken($dark_blue, 3);
+      }
+    }
+    &.active {
+      a {
+        background-color: darken($dark_blue, 3);
+      }
+    }
+  }
+  .route-logout {
+    a {
+      display: block;
+      padding: 0 rem(3);
+      background-color: darken($dark_blue, 5);
+      &:hover {
+        background-color: darken($dark_blue, 10);
+      }
+    }
+  }
+  .profile {
+    padding: rem(1);
+    min-width: rem(10);
+    color: $white;
+    background-color: darken($dark_blue, 3);
+    cursor: default;
+  }
+  .profile-label {
+    color: darken($white, 10);
+  }
+  .avatar {
+    width: rem(3.2);
+    height: rem(3.2);
+    border-radius: 50%;
+    vertical-align: middle;
+    background: lighten($dark_blue, 10) url($image_url + 'a.png') no-repeat 50% 50%;
+  }
+}

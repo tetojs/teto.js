@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 export default class Index extends Component {
 
-  static propTypes = {
-    children: PropTypes.element
-  }
+  // static propTypes = {
+  // }
 
   // constructor(props, context) {
   //   super(props, context)
@@ -14,7 +13,6 @@ export default class Index extends Component {
     return (
       <div>
         <blockquote>liwenfu@crossjs.com</blockquote>
-        {this.props.children}
       </div>
     )
   }

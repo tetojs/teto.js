@@ -1,0 +1,62 @@
+.ui-calendar-date {
+
+  table {
+    // font: 16px/20px 'Xin Gothic', 'PT Sans', 'Hiragino Sans GB', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    // border: 1px solid #dadada;
+    // box-shadow: 1px 1px 9px #ccc;
+    text-align: center;
+    border-spacing: 0;
+    width: $calendar_width;
+  }
+
+  tr {
+    background-color: #f9f9f9;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    color: #333;
+  }
+
+  td,
+  th {
+    font-weight: normal;
+    text-align: center;
+    border: none;
+    width: 34px;
+    padding: 4px 0;
+  }
+}
+
+.ui-calendar-date-5,
+.ui-calendar-date-6 {
+  color: #d64;
+}
+
+.ui-calendar-date-panel {
+  .prev-month,
+  .next-month {
+    color: #ccc;
+  }
+
+  td {
+    &:hover {
+      cursor: pointer;
+      color: #333;
+      background: #dadada;
+    }
+
+    &.curr-date {
+      color: #fff;
+      background: #d64;
+    }
+
+    &.date-disabled {
+      background: #eee;
+      color: #bbb;
+      cursor: not-allowed;
+    }
+  }
+}

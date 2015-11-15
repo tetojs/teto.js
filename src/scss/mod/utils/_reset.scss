@@ -1,0 +1,28 @@
+*{color:red}
+body, h1, h2, h3, h4, h5, h6, p, dl, dd, form, ul, ol, pre, blockquote, textarea, input, figure {
+  margin: 0;
+}
+
+ul, ol, th, td, button, textarea, input {
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+article, footer, header, nav, section {
+  display: block;
+}
+
+button, input, textarea {
+  outline: none;
+}
+
+:-ms-input-placeholder {
+  // color: darken($white, 40);
+}

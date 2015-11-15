@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 
-import { todoAtions } from '../../../../actions'
+import { todoActions } from '../../../../actions'
 
 import { default as Todo } from './todo'
 
 @connect(state => ({
   todos: state.todos
 }), dispatch => ({
-  actions: bindActionCreators(todoAtions, dispatch)
+  actions: bindActionCreators(todoActions, dispatch)
 }))
 export default class Todos extends Component {
 

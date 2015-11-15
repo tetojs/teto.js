@@ -1,41 +1,44 @@
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const Handlebars = require('handlebars')['default']
 
 const path = require('path')
 const fs = require('fs')
 
+const IP_ADDRESS = '192.168.0.103'
+const IS_DEVELOP = false
+
 module.exports = {
+  IP_ADDRESS: IP_ADDRESS,
+
   devtool: 'cheap-module-eval-source-map',
 
   // devtool: 'eval',
 
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://' + IP_ADDRESS + ':3000',
     'webpack/hot/only-dev-server',
     './src/index'
   ],
 
   output: {
     // filename: 'bundle.js',
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js',
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[chunkhash].js',
     path: path.resolve('./dist')
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('shared.js'),
+    new webpack.optimize.CommonsChunkPlugin('base.[hash].js'),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
       },
-      '__DEV__': false
-    }),
-    new ExtractTextPlugin('style.css', {
-      allChunks: true
+      '__DEV__': IS_DEVELOP
     }),
     new HtmlPlugin({
       templateContent: function (data) {
@@ -44,7 +47,6 @@ module.exports = {
             path.resolve(__dirname + '/src/templates/index.handlebars'), 'utf-8'
           )
         )(data.htmlWebpackPlugin.files)
-        // return require('./src/templates/index.handlebars')(data.htmlWebpackPlugin.files)
       }
     })
   ],
@@ -56,13 +58,8 @@ module.exports = {
       exclude: /node_modules/,
       include: __dirname
     }, {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass!postcss'),
-      exclude: /node_modules/,
-      include: __dirname
-    }, {
-      test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'),
+      test: /\.s?css$/,
+      loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?includePaths[]=' + __dirname + 'node_modules/compass-mixins/lib!postcss',
       exclude: /node_modules/,
       include: __dirname
     }, {

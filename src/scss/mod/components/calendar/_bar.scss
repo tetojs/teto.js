@@ -1,0 +1,29 @@
+.ui-calendar-bar {
+  padding: rem(1);
+  text-align: center;
+}
+.ui-calendar-bar-ok,
+.ui-calendar-bar-clear {
+  @include inline-block();
+  cursor: pointer;
+  margin: 0;
+  padding: rem(0.5) rem(2);
+  height: rem(2.8);
+  line-height: rem(1.8);
+  color: $white;
+  background-color: $orange;
+  border: none;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken($orange, 10);
+  }
+}
+
+.ui-calendar-bar-clear {
+  background-color: lighten(grayscale($orange), 10);
+
+  &:hover {
+    background-color: grayscale($orange);
+  }
+}

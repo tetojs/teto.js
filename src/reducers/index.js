@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { default as todos } from './todos'
+import blogs from './blogs'
+import todos from './todos'
 
-export default combineReducers({ todos })
+export default combineReducers({ blogs, todos })
