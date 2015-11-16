@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
-import { default as store } from './store'
-import { default as App } from './app'
-import { default as Debugger } from './debugger'
+import store from 'store'
+import App from 'app'
+import Debugger from './debugger'
 
 import './styles/app.scss'
 

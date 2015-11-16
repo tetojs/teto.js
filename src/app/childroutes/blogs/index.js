@@ -1,11 +1,6 @@
-import React, { Component } from 'react'
-import { Router } from 'react-router'
+export default {
 
-import history from 'utils/history'
-
-const routes = {
-
-  path: '/',
+  path: 'blogs',
 
   getChildRoutes (location, cb) {
     require.ensure([], (require) => {
@@ -25,23 +20,6 @@ const routes = {
     require.ensure([], (require) => {
       cb(null, require('./component'))
     })
-  }
-
-}
-
-export default class Index extends Component {
-
-  // static propTypes = {
-  // }
-
-  // constructor (props, context) {
-  //   super(props, context)
-  // }
-
-  render () {
-    return (
-      <Router history={history} routes={routes} />
-    )
   }
 
 }

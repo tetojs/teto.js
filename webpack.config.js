@@ -81,7 +81,12 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.jsx', '.js'],
-    modulesDirectories: ['node_modules']
+    modulesDirectories: ['node_modules'],
+    alias: {
+      app: __dirname + '/src/app',
+      store: __dirname + '/src/store',
+      utils: __dirname + '/src/utils'
+    }
   },
 
   cssnext: {
