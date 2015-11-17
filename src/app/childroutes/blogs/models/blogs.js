@@ -11,7 +11,7 @@ export default class Blogs extends REST {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(data)
-      }, 0)
+      }, 3000)
     })
   }
 

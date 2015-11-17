@@ -2,7 +2,12 @@ import Blogs from '../models/blogs'
 
 export function fetchBlogs (payload) {
   return {
-    type: 'FETCH_BLOGS',
+    types: [
+      'FETCH_BLOGS_PENDING',
+      'FETCH_BLOGS_SUCCESS',
+      'FETCH_BLOGS_FAILURE',
+      'FETCH_BLOGS_FINALLY'
+    ],
     payload: new Blogs().GET(payload)
   }
 }

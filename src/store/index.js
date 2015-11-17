@@ -2,7 +2,8 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import { devTools, persistState } from 'redux-devtools'
 
 // middlewares
-import promise from 'redux-promise'
+// import promise from 'redux-promise'
+import promise from 'utils/promise'
 import logger from 'redux-logger'
 
 import extend from 'extend'
@@ -28,6 +29,7 @@ let reducer = function () {
 let store = finalCreateStore(reducer)
 
 export function appendReducer (reducer) {
+  console.log('reducer', reducer)
   store.replaceReducer(combineReducers(extend(reducers, reducer)))
 
   return store

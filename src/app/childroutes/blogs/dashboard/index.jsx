@@ -17,7 +17,7 @@ import styles from './styles/index.scss'
 export default class Blogs extends Component {
 
   static propTypes = {
-    blogs: PropTypes.array.isRequired,
+    blogs: PropTypes.object.isRequired,
     fetchBlogs: PropTypes.func.isRequired,
     deleteBlog: PropTypes.func.isRequired
   }
@@ -31,7 +31,8 @@ export default class Blogs extends Component {
   }
 
   render () {
-    let { deleteBlog } = this.props
+    let { deleteBlog, blogs } = this.props
+    let { state, items } = blogs
     return (
       <div className={styles.ns}>
         <header className={styles.header}>
@@ -39,8 +40,9 @@ export default class Blogs extends Component {
           <Link to="/blogs/add">Add New</Link>
         </header>
         <section className={styles.blogs}>
+          { state }
           {
-            this.props.blogs.map(
+            items.map(
               blog => <Item key={blog.id} { ...blog } deleteBlog={deleteBlog} />
             )
           }
