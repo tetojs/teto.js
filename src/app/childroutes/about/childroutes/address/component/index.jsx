@@ -78,7 +78,7 @@ export default class Index extends Component {
         </div>
         <div className={styles.readonly}
           onDoubleClick={this.onDoubleClick}>
-          {this.state.address}
+          {this.state.address || 'Woops!'}
         </div>
       </div>
     )
