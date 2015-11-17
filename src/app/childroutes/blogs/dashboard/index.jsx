@@ -5,16 +5,6 @@ import { Link } from 'react-router'
 
 import * as blogActions from '../actions/blog'
 
-/**
- * Replace reducers with current component
- */
-import store from 'store'
-import blogs from '../reducers/blogs'
-
-store.replaceReducer(combineReducers({
-  blogs
-}))
-
 import Item from './item'
 
 import styles from './styles/index.scss'
@@ -49,13 +39,11 @@ export default class Blogs extends Component {
           <Link to="/blogs/add">Add New</Link>
         </header>
         <section className={styles.blogs}>
-          <ul>
-            {
-              this.props.blogs.map(
-                blog => <Item key={blog.id} { ...blog } deleteBlog={deleteBlog} />
-              )
-            }
-          </ul>
+          {
+            this.props.blogs.map(
+              blog => <Item key={blog.id} { ...blog } deleteBlog={deleteBlog} />
+            )
+          }
         </section>
       </div>
     )

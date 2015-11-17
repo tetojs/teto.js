@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 export default class Index extends Component {
 
   // static propTypes = {
@@ -11,9 +10,7 @@ export default class Index extends Component {
 
   render () {
     return (
-      <div>
-        <blockquote>五十二区</blockquote>
-      </div>
+      <blockquote>Test in about</blockquote>
     )
   }
 

@@ -7,10 +7,10 @@ new WebpackDevServer(webpack(config), {
   stats: {
     colors: true
   }
-}).listen(3000, config.IP_ADDRESS, function (err) {
+}).listen(config.SERVER_PORT, config.SERVER_HOST, function (err) {
   if (err) {
     console.log(err)
   }
 
-  console.log('Listening at ' + config.IP_ADDRESS + ':3000')
+  console.log('Listening at ' + config.SERVER_HOST + ':' + config.SERVER_PORT)
 })

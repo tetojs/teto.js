@@ -28,7 +28,7 @@ export default class Blogs extends REST {
           id: this.__cached.reduce((maxId, item) => Math.max(item.id, maxId), 0) + 1,
           ...options.data})
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
-        return this.promise(this.__cached[this.__cached.length])
+        return this.promise(this.__cached[this.__cached.length - 1])
       case 'DELETE':
         let matched = null
         this.__cached.some(function (item, index) {
@@ -37,8 +37,8 @@ export default class Blogs extends REST {
             return true
           }
         })
-        if (matched !== -1) {
-          matched = this.__cached.splice(matched, 1)
+        if (matched !== null) {
+          matched = this.__cached.splice(matched, 1)[0]
         }
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
         return this.promise(matched || {})

@@ -1,7 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
-import Nav from './nav'
+/**
+ * Append current reducers to store
+ */
+import '../reducers/about'
+
+import Aside from './aside'
 
 export default class Index extends Component {
 
@@ -27,11 +32,8 @@ export default class Index extends Component {
 
     return (
       <div>
-        <aside>
-          <Nav navs={navs} />
-        </aside>
-        <blockquote>Test</blockquote>
-        {this.props.children || <p>well</p>}
+        <Aside navs={navs} />
+        {this.props.children}
       </div>
     )
   }

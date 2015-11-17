@@ -1,16 +1,19 @@
 import extend from 'extend'
+import { appendReducer } from 'store'
 
 function blogs ( state = [], action ) {
   switch (action.type) {
     case 'FETCH_BLOGS':
-      return [...action.payload] || []
+      return action.payload && [...action.payload] || []
     case 'CREATE_BLOG':
-      return extend(true, [], state).concat[{...action.payload}]
+      return [...state, {...action.payload}]
     case 'DELETE_BLOG':
-      return extend(true, [], state).concat[{...action.payload}]
+      return state.filter(item => (item.id !== action.payload.id))
     default:
       return state
   }
 }
 
-export default blogs
+export default appendReducer({
+  blogs
+})

@@ -5,18 +5,20 @@ const Handlebars = require('handlebars')['default']
 const path = require('path')
 const fs = require('fs')
 
-const IP_ADDRESS = '192.168.0.103'
+const SERVER_HOST = '127.0.0.1'
+const SERVER_PORT = '3000'
 const IS_DEVELOP = false
 
 module.exports = {
-  IP_ADDRESS: IP_ADDRESS,
+  SERVER_HOST: SERVER_HOST,
+  SERVER_PORT: SERVER_PORT,
 
   devtool: 'cheap-module-eval-source-map',
 
   // devtool: 'eval',
 
   entry: [
-    'webpack-dev-server/client?http://' + IP_ADDRESS + ':3000',
+    'webpack-dev-server/client?http://' + SERVER_HOST + ':' + SERVER_PORT,
     'webpack/hot/only-dev-server',
     './src/index'
   ],

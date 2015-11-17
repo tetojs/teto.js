@@ -15,13 +15,15 @@ export default class Index extends Component {
     let { navs } = this.props
 
     return (
-      <nav>
-        <ul>
-          {navs.map((nav, i) =>
-            <li key={i}><Link to={nav.route}>{nav.title}</Link></li>
-          )}
-        </ul>
-      </nav>
+      <aside>
+        <nav>
+          <ul>
+            {navs.map((nav, i) =>
+              <li key={i}><Link to={nav.route}>{nav.title}</Link></li>
+            )}
+          </ul>
+        </nav>
+      </aside>
     )
   }
 

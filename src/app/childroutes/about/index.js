@@ -4,16 +4,21 @@ export default {
 
   getChildRoutes (location, cb) {
     require.ensure([], (require) => {
-      cb(null, [
-        require('./routes/contact'),
-        require('./routes/address')
-      ])
+      cb(null, require('./childroutes'))
+    })
+  },
+
+  getIndexRoute (location, cb) {
+    require.ensure([], (require) => {
+      cb(null, {
+        component: require('./dashboard')
+      })
     })
   },
 
   getComponent (location, cb) {
     require.ensure([], (require) => {
-      cb(null, require('./components'))
+      cb(null, require('./component'))
     })
   }
 

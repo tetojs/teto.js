@@ -5,6 +5,8 @@ import { devTools, persistState } from 'redux-devtools'
 import promise from 'redux-promise'
 import logger from 'redux-logger'
 
+import extend from 'extend'
+
 let finalCreateStore = applyMiddleware(promise, logger())(createStore)
 
 if (__DEV__) {
@@ -17,4 +19,18 @@ if (__DEV__) {
   )(finalCreateStore)
 }
 
-export default finalCreateStore(() => {})
+let reducers = {}
+
+let reducer = function () {
+  // console.log('reducer', arguments)
+}
+
+let store = finalCreateStore(reducer)
+
+export function appendReducer (reducer) {
+  store.replaceReducer(combineReducers(extend(reducers, reducer)))
+
+  return store
+}
+
+export default store

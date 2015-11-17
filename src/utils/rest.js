@@ -22,13 +22,6 @@ export default class REST {
     console.log('request with options:', options)
   }
 
-  GET (id) {
-    return this.request({
-      type: 'GET',
-      id
-    })
-  }
-
   DELETE (id) {
     return this.request({
       type: 'DELETE',
@@ -36,10 +29,10 @@ export default class REST {
     })
   }
 
-  POST (data) {
+  GET (id) {
     return this.request({
-      type: 'POST',
-      data
+      type: 'GET',
+      id
     })
   }
 
@@ -51,10 +44,16 @@ export default class REST {
     })
   }
 
-  PUT (id, data) {
+  POST (data) {
     return this.request({
-      type: 'PATCH',
-      id,
+      type: 'POST',
+      data
+    })
+  }
+
+  PUT (data) {
+    return this.request({
+      type: 'PUT',
       data
     })
   }

@@ -1,10 +1,10 @@
 export default {
 
-  path: 'contact',
+  path: 'address',
 
   getComponent (location, cb) {
     require.ensure([], (require) => {
-      cb(null, require('./components'))
+      cb(null, require('./component'))
     })
   }
 
