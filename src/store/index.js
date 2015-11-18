@@ -29,7 +29,7 @@ let reducer = function () {
 let store = finalCreateStore(reducer)
 
 export function appendReducer (reducer) {
-  console.log('reducer', reducer)
+  __DEV__ && console.log('appendReducer', reducer)
   store.replaceReducer(combineReducers(extend(reducers, reducer)))
 
   return store

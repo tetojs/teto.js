@@ -1,6 +1,6 @@
 import Blogs from '../models/blogs'
 
-export function fetchBlogs (payload) {
+export func tion fetchBlogs (payload) {
   return {
     types: [
       'FETCH_BLOGS_PENDING',
