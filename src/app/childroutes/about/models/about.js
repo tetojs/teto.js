@@ -3,15 +3,27 @@ import Promise from 'promise'
 import REST from 'utils/rest'
 
 export default class Blogs extends REST {
-  resource = '/about'
-
   __cached = null
 
-  promise (data) {
+  __resource = {
+    host: '',
+    version: '',
+    uri: 'about'
+  }
+
+  resolve (data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(data)
-      }, 0)
+      }, 1000)
+    })
+  }
+
+  reject (data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(data)
+      }, 1000)
     })
   }
 
@@ -22,12 +34,12 @@ export default class Blogs extends REST {
 
     switch (options.type) {
       case 'GET':
-        return this.promise(this.__cached)
+        return this.resolve(this.__cached)
       case 'PUT':
       console.log('[data]', options)
         Object.keys(options.data).forEach((key) => (this.__cached[key] = options.data[key]), this)
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
-        return this.promise(this.__cached)
+        return this.resolve(this.__cached)
     }
   }
 

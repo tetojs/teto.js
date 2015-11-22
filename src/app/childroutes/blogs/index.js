@@ -1,3 +1,6 @@
+// Append current reducers to store
+import './reducers/blogs'
+
 export default {
 
   path: 'blogs',

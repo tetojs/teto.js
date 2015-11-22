@@ -1,32 +1,48 @@
-import { appendReducer } from 'store'
+import extend from 'extend'
+
+import { appendReducer, actionTypeTransformer } from 'store'
 
 function blogs (state = {
+  count: 0,
   items: [],
-  state: 'PENDING'
+  state: '',
+  code: 0,
+  message: ''
 }, action) {
-  switch (action.type) {
-    case 'FETCH_BLOGS_PENDING':
-    case 'FETCH_BLOGS_SUCCESS':
-    case 'FETCH_BLOGS_FAILURE':
-    case 'FETCH_BLOGS_FINALLY':
-      console.log('action.payload', action.payload)
-      if (action.payload) {
-        return {
-          items: action.payload, state: action.type.substring(12)
-        }
-      }
-      let { items } = state
-      return { items: { ...items }, state: action.type.substring(12) }
-    case 'CREATE_BLOG':
+  let { actionType, actionState } = actionTypeTransformer(action.type)
+
+  function defaults () {
+    return extend({
+      ...state
+    }, {
+      state: actionState
+    })
+  }
+
+  if (!action.payload) {
+    return defaults()
+  }
+
+  switch (actionType) {
+    case 'FETCH_BLOGS':
       return {
-        items: [ ...state, { ...action.payload } ]
+        ...action.payload,
+        state: actionState
       }
+    case 'CREATE_BLOG':
+      return extend({
+        ...state
+      }, {
+        items: [ ...state.items, action.payload ],
+        state: actionState
+      })
     case 'DELETE_BLOG':
       return {
-        items: state.filter(item => (item.id !== action.payload.id))
+        items: state.items.filter(item => item.id !== action.payload.id),
+        state: actionState
       }
     default:
-      return state
+      return defaults()
   }
 }
 

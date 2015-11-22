@@ -1,10 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-/**
- * Append current reducers to store
- */
-import '../reducers/blogs'
-
 export default class Main extends Component {
 
   static propTypes = {
