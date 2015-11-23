@@ -26,10 +26,6 @@ export default class Blogs extends Component {
   //   super(props, context);
   // }
 
-  componentDidMount () {
-    this.props.fetchBlogs({})
-  }
-
   render () {
     let { deleteBlog, blogs } = this.props
     let { state, items } = blogs
