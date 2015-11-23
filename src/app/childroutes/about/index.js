@@ -1,3 +1,6 @@
+// Append current reducers to store
+import './reducers/about'
+
 export default {
 
   path: 'about',

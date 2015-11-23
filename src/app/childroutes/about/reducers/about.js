@@ -1,17 +1,38 @@
 import extend from 'extend'
-import { appendReducer } from 'store'
 
-function about ( state = {}, action ) {
-  switch (action.type) {
+import { appendReducer, actionTypeTransformer } from 'store'
+
+function about (state = {
+  state: '',
+  code: 0,
+  message: ''
+}, action) {
+  let { actionType, actionState } = actionTypeTransformer(action.type)
+
+  function defaults () {
+    return extend({
+      ...state
+    }, {
+      state: actionState
+    })
+  }
+
+  if (!action.payload) {
+    return defaults()
+  }
+
+  switch (actionType) {
     case 'FETCH_ABOUT':
-      return {...action.payload} || {}
+      return extend({ ...state }, action.payload, {
+        state: actionState
+      })
     case 'MODIFY_ABOUT':
-      return extend({}, state, action.payload)
+      return extend({ ...state }, action.payload, {
+        state: actionState
+      })
     default:
-      return state
+      return defaults()
   }
 }
 
-export default appendReducer({
-  about
-})
+export default appendReducer({ about })

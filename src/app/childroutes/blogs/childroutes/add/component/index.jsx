@@ -42,12 +42,13 @@ export default class Index extends Component {
     // TODO:
     // redirect after creation succeed
 
-    history.replaceState(null, '/blogs')
+    // history.replaceState(null, '/blogs')
   }
 
   render () {
     return (
       <form className={styles.ns} onSubmit={this.onSubmit}>
+        { this.props.blogs.state }
         <ul>
           <li className={styles.field}>
             <input ref="title" type="text" />

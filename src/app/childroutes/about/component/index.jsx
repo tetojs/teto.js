@@ -1,11 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
-/**
- * Append current reducers to store
- */
-import '../reducers/about'
-
 import Aside from './aside'
 
 export default class Index extends Component {

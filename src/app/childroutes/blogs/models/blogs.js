@@ -3,15 +3,27 @@ import Promise from 'promise'
 import REST from 'utils/rest'
 
 export default class Blogs extends REST {
-  resource = '/blogs'
-
   __cached = null
 
-  promise (data) {
+  __resource = {
+    host: '',
+    version: '',
+    uri: 'blogs'
+  }
+
+  resolve (data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(data)
-      }, 3000)
+      }, 1000)
+    })
+  }
+
+  reject (data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(data)
+      }, 1000)
     })
   }
 
@@ -22,13 +34,22 @@ export default class Blogs extends REST {
 
     switch (options.type) {
       case 'GET':
-        return this.promise(this.__cached)
+        return this.resolve({
+          count: this.__cached.length,
+          items: this.__cached
+        })
       case 'POST':
+        if (this.__cached.some(item => item.title === options.data.title)) {
+          return this.reject({
+            code: 201,
+            message: 'duplicated'
+          })
+        }
         this.__cached = this.__cached.concat({
           id: this.__cached.reduce((maxId, item) => Math.max(item.id, maxId), 0) + 1,
           ...options.data})
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
-        return this.promise(this.__cached[this.__cached.length - 1])
+        return this.resolve(this.__cached[this.__cached.length - 1])
       case 'DELETE':
         let matched = null
         this.__cached.some(function (item, index) {
@@ -41,7 +62,7 @@ export default class Blogs extends REST {
           matched = this.__cached.splice(matched, 1)[0]
         }
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
-        return this.promise(matched || {})
+        return this.resolve(matched || {})
     }
   }
 

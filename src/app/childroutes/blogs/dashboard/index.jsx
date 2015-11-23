@@ -38,7 +38,7 @@ export default class Blogs extends Component {
         <section className={styles.blogs}>
           { state }
           {
-            items.map(
+            items && items.map(
               blog => <Item key={blog.id} { ...blog } deleteBlog={deleteBlog} />
             )
           }

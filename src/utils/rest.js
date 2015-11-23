@@ -3,12 +3,26 @@ export default class REST {
   /**
    * @private
    */
-  __cache = null
+  // __cache = null
 
   /**
    * @abstract
    */
-  resource = ''
+  __resource = {
+    // host
+    // version
+    // uri
+  }
+
+  get resource () {
+    let { host, version, uri } = this.__resource
+
+    return [host, version, uri].join('/')
+  }
+
+  set resource (val) {
+    this.__resource = val
+  }
 
   /**
    * @protected
@@ -20,6 +34,18 @@ export default class REST {
    */
   request (options) {
     console.log('request with options:', options)
+  }
+
+  /**
+   * @abstract
+   */
+  resolve (data) {
+  }
+
+  /**
+   * @abstract
+   */
+  reject (error) {
   }
 
   DELETE (id) {
