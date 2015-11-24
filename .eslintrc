@@ -5,12 +5,13 @@
     "node": true
   },
   globals: {
-    "__DEV__", true
+    "__DEV__": true
   },
   "plugins": [
     "import",
     "react",
-    "standard"
+    "standard",
+    "babel"
   ],
   "extends": [
     "standard",
@@ -166,7 +167,7 @@
       "SwitchCase": 1
     }], // this option sets a specific tab width for your code (off by default)
     "brace-style": 1, // enforce one true brace style (off by default)
-    "camelcase": 1, // require camel case names
+    "camelcase": 0, // require camel case names
     "comma-spacing": [1, {
       "before": false,
       "after": true
@@ -235,6 +236,15 @@
     //
     "no-var": 2, // require let or const instead of var (off by default)
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions (off by default)
+
+    //
+    // eslint-plugin-babel
+    //
+    // "babel/generator-star-spacing": 1,
+    // "babel/new-cap": 1,
+    // "babel/object-curly-spacing": 1,
+    // "babel/object-shorthand": 1,
+    // "babel/arrow-parens": 1,
 
     //
     // Legacy
