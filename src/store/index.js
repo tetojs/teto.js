@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
-import { devTools, persistState } from 'redux-devtools'
+import { persistState } from 'redux-devtools'
 
 // middlewares
 // import promise from 'redux-promise'
@@ -12,10 +12,8 @@ const SUCCESS = 'SUCCESS'
 const FAILURE = 'FAILURE'
 const FINALLY = ''
 
-const glue = '_'
-
 function createTypeWithState (type, state) {
-  return [ type, state ].join(glue)
+  return state ? type + '_' + state : type
 }
 
 function isPromise (val) {
@@ -30,7 +28,9 @@ function promise ({ dispatch }) {
       return next(action)
     }
 
-    dispatch({ type: createTypeWithState(type, PENDING) })
+    dispatch({
+      type: createTypeWithState(type, PENDING)
+    })
 
     return payload
       .then(
@@ -59,8 +59,6 @@ let finalCreateStore = applyMiddleware(promise, logger())(createStore)
 
 if (__DEV__) {
   finalCreateStore = compose(
-    // Provides support for DevTools:
-    devTools(),
     // Lets you write ?debug_session=<name>
     // in address bar to persist debug sessions
     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
@@ -70,7 +68,7 @@ if (__DEV__) {
 let reducers = {}
 
 let reducer = function () {
-  console.log('reducer', arguments)
+  // console.log('reducer', arguments)
 }
 
 let store = finalCreateStore(reducer)

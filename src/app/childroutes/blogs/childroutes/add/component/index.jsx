@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
+import { Form, FormField, FormInput, Button } from 'elemental'
+
 import * as blogActions from '../../../actions/blog'
 import history from 'utils/history'
 
@@ -47,20 +49,18 @@ export default class Index extends Component {
 
   render () {
     return (
-      <form className={styles.ns} onSubmit={this.onSubmit}>
+      <Form className={styles.form} onSubmit={this.onSubmit}>
         { this.props.blogs.state }
-        <ul>
-          <li className={styles.field}>
-            <input ref="title" type="text" />
-          </li>
-          <li className={styles.field}>
-            <textarea ref="content" />
-          </li>
-        </ul>
+        <FormField className={styles.field}>
+          <FormInput ref="title" type="text" />
+        </FormField>
+        <FormField className={styles.field}>
+          <FormInput ref="content" multiline />
+        </FormField>
         <div className={styles.button}>
-          <button type="submit">Submit</button>
+          <Button type="primary" htmlType="submit">Submit</Button>
         </div>
-      </form>
+      </Form>
     )
   }
 }
