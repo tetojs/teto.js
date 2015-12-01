@@ -1,23 +1,28 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { combineReducers, bindActionCreators } from 'redux'
-import { Link } from 'react-router'
+import React, { PropTypes } from 'react'
 
 // Append current reducers to store
 import '../reducers/blog'
 
-export default class extends Component {
+import Aside from './aside'
 
-  static propTypes = {
+export default React.createClass({
+
+  propTypes: {
+    route: PropTypes.object.isRequired,
     children: PropTypes.element
-  }
+  },
 
   // constructor(props, context) {
-  //   super(props, context);
+  //   super(props, context)
   // }
 
   render () {
-    return this.props.children
+    return (
+      <div>
+        <Aside scope={this.props.route.path} />
+        {this.props.children}
+      </div>
+    )
   }
 
-}
+})

@@ -13,7 +13,7 @@ const webpackConfig = {
   target: 'web',
   entry: {
     app: [
-      `./${src}/app/entry.jsx`
+      `./${src}/index.jsx`
     ],
     vendor: config.get('vendor_dependencies')
   },

@@ -39,7 +39,7 @@ config.set('vendor_dependencies', [
   'react-redux',
   'react-router',
   'redux',
-  'antd'
+  'elemental'
 ].filter(dep => {
   if (pkg.dependencies[dep]) return true;
 
@@ -105,6 +105,7 @@ config.set('utils_aliases', [
   'app',
   'components',
   'decorators',
+  'debugger',
   'routes',
   'static',
   'store',

@@ -1,10 +1,13 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
+// import { RouteContext } from 'react-router'
 
-export default class extends Component {
+export default React.createClass({
 
-  static propTypes = {
+  // mixins: [RouteContext],
+
+  propTypes: {
     children: PropTypes.element
-  }
+  },
 
   // constructor(props, context) {
   //   super(props, context)
@@ -18,4 +21,4 @@ export default class extends Component {
     )
   }
 
-}
+})

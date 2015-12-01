@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class Message extends Component {
+export default class extends Component {
 
   static propTypes = {
     state: PropTypes.string
