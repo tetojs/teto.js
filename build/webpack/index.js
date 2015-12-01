@@ -1,3 +1,3 @@
 const config = require('../config')
 
-module.exports = require(config.get('env'))
+module.exports = require('./' + config.get('env'))

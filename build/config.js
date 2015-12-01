@@ -103,6 +103,7 @@ config.set('utils_paths', paths);
 config.set('utils_aliases', [
   'app',
   'debugger',
+  'routes',
   'static',
   'store',
   'utils'
