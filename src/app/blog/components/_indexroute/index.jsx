@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
-import { Link } from 'react-router'
 
 import * as blogActions from '../../actions/blog'
 
@@ -33,7 +32,6 @@ export default class Blogs extends Component {
       <div className={styles.ns}>
         <header className={styles.header}>
           Blogs:
-          <Link to="/blog/add">Add New</Link>
         </header>
         <section className={styles.blogs}>
           { state }
