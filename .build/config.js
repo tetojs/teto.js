@@ -38,7 +38,8 @@ config.set('vendor_dependencies', [
   'react',
   'react-redux',
   'react-router',
-  'redux'
+  'redux',
+  'antd'
 ].filter(dep => {
   if (pkg.dependencies[dep]) return true;
 
@@ -102,7 +103,8 @@ const paths = (() => {
 config.set('utils_paths', paths);
 config.set('utils_aliases', [
   'app',
-  'debugger',
+  'components',
+  'decorators',
   'routes',
   'static',
   'store',

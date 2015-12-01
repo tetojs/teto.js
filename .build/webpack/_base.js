@@ -13,7 +13,7 @@ const webpackConfig = {
   target: 'web',
   entry: {
     app: [
-      `./${src}/index.jsx`
+      `./${src}/app/entry.jsx`
     ],
     vendor: config.get('vendor_dependencies')
   },
@@ -72,17 +72,15 @@ const webpackConfig = {
         test: /\.scss$/,
         loaders: [
           'style',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'postcss',
+          'css',
           'sass?includePaths[]=' + __dirname + 'node_modules/compass-mixins/lib'
         ]
       },
       {
-        test: /\.less$/,
+        test: /\.(less|css)$/,
         loaders: [
           'style',
           'css',
-          'postcss',
           'less'
         ]
       },
@@ -91,6 +89,14 @@ const webpackConfig = {
         loaders: [
           'blueimp-tmpl'
         ]
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2)$/,
+        loaders: ['url?limit=8192']
+      },
+      {
+        test: /\.mp3$/,
+        loaders: ['file']
       },
       /* eslint-disable */
       { test: /\.woff(\?.*)?$/,  loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff" },
