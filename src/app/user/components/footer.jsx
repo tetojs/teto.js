@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 export default class extends Component {
 
   // static propTypes = {
@@ -10,7 +11,9 @@ export default class extends Component {
 
   render () {
     return (
-      <blockquote>Test in about</blockquote>
+      <footer>
+        &copy; {new Date().toISOString()}
+      </footer>
     )
   }
 

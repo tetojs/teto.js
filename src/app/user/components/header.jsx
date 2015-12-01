@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import Navbar from './navbar'
+
 export default class extends Component {
 
   // static propTypes = {
@@ -10,7 +13,9 @@ export default class extends Component {
 
   render () {
     return (
-      <blockquote>Test in about</blockquote>
+      <header>
+        <Navbar />
+      </header>
     )
   }
 

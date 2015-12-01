@@ -12,7 +12,7 @@ import styles from './styles/index.scss'
 }), dispatch => ({
   ...bindActionCreators(aboutActions, dispatch)
 }))
-export default class Index extends Component {
+export default class extends Component {
 
   static propTypes = {
     address: PropTypes.string,

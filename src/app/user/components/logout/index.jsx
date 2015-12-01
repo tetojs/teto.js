@@ -8,17 +8,14 @@ import { Form, FormField, FormInput, Button } from 'elemental'
 import md5 from 'utils/md5'
 import Message from 'utils/Message'
 
-// Append current reducers to store
-import '../reducers/tokens'
-
-import * as tokenActions from '../actions/tokens'
+import * as tokenActions from '../../actions/tokens'
 
 @connect(state => ({
   ...state.tokens
 }), dispatch => ({
   ...bindActionCreators(tokenActions, dispatch)
 }))
-export default class Index extends Component {
+export default class extends Component {
 
   static propTypes = {
     username: PropTypes.string,
@@ -67,6 +64,7 @@ export default class Index extends Component {
     let { state } = this.props
     return (
       <Form onSubmit={this.handleSubmit}>
+        <span>LOGOUT</span>
         <Message state={ state } />
         <FormField
           id="username"

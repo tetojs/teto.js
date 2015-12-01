@@ -15,7 +15,7 @@ import styles from './styles/index.scss'
 }), dispatch => ({
   ...bindActionCreators(blogActions, dispatch)
 }))
-export default class Index extends Component {
+export default class extends Component {
 
   static propTypes = {
     createBlog: PropTypes.func.isRequired

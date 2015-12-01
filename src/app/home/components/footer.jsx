@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import styles from './styles/footer.scss'
 
-export default class Index extends Component {
+export default class extends Component {
 
   // static propTypes = {
   // }

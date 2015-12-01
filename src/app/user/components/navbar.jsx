@@ -1,9 +1,7 @@
 import React from 'react'
-import { IndexLink, Link } from 'react-router'
+import { IndexLink } from 'react-router'
 
 import route from 'utils/route'
-
-import styles from './styles/navbar.scss'
 
 export default React.createClass({
 
@@ -12,14 +10,11 @@ export default React.createClass({
 
   render () {
     return (
-      <nav className={styles.ns}>
+      <nav>
         <h1>
           <IndexLink to="/">TeTo.js</IndexLink>
         </h1>
-        { route.getLinks('/', false) }
-        <p>
-          <Link to="user">用户</Link>
-        </p>
+        { route.getLinks('user/', false) }
       </nav>
     )
   }

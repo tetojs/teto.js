@@ -10,7 +10,7 @@ export default class extends Component {
 
   render () {
     return (
-      <blockquote>Test in about</blockquote>
+      <blockquote>Test in user</blockquote>
     )
   }
 

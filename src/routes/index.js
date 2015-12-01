@@ -1,11 +1,9 @@
+import user from './user'
 import blog from './blog'
 import about from './about'
 
 export default {
-  login: {
-    title: '登录',
-    component: 'login/components/index'
-  },
+  ...user,
   '/': {
     title: '首页',
     component: 'home/components/index',
