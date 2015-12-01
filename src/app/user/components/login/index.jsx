@@ -83,7 +83,7 @@ export default class extends Component {
             onChange={this.setValue} />
         </FormField>
         <p>
-          <Button type="primary" htmlType="submit">登录</Button>
+          <Button type="primary" submit>登录</Button>
         </p>
       </Form>
     )

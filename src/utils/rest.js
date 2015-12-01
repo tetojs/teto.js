@@ -1,6 +1,7 @@
 import axios from 'axios'
 import 'promise.prototype.finally'
-import util from './env'
+import ENV from 'utils/env'
+import AUTH from 'utils/auth'
 
 const encode = window.encodeURIComponent;
 
@@ -62,26 +63,26 @@ export default class REST {
 
   processDispatch(options) {
     // 未开启代理
-    if (!util.DISPATCHER_ENABLED) {
+    if (!ENV.DISPATCHER_ENABLED) {
       return;
     }
 
     // 模拟环境下
-    if (util.ENV === util.SIMULATION) {
+    if (ENV.ENV === ENV.SIMULATION) {
       return;
     }
 
     let dispatchUrl = options.dispatchUrl;
 
     // 存在白名单
-    if (util.DISPATCHER_WHITELIST) {
+    if (ENV.DISPATCHER_WHITELIST) {
       // 不在白名单
-      if (util.DISPATCHER_WHITELIST.indexOf(dispatchUrl) === -1) {
+      if (ENV.DISPATCHER_WHITELIST.indexOf(dispatchUrl) === -1) {
         return;
       }
     } else {
       // 本地接口
-      if (dispatchUrl === util.LOC_ORIGIN) {
+      if (dispatchUrl === ENV.LOC_ORIGIN) {
         return;
       }
     }
@@ -123,9 +124,11 @@ export default class REST {
   }
 
   processHeaders(options) {
-    options.headers = options.headers || {};
+    options.headers = options.headers || {
+      'Content-Type': 'application/json'
+    };
     // disable cache
-    if (!util.CACHE_ENABLED) {
+    if (!ENV.CACHE_ENABLED) {
       if (options.dispatcher) {
         options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache';
       } else {
@@ -142,11 +145,11 @@ export default class REST {
     }
 
     // has uc tokens
-    if (util.auth.isLogin()) {
+    if (AUTH.isLogin()) {
       let matched = options.url.match(/^(?:https?:)?\/\/([^\/]+)(\/.+)$/i);
       // data.headers.Authorization = 'DEBUG userid=220267';
       options.headers.Authorization =
-        util.auth.getAuthentization(
+        AUTH.getAuthentization(
           options.method, matched[2], matched[1]
         );
       // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd';

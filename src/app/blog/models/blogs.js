@@ -2,7 +2,7 @@ import Promise from 'promise'
 
 import REST from 'utils/rest'
 
-export default class Blogs extends REST {
+export default class extends REST {
   __cached = null
 
   __resource = {
