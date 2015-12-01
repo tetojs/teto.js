@@ -1,3 +1,3 @@
 require('babel/register')
 
-module.exports = require('./build/webpack')
+module.exports = require('./.build/webpack')

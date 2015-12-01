@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react'
-// import { RouteContext } from 'react-router'
+
+// Append current reducers to store
+import '../reducers/blog'
+
+import Aside from './aside'
 
 export default React.createClass({
 
-  // mixins: [RouteContext],
-
   propTypes: {
+    route: PropTypes.object.isRequired,
     children: PropTypes.element
   },
 
@@ -16,6 +19,7 @@ export default React.createClass({
   render () {
     return (
       <div>
+        <Aside scope={this.props.route.path} />
         {this.props.children}
       </div>
     )
