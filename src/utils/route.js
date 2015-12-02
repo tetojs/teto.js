@@ -22,6 +22,12 @@ const walkRoutes = function (sets, recursive = true, level = 0, prefix = '/') {
 
 export default {
 
+  /**
+   * 根据给定的路径返回导航
+   * @param  {string}  scope     路径
+   * @param  {boolean} recursive 是否递归
+   * @return {string}            HTML 代码
+   */
   getLinks (scope, recursive) {
     let sets
 
