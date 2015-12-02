@@ -12,7 +12,7 @@ import App from 'app'
 import 'elemental/less/elemental.less'
 
 const asyncLoader = component => (location, cb) => {
-  require(`bundle!app/${component}`)(function (c) {
+  require(`app/${component}`)(function (c) {
     cb(null, c)
   })
 }

@@ -51,14 +51,12 @@ export default class REST {
    * @protected
    */
   request(options) {
-    // dispatch
     this.processDispatch(options);
     this.processUrl(options);
     this.processData(options);
     this.processHeaders(options);
 
-    let config = this.createConfig(options);
-    return axios(this.preSendHandler(config));
+    return axios(this.preSendHandler(this.createConfig(options)))
   }
 
   processDispatch(options) {

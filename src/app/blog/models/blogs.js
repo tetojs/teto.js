@@ -32,7 +32,7 @@ export default class extends REST {
       this.__cached = JSON.parse(localStorage.getItem(this.resource)) || []
     }
 
-    switch (options.type) {
+    switch (options.method) {
       case 'GET':
         return this.resolve({
           count: this.__cached.length,

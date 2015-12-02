@@ -8,6 +8,24 @@ const paths = config.get('utils_paths')
 const src = config.get('dir_src')
 const dist = config.get('dir_dist')
 
+const babelLoaderQuery = {
+  stage: 0,
+  optional: ['runtime'],
+  env: {
+    development: {
+      plugins: ['react-transform'],
+      extra: {
+        'react-transform': {
+          transforms: [{
+            transform: 'react-transform-catch-errors',
+            imports: ['react', 'redbox-react']
+          }]
+        }
+      }
+    }
+  }
+}
+
 const webpackConfig = {
   name: 'client',
   target: 'web',
@@ -41,32 +59,25 @@ const webpackConfig = {
     })
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.json', '.js', '.jsx', '.async.js', '.async.jsx'],
     alias: config.get('utils_aliases')
   },
   module: {
     loaders: [
       {
+        test: /\.async\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: [
+          'bundle',
+          'babel?' + JSON.stringify(babelLoaderQuery)
+        ]
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          stage: 0,
-          optional: ['runtime'],
-          env: {
-            development: {
-              plugins: ['react-transform'],
-              extra: {
-                'react-transform': {
-                  transforms: [{
-                    transform: 'react-transform-catch-errors',
-                    imports: ['react', 'redbox-react']
-                  }]
-                }
-              }
-            }
-          }
-        }
+        loaders: [
+          'babel?' + JSON.stringify(babelLoaderQuery)
+        ]
       },
       {
         test: /\.scss$/,
@@ -77,7 +88,7 @@ const webpackConfig = {
         ]
       },
       {
-        test: /\.(less|css)$/,
+        test: /\.(le|c)ss$/,
         loaders: [
           'style',
           'css',
@@ -86,9 +97,7 @@ const webpackConfig = {
       },
       {
         test: /\.tmpl$/,
-        loaders: [
-          'blueimp-tmpl'
-        ]
+        loaders: ['blueimp-tmpl']
       },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,

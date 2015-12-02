@@ -7,6 +7,7 @@ import { Form, FormField, FormInput, Button } from 'elemental'
 
 import * as blogActions from '../../actions/blog'
 import history from 'utils/history'
+import Message from 'utils/Message'
 
 import styles from './styles/index.scss'
 
@@ -21,25 +22,24 @@ export default class extends Component {
     createBlog: PropTypes.func.isRequired
   }
 
-  // constructor (props, context) {
-  //   super(props, context)
-  // }
+  constructor (props, context) {
+    super(props, context)
+
+    this.state = {
+      title: '',
+      content: ''
+    }
+  }
 
   @autobind
   onSubmit (event) {
     event.preventDefault()
 
-    let title = this.refs.title.value
-    let content = this.refs.content.value
-
-    if (title === '' || content === '') {
+    if (this.state.title === '' || this.state.content === '') {
       return
     }
 
-    this.props.createBlog({
-      title,
-      content
-    })
+    this.props.createBlog(this.state)
 
     // TODO:
     // redirect after creation succeed
@@ -47,20 +47,28 @@ export default class extends Component {
     // history.replaceState(null, '/blogs')
   }
 
+  onChange (field, event) {
+    this.setState({
+      [field]: event.target.value.trim()
+    })
+  }
+
   render () {
+    let { state } = this.props
     return (
       <Form className={styles.form} onSubmit={this.onSubmit}>
-        { this.props.blogs.state }
+        <Message state={ state } />
         <FormField className={styles.field}>
-          <FormInput ref="title" type="text" />
+          <FormInput onChange={this.onChange.bind(this, 'title')} type="text" />
         </FormField>
         <FormField className={styles.field}>
-          <FormInput ref="content" multiline />
+          <FormInput onChange={this.onChange.bind(this, 'content')} multiline />
         </FormField>
         <div className={styles.button}>
-          <Button type="primary" htmlType="submit">Submit</Button>
+          <Button type="primary" submit>Submit</Button>
         </div>
       </Form>
     )
   }
+
 }
