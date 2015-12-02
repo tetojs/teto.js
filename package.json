@@ -89,7 +89,7 @@
     "clean": "rm -rf index.html dist",
     "lint": "eslint src",
     "lint:tests": "eslint ./tests/**/*.spec.js",
-    "compile": "npm run clean && webpack",
+    "compile": "npm run clean && set NODE_ENV=production && webpack",
     "start": "npm run dev",
     "dev": "node --harmony .bin/webpack-dev-server",
     "dev:no-debug": "npm run dev -- --no_debug",

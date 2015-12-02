@@ -2,7 +2,6 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import { persistState } from 'redux-devtools'
 
 // middlewares
-// import promise from 'redux-promise'
 import logger from 'redux-logger'
 
 import extend from 'extend'

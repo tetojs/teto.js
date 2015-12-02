@@ -61,7 +61,7 @@ Edit at Your Own Risk
 // ------------------------------------
 // Environment
 // ------------------------------------
-config.set('env', process.env.NODE_ENV);
+config.set('env', process.env.NODE_ENV.trim());
 config.set('globals', {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.get('env'))
