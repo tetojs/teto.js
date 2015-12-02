@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './styles/footer.scss'
+import styles from '../themes/styles/footer.scss'
 
 export default class extends Component {
 

@@ -39,7 +39,7 @@ config.set('vendor_dependencies', [
   'react-redux',
   'react-router',
   'redux',
-  'elemental'
+  'antd'
 ].filter(dep => {
   if (pkg.dependencies[dep]) return true;
 

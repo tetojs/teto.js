@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Navbar from './navbar'
 
-import styles from './styles/header.scss'
+import styles from '../themes/styles/header.scss'
 
 export default class extends Component {
 

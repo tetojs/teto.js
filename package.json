@@ -4,9 +4,9 @@
   "description": "teto.js",
   "main": "index.js",
   "dependencies": {
+    "antd": "^0.10.4",
     "autobind-decorator": "^1.3.2",
     "axios": "^0.7.0",
-    "elemental": "^0.5.6",
     "extend": "^3.0.0",
     "history": "^1.13.0",
     "nd-datetime": "^1.0.1",

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-// import { RouteContext } from 'react-router'
+import { Switch } from 'antd'
 
 export default React.createClass({
 
@@ -7,6 +7,18 @@ export default React.createClass({
 
   propTypes: {
     children: PropTypes.element
+  },
+
+  getInitialState () {
+    return {
+      theme: 'light'
+    }
+  },
+
+  changeTheme (value) {
+    this.setState({
+      theme: value ? 'dark' : 'light'
+    })
   },
 
   // constructor(props, context) {
@@ -17,6 +29,9 @@ export default React.createClass({
     return (
       <div>
         {this.props.children}
+        <Switch onChange={this.changeTheme}
+          checkedChildren="暗"
+          unCheckedChildren="亮" />
       </div>
     )
   }

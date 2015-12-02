@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import Header from './header'
 import Footer from './footer'
 
-import styles from './styles/main.scss'
+import styles from '../themes/styles/main.scss'
 
 export default class extends Component {
 

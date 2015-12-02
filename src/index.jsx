@@ -9,7 +9,7 @@ import history from 'utils/history'
 
 import App from 'app'
 
-import 'elemental/less/elemental.less'
+import 'antd/style/index.less'
 
 const asyncLoader = component => (location, cb) => {
   require(`app/${component}`)(function (c) {

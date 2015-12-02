@@ -83,8 +83,9 @@ const webpackConfig = {
         test: /\.scss$/,
         loaders: [
           'style',
-          'css',
-          'sass?includePaths[]=' + __dirname + 'node_modules/compass-mixins/lib'
+          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'sass?includePaths[]=' + __dirname + 'node_modules/compass-mixins/lib',
+          'postcss'
         ]
       },
       {
