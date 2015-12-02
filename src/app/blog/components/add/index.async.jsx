@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { Form, FormField, FormInput, Button } from 'elemental'
+import { Form, Input, Button } from 'antd'
 
 import * as blogActions from '../../actions/blog'
 import history from 'utils/history'
@@ -56,16 +56,16 @@ export default class extends Component {
   render () {
     let { state } = this.props
     return (
-      <Form className={styles.form} onSubmit={this.onSubmit}>
+      <Form horizontal onSubmit={this.onSubmit}>
         <Message state={ state } />
-        <FormField className={styles.field}>
+        <Form.Item className={styles.field}>
           <FormInput onChange={this.onChange.bind(this, 'title')} type="text" />
-        </FormField>
-        <FormField className={styles.field}>
-          <FormInput onChange={this.onChange.bind(this, 'content')} multiline />
-        </FormField>
+        </Form.Item>
+        <Form.Item className={styles.field}>
+          <FormInput onChange={this.onChange.bind(this, 'content')} type="multiline"  />
+        </Form.Item>
         <div className={styles.button}>
-          <Button type="primary" submit>Submit</Button>
+          <Button type="primary" htmlType="submit">Submit</Button>
         </div>
       </Form>
     )

@@ -9,6 +9,7 @@ import Footer from './footer'
 export default React.createClass({
 
   propTypes: {
+    route: PropTypes.object.isRequired,
     children: PropTypes.element
   },
 
@@ -19,7 +20,7 @@ export default React.createClass({
   render () {
     return (
       <div>
-        <Header />
+        <Header scope={this.props.route.path} />
         <main>
           {this.props.children}
         </main>

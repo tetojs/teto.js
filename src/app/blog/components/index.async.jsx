@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 // Append current reducers to store
 import '../reducers/blog'
 
-import Aside from './aside'
+// import Aside from './aside'
 
 export default React.createClass({
 
@@ -17,9 +17,9 @@ export default React.createClass({
   // }
 
   render () {
+    // <Aside scope={this.props.route.path} />
     return (
       <div>
-        <Aside scope={this.props.route.path} />
         {this.props.children}
       </div>
     )

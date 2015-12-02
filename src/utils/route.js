@@ -21,8 +21,6 @@ const walkRoutes = function (options = {
     Cmp = Menu
   }
 
-  console.log('options', options)
-
   return (
     <Cmp key={level + ':' + prefix} mode="horizontal" title={title}>
       {

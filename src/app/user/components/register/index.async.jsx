@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { Form, FormField, FormInput, Button } from 'elemental'
+import { Form, Input, Button } from 'antd'
 
 import md5 from 'utils/md5'
 import Message from 'utils/Message'
@@ -63,25 +63,25 @@ export default class extends Component {
     let { username, password } = this.state
     let { state } = this.props
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form horizontal onSubmit={this.handleSubmit}>
         <span>REGISTER</span>
         <Message state={ state } />
-        <FormField
+        <Form.Item
           id="username"
           label="帐号">
-          <FormInput placeholder="请输入帐号"
+          <Input placeholder="请输入帐号"
             id="username" name="username"
             value={username}
             onChange={this.setValue} />
-        </FormField>
-        <FormField
+        </Form.Item>
+        <Form.Item
           id="password"
           label="密码">
-          <FormInput type="password" placeholder="请输入密码"
+          <Input type="password" placeholder="请输入密码"
             id="password" name="password"
             value={password}
             onChange={this.setValue} />
-        </FormField>
+        </Form.Item>
         <p>
           <Button type="primary" htmlType="submit">登录</Button>
         </p>

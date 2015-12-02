@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { IndexLink } from 'react-router'
 
 import route from 'utils/route'
 
 export default React.createClass({
 
-  // propTypes: {
-  // }
+  propTypes: {
+    scope: PropTypes.object.isRequired
+  },
 
   render () {
     return (
@@ -14,7 +15,9 @@ export default React.createClass({
         <h1>
           <IndexLink to="/">TeTo.js</IndexLink>
         </h1>
-        { route.getLinks('user/', false) }
+        <div>
+          { route.getLinks(this.props.scope + '/', false) }
+        </div>
       </nav>
     )
   }
