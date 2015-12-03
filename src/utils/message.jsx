@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
+import { Alert } from 'antd'
 
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string
+    state: PropTypes.string,
+    message: PropTypes.string
   }
 
   // constructor(props, context) {
@@ -11,16 +13,16 @@ export default class extends Component {
   // }
 
   render () {
-    let { state } = this.props
+    let { state, message } = this.props
 
-    let styles = {
-      color: state === 'SUCCESS' ? 'green' :
-             state === 'FAILURE' ? 'red' :
-             state === 'PENDING' ? 'yellow' : 'gray'
-    }
+    let type = state === 'SUCCESS' ? 'success' :
+             state === 'FAILURE' ? 'error' :
+             state === 'PENDING' ? 'info' : ''
 
     return (
-      <div style={styles}>{this.props.state}</div>
+      <div>
+        { type && message && <Alert type={type} message={message} /> }
+      </div>
     )
   }
 

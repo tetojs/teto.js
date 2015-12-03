@@ -9,10 +9,10 @@ import history from 'utils/history'
 
 import App from 'app'
 
-import 'elemental/less/elemental.less'
+import styles from 'static/themes/default/styles/index.scss'
 
 const asyncLoader = component => (location, cb) => {
-  require(`bundle!app/${component}`)(function (c) {
+  require(`app/${component}`)(function (c) {
     cb(null, c)
   })
 }
@@ -31,6 +31,10 @@ const walkRoutes = (sets) =>
     )
   })
 
+const container = document.getElementById('app')
+
+container.className = styles.app
+
 render(
   <Provider key="provider" store={store}>
     <Router history={history}>
@@ -39,5 +43,5 @@ render(
       </Route>
     </Router>
   </Provider>
-  , document.getElementById('app')
+  , container
 )

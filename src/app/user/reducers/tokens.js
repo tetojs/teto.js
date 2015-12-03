@@ -4,7 +4,6 @@ import { appendReducer, actionTypeTransformer } from 'store'
 
 function tokens (state = {
   login_name: 'admin@ndtest',
-  password: '123456!@#',
   state: '',
   code: 0,
   message: ''
@@ -25,6 +24,11 @@ function tokens (state = {
 
   switch (actionType) {
     case 'POST_TOKEN':
+      return {
+        ...action.payload,
+        state: actionState
+      }
+    case 'DELETE_TOKEN':
       return {
         ...action.payload,
         state: actionState

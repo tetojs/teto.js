@@ -5,7 +5,7 @@
 
 /**
  * @param {string} prefix  key 前缀
- * @param {number} expire  默认过期秒数
+ * @param {number} expire  默认过期毫秒数
  * @param {object} driver  数据存储器
  * @return {object} this
  */
@@ -69,7 +69,7 @@ Storage.prototype = {
     }
 
     if (data.expire) {
-      data.expire = Date.now() + data.expire * 1000
+      data.expire = Date.now() + data.expire
     }
 
     this.driver.setItem(this.makeKey(key), JSON.stringify(data))

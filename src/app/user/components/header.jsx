@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 
 import Navbar from './navbar'
 
-export default class extends Component {
+export default React.createClass({
 
-  // static propTypes = {
-  // }
+  propTypes: {
+    scope: PropTypes.string.isRequired
+  },
 
   // constructor(props, context) {
   //   super(props, context)
@@ -14,9 +15,9 @@ export default class extends Component {
   render () {
     return (
       <header>
-        <Navbar />
+        <Navbar scope={this.props.scope} />
       </header>
     )
   }
 
-}
+})
