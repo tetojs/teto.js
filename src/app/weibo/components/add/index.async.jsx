@@ -5,28 +5,29 @@ import autobind from 'autobind-decorator'
 
 import { Form, Input, Button } from 'antd'
 
-import * as blogActions from '../../actions/blog'
+import * as weiboActions from '../../actions/weibo'
 import history from 'utils/history'
 import Message from 'utils/Message'
 
 import styles from './styles/index.scss'
 
 @connect(state => ({
-  blogs: state.blogs
+  ...state.weibo
 }), dispatch => ({
-  ...bindActionCreators(blogActions, dispatch)
+  ...bindActionCreators(weiboActions, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
-    createBlog: PropTypes.func.isRequired
+    state: PropTypes.string.isRequired,
+    message: PropTypes.string,
+    createWeibo: PropTypes.func.isRequired
   }
 
   constructor (props, context) {
     super(props, context)
 
     this.state = {
-      title: '',
       content: ''
     }
   }
@@ -35,16 +36,20 @@ export default class extends Component {
   onSubmit (event) {
     event.preventDefault()
 
-    if (this.state.title === '' || this.state.content === '') {
+    if (this.state.content === '') {
       return
     }
 
-    this.props.createBlog(this.state)
+    this.props.createWeibo({
+      data: {
+        content: this.state.content
+      }
+    })
 
     // TODO:
     // redirect after creation succeed
 
-    // history.replaceState(null, '/blogs')
+    // history.replaceState(null, '/weibos')
   }
 
   onChange (field, event) {
@@ -54,15 +59,12 @@ export default class extends Component {
   }
 
   render () {
-    let { state } = this.props
+    let { state, message } = this.props
     return (
       <Form horizontal onSubmit={this.onSubmit}>
-        <Message state={ state } />
+        <Message state={ state } message={ message } />
         <Form.Item className={styles.field}>
-          <FormInput onChange={this.onChange.bind(this, 'title')} type="text" />
-        </Form.Item>
-        <Form.Item className={styles.field}>
-          <FormInput onChange={this.onChange.bind(this, 'content')} type="multiline"  />
+          <Input onChange={this.onChange.bind(this, 'content')} type="textarea"  />
         </Form.Item>
         <div className={styles.button}>
           <Button type="primary" htmlType="submit">Submit</Button>

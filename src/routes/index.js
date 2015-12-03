@@ -1,5 +1,5 @@
 import user from './user'
-import blog from './blog'
+import weibo from './weibo'
 import about from './about'
 
 export default {
@@ -10,7 +10,7 @@ export default {
     component: 'home/components/index',
     indexroute: 'home/components/_indexroute/index',
     childroutes: {
-      ...blog,
+      ...weibo,
       ...about,
       '*': {
         component: 'error/components/index'

@@ -26,12 +26,12 @@ const LOC_HOSTNAME = location.hostname
 /**
  * @constant {number} ENV
  */
-const ENV = (function() {
+const ENV = (function () {
   switch (LOC_HOSTNAME) {
     case '127.0.0.1':
       return SIMULATION
     case 'localhost':
-      return PRODUCTION
+      return DEBUG
     default:
       if (/\.dev\.web\.nd$/.test(LOC_HOSTNAME)) {
         return DEVELOPMENT
@@ -51,6 +51,12 @@ const ENV = (function() {
       return PRODUCTION
   }
 })()
+
+const LOC_RES = {
+  protocol: LOC_PROTOCOL,
+  host: LOC_HOST,
+  ver: 'v0.1'
+}
 
 /**
  * @constant {object} UC_RES
@@ -104,16 +110,57 @@ switch (ENV) {
     }
     break
   default:
-    UC_RES = {
-      protocol: LOC_PROTOCOL,
-      host: LOC_HOST,
+    UC_RES = LOC_RES
+    CS_RES = LOC_RES
+}
+
+let MB_RES
+
+switch (ENV) {
+  case DEVELOPMENT:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.dev.web.nd',
       ver: 'v0.1'
     }
-    CS_RES = {
-      protocol: LOC_PROTOCOL,
-      host: LOC_HOST,
+    break
+  case DEBUG:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.debug.web.nd',
       ver: 'v0.1'
     }
+    break
+  case PRODUCTION:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.web.sdp.101.com',
+      ver: 'v0.1'
+    }
+    break
+  case AWS:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.aws.101.com',
+      ver: 'v0.1'
+    }
+    break
+  case PREPRODUCTION:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.beta.web.sdp.101.com',
+      ver: 'v0.1'
+    }
+    break
+  case PRESSURE:
+    MB_RES = {
+      protocol: 'http://',
+      host: 'microblog.qa.web.sdp.101.com',
+      ver: 'v0.1'
+    }
+    break
+  default:
+    MB_RES = LOC_RES
 }
 
 /**
@@ -124,12 +171,12 @@ const CACHE_ENABLED = false
 /**
  * @constant {boolean} 开启基于角色的权限控制
  */
-const RBAC_ENABLED = true
+const RBAC_ENABLED = false
 
 /**
  * @constant {boolean} 启用接口请求代理
  */
-const DISPATCHER_ENABLED = true
+const DISPATCHER_ENABLED = false
 
 /**
  * @constant {boolean} 接口请求代理版本
@@ -190,10 +237,10 @@ export default {
   PRESSURE,
   AWS,
   ENV,
-  LOC_PROTOCOL,
-  LOC_HOST,
+  LOC_RES,
   UC_RES,
   CS_RES,
+  MB_RES,
   CACHE_ENABLED,
   RBAC_ENABLED,
   DISPATCHER_ENABLED,

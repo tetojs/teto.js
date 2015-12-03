@@ -7,22 +7,12 @@ export default {
     childroutes: {
       login: {
         title: '登录',
-        icon: 'login',
+        icon: 'lock',
         component: 'user/components/login/index'
-      },
-      register: {
-        title: '注册',
-        icon: 'register',
-        component: 'user/components/register/index'
-      },
-      forgot: {
-        title: '忘记密码',
-        icon: 'forgot',
-        component: 'user/components/forgot/index'
       },
       logout: {
         title: '退出',
-        icon: 'logout',
+        icon: 'unlock',
         component: 'user/components/logout/index'
       }
     }

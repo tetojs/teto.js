@@ -2,9 +2,10 @@ import extend from 'extend'
 
 import { appendReducer, actionTypeTransformer } from 'store'
 
-function blogs (state = {
+function weibo (state = {
   count: 0,
   items: [],
+  finished: false,
   state: '',
   code: 0,
   message: ''
@@ -24,19 +25,19 @@ function blogs (state = {
   }
 
   switch (actionType) {
-    case 'FETCH_BLOGS':
+    case 'FETCH_WEIBOS':
       return {
         ...action.payload,
         state: actionState
       }
-    case 'CREATE_BLOG':
+    case 'CREATE_WEIBO':
       return extend({
         ...state
       }, {
         items: [ ...state.items, action.payload ],
         state: actionState
       })
-    case 'DELETE_BLOG':
+    case 'DELETE_WEIBO':
       return {
         items: state.items.filter(item => item.id !== action.payload.id),
         state: actionState
@@ -46,4 +47,4 @@ function blogs (state = {
   }
 }
 
-export default appendReducer({ blogs })
+export default appendReducer({ weibo })

@@ -6,9 +6,11 @@ import REST from 'utils/rest'
 export default class extends REST {
 
   __resource = {
-    api: '/tokens',
-    idVar: 'access_token',
-    ...ENV.UC_RES
+    api: '/timelines/{timeline_name}',
+    vars: {
+      timeline_name: 'square'
+    },
+    ...ENV.MB_RES
   }
 
 }

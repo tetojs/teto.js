@@ -6,7 +6,7 @@ import route from 'utils/route'
 export default React.createClass({
 
   propTypes: {
-    scope: PropTypes.object.isRequired
+    scope: PropTypes.string.isRequired
   },
 
   render () {

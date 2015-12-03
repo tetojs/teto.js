@@ -3,10 +3,17 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { Form, Input, Button } from 'antd'
-
 import md5 from 'utils/md5'
 import Message from 'utils/Message'
+import STATES from 'utils/states'
+import auth from 'utils/auth'
+
+const {
+  PENDING,
+  SUCCESS,
+  FAILURE,
+  FINALLY
+} = STATES
 
 import * as tokenActions from '../../actions/tokens'
 
@@ -18,74 +25,38 @@ import * as tokenActions from '../../actions/tokens'
 export default class extends Component {
 
   static propTypes = {
-    username: PropTypes.string,
-    password: PropTypes.string
+    state: PropTypes.string.isRequired,
+    message: PropTypes.string,
+    deleteToken: PropTypes.func.isRequired
   }
 
-  constructor(props, context) {
-    super(props, context)
+  // constructor(props, context) {
+  //   super(props, context)
+  // }
 
-    this.state = {
-      username: props.username,
-      password: props.password
+  componentDidMount () {
+    let accessToken = auth.getTokens('access_token')
+
+    if (accessToken) {
+      this.props.deleteToken(accessToken)
+    } else {
+      alert('你还没登录')
     }
   }
 
   componentWillReceiveProps (props) {
-    if (props.state === 'state') {
-
+    switch (props.state) {
+      case SUCCESS:
+        auth.destroy()
     }
   }
 
-  @autobind
-  handleSubmit (event) {
-    event.preventDefault()
-
-    let { username, password } = this.state
-
-    this.props.postToken({
-      login_name: username,
-      password: md5(password)
-    })
-  }
-
-  @autobind
-  setValue (event) {
-    event.preventDefault()
-
-    let obj = {}
-    obj[event.target.name] = event.target.value.trim()
-
-    this.setState(obj)
-  }
-
   render () {
-    let { username, password } = this.state
-    let { state } = this.props
+    let { state, message } = this.props
     return (
-      <Form horizontal onSubmit={this.handleSubmit}>
-        <span>LOGOUT</span>
-        <Message state={ state } />
-        <Form.Item
-          id="username"
-          label="帐号">
-          <Input placeholder="请输入帐号"
-            id="username" name="username"
-            value={username}
-            onChange={this.setValue} />
-        </Form.Item>
-        <Form.Item
-          id="password"
-          label="密码">
-          <Input type="password" placeholder="请输入密码"
-            id="password" name="password"
-            value={password}
-            onChange={this.setValue} />
-        </Form.Item>
-        <p>
-          <Button type="primary" htmlType="submit">登录</Button>
-        </p>
-      </Form>
+      <div>
+        <Message state={ state } message={ message } />
+      </div>
     )
   }
 

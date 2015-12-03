@@ -9,7 +9,7 @@ import history from 'utils/history'
 
 import App from 'app'
 
-import 'antd/style/index.less'
+import styles from 'static/themes/default/styles/index.scss'
 
 const asyncLoader = component => (location, cb) => {
   require(`app/${component}`)(function (c) {
@@ -31,6 +31,10 @@ const walkRoutes = (sets) =>
     )
   })
 
+const container = document.getElementById('app')
+
+container.className = styles.app
+
 render(
   <Provider key="provider" store={store}>
     <Router history={history}>
@@ -39,5 +43,5 @@ render(
       </Route>
     </Router>
   </Provider>
-  , document.getElementById('app')
+  , container
 )

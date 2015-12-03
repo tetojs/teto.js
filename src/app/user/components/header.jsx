@@ -5,7 +5,7 @@ import Navbar from './navbar'
 export default React.createClass({
 
   propTypes: {
-    scope: PropTypes.object.isRequired
+    scope: PropTypes.string.isRequired
   },
 
   // constructor(props, context) {

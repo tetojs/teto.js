@@ -36,7 +36,6 @@ export default class extends REST {
       case 'GET':
         return this.resolve(this.__cached)
       case 'PUT':
-      console.log('[data]', options)
         Object.keys(options.data).forEach((key) => (this.__cached[key] = options.data[key]), this)
         localStorage.setItem(this.resource, JSON.stringify(this.__cached))
         return this.resolve(this.__cached)
