@@ -5,11 +5,11 @@ import autobind from 'autobind-decorator'
 
 import { Form, Input, Button } from 'antd'
 
-import * as weiboActions from '../../actions/weibo'
 import history from 'utils/history'
 import Message from 'utils/Message'
 
-import styles from './styles/index.scss'
+import * as weiboActions from '../../actions/weibo'
+import styles from '../../themes/styles/add.scss'
 
 @connect(state => ({
   ...state.weibo

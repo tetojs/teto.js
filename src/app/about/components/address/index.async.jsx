@@ -4,8 +4,7 @@ import { combineReducers, bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
 import * as aboutActions from '../../actions/about'
-
-import styles from './styles/index.scss'
+import styles from '../../themes/styles/address.scss'
 
 @connect(state => ({
   ...state.about

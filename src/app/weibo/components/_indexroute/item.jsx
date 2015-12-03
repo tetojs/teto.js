@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import styles from './styles/item.scss'
+import styles from '../../themes/styles/item.scss'
 
 export default class extends Component {
 

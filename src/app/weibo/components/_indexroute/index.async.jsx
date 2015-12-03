@@ -6,10 +6,9 @@ import Message from 'utils/Message'
 // import STATES from 'utils/states'
 
 import * as weiboActions from '../../actions/weibo'
+import styles from '../../themes/styles/index.scss'
 
 import Item from './item'
-
-import styles from './styles/index.scss'
 
 @connect(state => ({
   ...state.weibo

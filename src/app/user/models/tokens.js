@@ -1,5 +1,3 @@
-import Promise from 'promise'
-
 import ENV from 'utils/env'
 import REST from 'utils/rest'
 
