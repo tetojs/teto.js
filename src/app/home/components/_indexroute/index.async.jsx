@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col } from 'elemental'
+//import { Row, Col } from 'elemental'
 
 export default class extends Component {
 
@@ -19,23 +19,26 @@ export default class extends Component {
     }
 
     return (
-      <Row>
-        <Col sm="1/3">
-          <article style={styles}>
-            react
-          </article>
-        </Col>
-        <Col sm="1/3">
-          <article style={styles}>
-            redux
-          </article>
-        </Col>
-        <Col sm="1/3">
-          <article style={styles}>
-            webpack
-          </article>
-        </Col>
-      </Row>
+    <article style={styles}>
+      react
+    </article>
+      //<Row>
+      //  <Col sm="1/3">
+      //    <article style={styles}>
+      //      react
+      //    </article>
+      //  </Col>
+      //  <Col sm="1/3">
+      //    <article style={styles}>
+      //      redux
+      //    </article>
+      //  </Col>
+      //  <Col sm="1/3">
+      //    <article style={styles}>
+      //      webpack
+      //    </article>
+      //  </Col>
+      //</Row>
     )
   }
 
