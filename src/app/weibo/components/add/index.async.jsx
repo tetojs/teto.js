@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator'
 import { Form, Input, Button } from 'antd'
 
 import history from 'utils/history'
-import Message from 'utils/Message'
+import Message from 'utils/message'
 
 import * as weiboActions from '../../actions/weibo'
 import styles from '../../themes/styles/add.scss'
