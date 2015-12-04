@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
 import md5 from 'utils/md5'
-import Message from 'utils/Message'
+import Message from 'utils/message'
 import STATES from 'utils/states'
 import auth from 'utils/auth'
 
