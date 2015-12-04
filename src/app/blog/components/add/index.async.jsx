@@ -7,7 +7,7 @@ import { Form, Input, Button } from 'antd'
 
 import * as blogActions from '../../actions/blog'
 import history from 'utils/history'
-import Message from 'utils/Message'
+import Message from 'utils/message'
 
 import styles from './styles/index.scss'
 
