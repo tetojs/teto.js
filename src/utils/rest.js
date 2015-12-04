@@ -7,7 +7,7 @@ import auth from 'utils/auth'
 const encode = window.encodeURIComponent
 
 const addParams = function (url, params, useVar) {
-  var arr = Object.keys(params).map(function(key) {
+  let arr = Object.keys(params).map((key) => {
     return encode(key) + '=' + (useVar ? ('{' + key + '}') : encode(params[key]))
   }).join('&')
 
@@ -56,21 +56,21 @@ export default class REST {
   }
 
   get resource () {
-    return this.__resource;
+    return this.__resource
   }
 
   set resource (val) {
     this.__resource = val
   }
 
-  __inFilter = options => options
+  __inFilter = (options) => options
 
   get inFilter () {
-    return this.__inFilter;
+    return this.__inFilter
   }
 
   set inFilter (val) {
-    this.__inFilter = val;
+    this.__inFilter = val
   }
 
   /**
@@ -103,16 +103,16 @@ export default class REST {
 
     let keys = ['url', 'method', 'data', 'headers']
 
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       if (options.hasOwnProperty(key)) {
         config[key] = options[key]
       }
     })
 
-    return new Promise(function(resolve, reject) {
-      axios(config).then(function(response) {
+    return new Promise((resolve, reject) => {
+      axios(config).then((response) => {
         resolve(response.data)
-      }, function(response) {
+      }, (response) => {
         reject(response.data)
       })
     })
@@ -130,7 +130,7 @@ export default class REST {
     }
 
     if (vars) {
-      Object.keys(vars).forEach(function(key) {
+      Object.keys(vars).forEach((key) => {
         api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
       })
     }
@@ -162,7 +162,7 @@ export default class REST {
     // disable cache
     if (!ENV.CACHE_ENABLED) {
       if (options.dispatcher) {
-        options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
+        // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
       }
     }
 
@@ -185,7 +185,7 @@ export default class REST {
   createConfig (options) {
     let config = {}
 
-    Object.keys(options).forEach(function(key) {
+    Object.keys(options).forEach((key) => {
       if (['url', 'method', 'data', 'headers'].indexOf(key) !== -1) {
         config[key] = options[key]
       }

@@ -9,20 +9,25 @@ const walkRoutes = function (options = {
   level: 0,
   prefix: '/',
   Cmp: Menu,
+  mode: 'horizontal',
   title: ''
 }) {
-  let { sets, recursive, Cmp, title, level, prefix } = options
-
-  if (!title) {
-    title = ''
-  }
+  let { sets, recursive, level, prefix, Cmp, mode, title } = options
 
   if (!Cmp) {
     Cmp = Menu
   }
 
+  if (!mode) {
+    mode = 'horizontal'
+  }
+
+  if (!title) {
+    title = ''
+  }
+
   return (
-    <Cmp key={level + ':' + prefix} mode="horizontal" title={title}>
+    <Cmp key={level + ':' + prefix} mode={mode} title={title}>
       {
         Object.keys(sets)
         .filter((path) => path !== '/' && path !== '*')
@@ -34,14 +39,15 @@ const walkRoutes = function (options = {
               arr.push(
                 walkRoutes({
                   title: <Link to={prefix + path} activeClassName="active">
-                    { value.icon && <Icon type={value.icon} /> }
+                    {value.icon && <Icon type={value.icon} /> }
                     {value.title}
                   </Link>,
                   sets: value.childroutes,
                   recursive,
                   level: level + 1,
                   prefix: prefix + path + '/',
-                  Cmp: Menu.SubMenu
+                  Cmp: Menu.SubMenu,
+                  mode: mode
                 })
               )
 
@@ -52,7 +58,7 @@ const walkRoutes = function (options = {
           arr.push(
             <Menu.Item key={level + ':' + idx}>
               <Link to={prefix + path} activeClassName="active">
-                { value.icon && <Icon type={value.icon} /> }
+                {value.icon && <Icon type={value.icon} />}
                 {value.title}
               </Link>
             </Menu.Item>
@@ -83,7 +89,7 @@ export default {
         sets = scope
         .replace(/\/$/, '')
         .split('/')
-        .reduce(function (obj, key) {
+        .reduce((obj, key) => {
           return obj[key || '/'].childroutes
         }, routes)
       }
