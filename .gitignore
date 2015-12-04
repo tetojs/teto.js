@@ -1,7 +1,19 @@
 .DS_STORE
+logs
 *.log
 
 node_modules
 
 dist
 coverage
+
+npm-debug.log*
+
+# npm cache
+.npm
+.node_repl_history
+
+# vim swap/undo
+*.un~
+*.swp
+*.swo
