@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
 
-import Message from 'utils/Message'
+import Message from 'utils/message'
 // import STATES from 'utils/states'
 
 import * as weiboActions from '../../actions/weibo'

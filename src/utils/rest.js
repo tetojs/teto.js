@@ -1,22 +1,8 @@
 import axios from 'axios'
 import Promise from 'promise'
-import 'promise.prototype.finally'
+// import 'promise.prototype.finally'
 import ENV from 'utils/env'
 import auth from 'utils/auth'
-
-const encode = window.encodeURIComponent
-
-const addParams = function (url, params, useVar) {
-  let arr = Object.keys(params).map((key) => {
-    return encode(key) + '=' + (useVar ? ('{' + key + '}') : encode(params[key]))
-  }).join('&')
-
-  if (!arr) {
-    return url
-  }
-
-  return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr
-}
 
 /**
  * options' structure
@@ -46,9 +32,11 @@ export default class REST {
    * @abstract
    */
   __resource = {
-    // protocol
-    // host
-    // ver
+    // res: {
+    //   protocol
+    //   host
+    //   ver
+    // }
     // api
     // vars
     // id
@@ -60,17 +48,17 @@ export default class REST {
   }
 
   set resource (val) {
-    this.__resource = val
+    this.__resource = { ...this.__resource, ...val }
   }
 
-  __inFilter = (options) => options
+  __optionReducer = (options) => options
 
-  get inFilter () {
-    return this.__inFilter
+  get optionReducer () {
+    return this.__optionReducer
   }
 
-  set inFilter (val) {
-    this.__inFilter = val
+  set optionReducer (val) {
+    this.__optionReducer = val
   }
 
   /**
@@ -82,132 +70,41 @@ export default class REST {
    * @protected
    */
   request (options, method) {
+    // 转换直接传入 ID 值的情况
     if (typeof options === 'string' || typeof options === 'number') {
       options = {
         id: options
       }
     }
 
-    options = Object.assign({ method: method }, this.__resource, options)
-
-    this.inFilter(options)
-
-    // this.processDispatcher(options)
-    // this.processId(options)
-    // this.processVars(options)
-    this.processUrl(options)
-    this.processData(options)
-    this.processHeaders(options)
-
-    let config = {}
-
-    let keys = ['url', 'method', 'data', 'headers']
-
-    keys.forEach((key) => {
-      if (options.hasOwnProperty(key)) {
-        config[key] = options[key]
+    options = Object.assign({
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
       }
-    })
+    }, this.resource, options)
 
+    this.optionReducer(options)
+
+    let dispatcher = getDispatcher(options)
+
+    // id, data, vars, etc
+    processIdAndData(options, dispatcher)
+
+    // dispatcher
+    dispatcher && processDispatcher(options, dispatcher)
+
+    // authorization
+    processAuthorization(options, dispatcher)
+
+    // 只返回 axios 构造的返回值中的 data 部分
     return new Promise((resolve, reject) => {
-      axios(config).then((response) => {
+      axios(getConfigForAxios(options)).then((response) => {
         resolve(response.data)
       }, (response) => {
         reject(response.data)
       })
     })
-  }
-
-  processUrl (options) {
-    let { api, id, data, method, vars } = options
-
-    if (typeof id !== 'undefined') {
-      api += '/' + id
-    }
-
-    if (data && /^GET|DELETE$/i.test(method)) {
-      api = addParams(api, data)
-    }
-
-    if (vars) {
-      Object.keys(vars).forEach((key) => {
-        api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
-      })
-    }
-
-    // disable cache
-    if (!ENV.CACHE_ENABLED) {
-      // waf DOESN'T support cors Cache-Control header currently
-      // would be REMOVED after waf updated
-      api += api.indexOf('?') === -1 ? '?' : '&'
-      api += '_=' + new Date().getTime()
-    }
-
-    options.api = api
-
-    options.url = options.protocol + options.host + '/' + options.ver + options.api
-  }
-
-  processData (options) {
-    if (options.data && /^POST|PATCH|PUT$/i.test(options.method)) {
-      options.data = JSON.stringify(options.data)
-    }
-  }
-
-  processHeaders (options) {
-    options.headers = options.headers || {
-      'Content-Type': 'application/json'
-    }
-
-    // disable cache
-    if (!ENV.CACHE_ENABLED) {
-      if (options.dispatcher) {
-        // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
-      }
-    }
-
-    // proxy pass
-    if (options.dispatcher) {
-      options.headers.Dispatcher = options.dispatcher
-    }
-
-    // has uc tokens
-    if (auth.isLogin()) {
-      // data.headers.Authorization = 'DEBUG userid=220267'
-      // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'
-      options.headers.Authorization =
-        auth.getAuthentization(
-          options.method, '/' + options.ver + options.api, options.host
-        )
-    }
-  }
-
-  createConfig (options) {
-    let config = {}
-
-    Object.keys(options).forEach((key) => {
-      if (['url', 'method', 'data', 'headers'].indexOf(key) !== -1) {
-        config[key] = options[key]
-      }
-    })
-
-    return config
-  }
-
-  appendApiWithId (api, options) {
-    if (options.data && options.data[options.idVar]) {
-      return api + '/' + options.data[options.idVar]
-    }
-
-    return api
-  }
-
-  mergeOpts(options) {
-    // let {
-    //   vars, method, data
-    // } = options
-
-    return Object.assign({}, this.__resource, options)
   }
 
   DELETE (options) {
@@ -230,54 +127,137 @@ export default class REST {
     return this.request(options, 'PUT')
   }
 
-  processDispatcher (options) {
-    // 未开启代理
-    if (!ENV.DISPATCHER_ENABLED) {
-      return
+}
+
+const encode = window.encodeURIComponent
+
+const addParams = (url, params, dispatch) => {
+  let arr = Object.keys(params).map((key) => {
+    return encode(key) + '=' + (dispatch ? ('{' + encode(key) + '}') : encode(params[key]))
+  }).join('&')
+
+  if (!arr) {
+    return url
+  }
+
+  return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr
+}
+
+const getDispatcher = (options) => {
+  // 未开启代理
+  if (!ENV.DISPATCHER) {
+    return false
+  }
+
+  // 模拟环境下，跳过代理
+  if (ENV.ENV === ENV.SIMULATION) {
+    return false
+  }
+
+  let { whitelist, dispatcherRes } = ENV.DISPATCHER
+  let { res } = options
+
+  // 本地接口，跳过代理
+  if (dispatcherRes === res) {
+    return false
+  }
+
+  // 存在白名单
+  if (whitelist) {
+    // 不在白名单
+    if (whitelist.indexOf(res) === -1) {
+      return false
     }
+  }
 
-    // 模拟环境下
-    if (ENV.ENV === ENV.SIMULATION) {
-      return
-    }
+  return ENV.DISPATCHER
+}
 
-    let dispatchUrl = options.dispatchUrl
+const processIdAndData = (options, dispatcher) => {
+  let { api, id, data, method, vars = {}, res } = options
 
-    // 存在白名单
-    if (ENV.DISPATCHER_WHITELIST) {
-      // 不在白名单
-      if (ENV.DISPATCHER_WHITELIST.indexOf(dispatchUrl) === -1) {
-        return
+  if (typeof id !== 'undefined') {
+    api += '/' + id
+
+    // 保存到 vars
+    vars.idVar = id
+  }
+
+  if (data) {
+    if (/^GET|DELETE$/i.test(method)) {
+      api = addParams(api, data, dispatcher)
+
+      if (dispatcher) {
+        vars = { ...vars, ...data }
       }
     } else {
-      // 本地接口
-      if (dispatchUrl === ENV.LOC_ORIGIN) {
-        return
-      }
+      options.data = JSON.stringify(data)
     }
+  }
 
-    // 开始设置 dispatcher
-    let api = options.api
-
-    if (options.data && !/^POST|PATCH|PUT$/i.test(options.method)) {
-      api = addParams(api, options.data, true)
-      this.addVars(options)
-    }
-
-    options.dispatcher = JSON.stringify({
-      'protocol': options.protocol,
-      'host': dispatchUrl.replace(/^(?:https?:)?\/\//i, ''),
-      'ver': options.ver,
-      'api': encodeURIComponent(api),
-      'var': options.vars,
-      'module': options.module
+  if (vars) {
+    Object.keys(vars).forEach((key) => {
+      api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
     })
-
-    return options
   }
 
-  addVars (options) {
-    options.vars = { ...options.vars, ...options.data }
+  // disable cache
+  if (!ENV.CACHE_ENABLED) {
+    if (dispatcher) {
+      // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
+    } else {
+      // waf DOES NOT support cors Cache-Control header currently
+      // would be REMOVED after waf updated
+      api += api.indexOf('?') === -1 ? '?' : '&'
+      api += '_=' + new Date().getTime()
+    }
   }
 
+  options.api = api
+  options.vars = vars
+}
+
+const processDispatcher = (options, dispatcher) => {
+  let { res, api, vars, headers } = options
+
+  headers.Dispatcher = JSON.stringify({
+    ...res,
+    'api': encode(api),
+    'var': vars
+  })
+
+  // disable cache
+  // if (!ENV.CACHE_ENABLED) {
+    // headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
+  // }
+
+  // 修改 res
+  options.res = dispatcher.res
+
+  // 修改 api
+  options.api = '/' + dispatcher.api + api
+}
+
+const processAuthorization = (options) => {
+  let { res, api, headers, method } = options
+
+  // has uc tokens
+  if (auth.isLogin()) {
+    // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'
+    headers.Authorization =
+      auth.getAuthentization(
+        method, '/' + res.ver + api, res.host
+      )
+  }
+}
+
+const getConfigForAxios = (options) => {
+  let { res, api, method, data, headers } = options
+
+  return {
+    url: res.protocol + res.host + '/' + res.ver + api,
+    method,
+    data,
+    headers
+  }
 }

@@ -16,12 +16,10 @@ const PRESSURE = 16
 // 亚马逊
 const AWS = 32
 
-const LOC_PROTOCOL = location.protocol
+const LOC_PROTOCOL = location.protocol + '//'
 const LOC_HOST = location.host
 // host === hostname:port
 const LOC_HOSTNAME = location.hostname
-// const LOC_PORT = location.port
-// const LOC_ORIGIN = LOC_PROTOCOL + '//' + LOC_HOST
 
 /**
  * @constant {number} ENV
@@ -53,6 +51,7 @@ const ENV = (function () {
 })()
 
 const LOC_RES = {
+  module: 'loc',
   protocol: LOC_PROTOCOL,
   host: LOC_HOST,
   ver: 'v0.1'
@@ -75,11 +74,13 @@ switch (ENV) {
   case PREPRODUCTION:
   case PRESSURE:
     UC_RES = {
+      module: 'uc',
       protocol: 'http://',
       host: '101uccenter.beta.web.sdp.101.com',
       ver: 'v0.9'
     }
     CS_RES = {
+      module: 'cs',
       protocol: 'http://',
       host: 'betacs.101.com',
       ver: 'v0.1'
@@ -87,11 +88,13 @@ switch (ENV) {
     break
   case PRODUCTION:
     UC_RES = {
+      module: 'uc',
       protocol: 'https://',
       host: 'aqapi.101.com',
       ver: 'v0.9'
     }
     CS_RES = {
+      module: 'cs',
       protocol: 'http://',
       host: 'cs.101.com',
       ver: 'v0.1'
@@ -99,11 +102,13 @@ switch (ENV) {
     break
   case AWS:
     UC_RES = {
+      module: 'uc',
       protocol: 'https://',
       host: 'awsuc.101.com',
       ver: 'v0.9'
     }
     CS_RES = {
+      module: 'cs',
       protocol: 'https://',
       host: 'awscs.101.com',
       ver: 'v0.1'
@@ -114,11 +119,16 @@ switch (ENV) {
     CS_RES = LOC_RES
 }
 
+/**
+ * @constant {object} MB_RES
+ */
+
 let MB_RES
 
 switch (ENV) {
   case DEVELOPMENT:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.dev.web.nd',
       ver: 'v0.1'
@@ -126,6 +136,7 @@ switch (ENV) {
     break
   case DEBUG:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.debug.web.nd',
       ver: 'v0.1'
@@ -133,6 +144,7 @@ switch (ENV) {
     break
   case PRODUCTION:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.web.sdp.101.com',
       ver: 'v0.1'
@@ -140,6 +152,7 @@ switch (ENV) {
     break
   case AWS:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.aws.101.com',
       ver: 'v0.1'
@@ -147,6 +160,7 @@ switch (ENV) {
     break
   case PREPRODUCTION:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.beta.web.sdp.101.com',
       ver: 'v0.1'
@@ -154,6 +168,7 @@ switch (ENV) {
     break
   case PRESSURE:
     MB_RES = {
+      module: 'microblog',
       protocol: 'http://',
       host: 'microblog.qa.web.sdp.101.com',
       ver: 'v0.1'
@@ -174,24 +189,16 @@ const CACHE_ENABLED = false
 const RBAC_ENABLED = false
 
 /**
- * @constant {boolean} 启用接口请求代理
+ * @constant {object} 接口请求代理配置，设置为 null 不走代理
  */
-const DISPATCHER_ENABLED = false
-
-/**
- * @constant {boolean} 接口请求代理版本
- */
-const DISPATCHER_VERSION = 'v0.1'
-
-/**
- * @constant {boolean} 接口请求代理前缀
- */
-const DISPATCHER_PREFIX = 'dispatcher'
-
-/**
- * @constant {boolean} 请求代理白名单
- */
-const DISPATCHER_WHITELIST = []
+const DISPATCHER = {
+  // 只代理白名单资源
+  // 设置为 null 则全部走代理
+  // whitelist: [UC_RES],
+  whitelist: [MB_RES],
+  res: LOC_RES,
+  api: 'dispatcher'
+}
 
 /**
  * @constant {string} DATETIME_FORMAT 默认的时间日期格式
@@ -243,10 +250,7 @@ export default {
   MB_RES,
   CACHE_ENABLED,
   RBAC_ENABLED,
-  DISPATCHER_ENABLED,
-  DISPATCHER_VERSION,
-  DISPATCHER_PREFIX,
-  DISPATCHER_WHITELIST,
+  DISPATCHER,
   DATETIME_FORMAT,
   DATE_FORMAT,
   TIME_FORMAT,
