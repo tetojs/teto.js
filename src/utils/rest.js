@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Promise from 'promise'
-// import 'promise.prototype.finally'
 import ENV from 'utils/env'
 import auth from 'utils/auth'
 
@@ -131,9 +130,9 @@ export default class REST {
 
 const encode = window.encodeURIComponent
 
-const addParams = (url, params, dispatch) => {
+const addParams = (url, params, hasDispatcher) => {
   let arr = Object.keys(params).map((key) => {
-    return encode(key) + '=' + (dispatch ? ('{' + encode(key) + '}') : encode(params[key]))
+    return encode(key) + '=' + (hasDispatcher ? ('{' + encode(key) + '}') : encode(params[key]))
   }).join('&')
 
   if (!arr) {
@@ -154,18 +153,15 @@ const getDispatcher = (options) => {
     return false
   }
 
-  let { whitelist, dispatcherRes } = ENV.DISPATCHER
-  let { res } = options
-
   // 本地接口，跳过代理
-  if (dispatcherRes === res) {
+  if (ENV.DISPATCHER.res === options.res) {
     return false
   }
 
   // 存在白名单
-  if (whitelist) {
+  if (ENV.DISPATCHER.whitelist) {
     // 不在白名单
-    if (whitelist.indexOf(res) === -1) {
+    if (ENV.DISPATCHER.whitelist.indexOf(options.res) === -1) {
       return false
     }
   }
@@ -177,15 +173,17 @@ const processIdAndData = (options, dispatcher) => {
   let { api, id, data, method, vars = {}, res } = options
 
   if (typeof id !== 'undefined') {
-    api += '/' + id
-
-    // 保存到 vars
-    vars.idVar = id
+    if (dispatcher) {
+      // 保存到 vars
+      vars.idVar = id
+    } else {
+      api += '/' + id
+    }
   }
 
   if (data) {
     if (/^GET|DELETE$/i.test(method)) {
-      api = addParams(api, data, dispatcher)
+      api = addParams(api, data, !!dispatcher)
 
       if (dispatcher) {
         vars = { ...vars, ...data }
@@ -195,7 +193,7 @@ const processIdAndData = (options, dispatcher) => {
     }
   }
 
-  if (vars) {
+  if (vars && !dispatcher) {
     Object.keys(vars).forEach((key) => {
       api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
     })
