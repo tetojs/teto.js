@@ -61,6 +61,8 @@
     "strict": [2, "never"],
     "yoda": [2, "never"],
 
+    "jsx-quotes": "prefer-double",
+
     "no-alert": 2,
     "no-const-assign": 2,
     "no-else-return": 2,

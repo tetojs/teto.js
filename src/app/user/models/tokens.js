@@ -3,10 +3,10 @@ import REST from 'utils/rest'
 
 export default class extends REST {
 
-  __resource = {
+  resource = {
+    res: ENV.UC_RES,
     api: '/tokens',
-    idVar: 'access_token',
-    ...ENV.UC_RES
+    idVar: 'access_token'
   }
 
 }
