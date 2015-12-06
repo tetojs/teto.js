@@ -1,50 +1,29 @@
-import extend from 'extend'
+import { appendReducer, modifyReducer } from 'store'
 
-import { appendReducer, actionTypeTransformer } from 'store'
-
-function weibo (state = {
+const weibo = modifyReducer((state = {
   count: 0,
   items: [],
   finished: false,
   state: '',
   code: 0,
   message: ''
-}, action) {
-  let { actionType, actionState } = actionTypeTransformer(action.type)
-
-  function defaults () {
-    return extend({
-      ...state
-    }, {
-      state: actionState
-    })
-  }
-
-  if (!action.payload) {
-    return defaults()
-  }
-
+}, action) => {
   switch (actionType) {
     case 'FETCH_WEIBOS':
       return {
         ...action.payload,
-        state: actionState
+        state: action.state
       }
     case 'CREATE_WEIBO':
-      return extend({
-        ...state
-      }, {
-        items: [ ...state.items, action.payload ],
-        state: actionState
-      })
-    case 'DELETE_WEIBO':
       return {
-        items: state.items.filter(item => item.id !== action.payload.id),
-        state: actionState
+        ...state,
+        count: state.count + 1,
+        items: [ ...state.items, action.payload ],
+        state: action.state
       }
     default:
-      return defaults()
+      return state
   }
-}
+})
 
 export default appendReducer({ weibo })

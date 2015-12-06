@@ -20,7 +20,7 @@ export default class extends Component {
   static propTypes = {
     state: PropTypes.string.isRequired,
     message: PropTypes.string,
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array,
     fetchWeibos: PropTypes.func.isRequired
   }
 

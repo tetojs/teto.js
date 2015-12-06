@@ -29,7 +29,7 @@ const ENV = (function () {
     case '127.0.0.1':
       return SIMULATION
     case 'localhost':
-      return DEBUG
+      return PREPRODUCTION
     default:
       if (/\.dev\.web\.nd$/.test(LOC_HOSTNAME)) {
         return DEVELOPMENT
@@ -195,7 +195,7 @@ const DISPATCHER = {
   // 只代理白名单资源
   // 设置为 null 则全部走代理
   // whitelist: [UC_RES],
-  whitelist: [MB_RES],
+  // whitelist: [MB_RES],
   res: LOC_RES,
   api: 'dispatcher'
 }

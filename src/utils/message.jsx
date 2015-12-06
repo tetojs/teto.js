@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Alert } from 'antd'
+import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string,
-    message: PropTypes.string
+    meta: PropTypes.object.isRequired
   }
 
   // constructor(props, context) {
@@ -13,11 +13,10 @@ export default class extends Component {
   // }
 
   render () {
-    let { state, message } = this.props
-
-    let type = state === 'SUCCESS' ? 'success' :
-             state === 'FAILURE' ? 'error' :
-             state === 'PENDING' ? 'info' : ''
+    const { state, message } = this.props.meta
+    const type = state === SUCCESS ? 'success' :
+             state === FAILURE ? 'error' :
+             state === PENDING ? 'info' : ''
 
     return (
       <div>

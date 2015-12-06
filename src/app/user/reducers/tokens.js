@@ -1,41 +1,26 @@
-import extend from 'extend'
+import { appendReducer, modifyReducer } from 'store'
 
-import { appendReducer, actionTypeTransformer } from 'store'
-
-function tokens (state = {
-  login_name: 'admin@ndtest',
-  state: '',
-  code: 0,
-  message: ''
-}, action) {
-  let { actionType, actionState } = actionTypeTransformer(action.type)
-
-  function defaults () {
-    return extend({
-      ...state
-    }, {
-      state: actionState
-    })
-  }
-
-  if (!action.payload) {
-    return defaults()
-  }
-
-  switch (actionType) {
+const tokens = modifyReducer((state = {
+  meta: {
+    state: '',
+    message: ''
+  },
+  token: null
+}, action) => {
+  switch (action.type) {
     case 'POST_TOKEN':
       return {
-        ...action.payload,
-        state: actionState
+        meta: action.meta,
+        token: action.payload
       }
     case 'DELETE_TOKEN':
       return {
-        ...action.payload,
-        state: actionState
+        meta: action.meta,
+        token: null
       }
     default:
-      return defaults()
+      return state
   }
-}
+})
 
 export default appendReducer({ tokens })

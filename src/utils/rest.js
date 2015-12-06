@@ -50,14 +50,17 @@ export default class REST {
     this.__resource = { ...this.__resource, ...val }
   }
 
-  __optionReducer = (options) => options
-
-  get optionReducer () {
-    return this.__optionReducer
+  __interceptors = {
+    options: (options) => options,
+    response: (response) => response
   }
 
-  set optionReducer (val) {
-    this.__optionReducer = val
+  get interceptors () {
+    return this.__interceptors
+  }
+
+  set interceptors (val) {
+    this.__interceptors = { ...this.__interceptors, ...val }
   }
 
   /**
@@ -79,29 +82,32 @@ export default class REST {
     options = Object.assign({
       method: method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
       }
     }, this.resource, options)
 
-    this.optionReducer(options)
+    // interceptor for options
+    let optionsInterceptors = this.interceptors.options
+    options = optionsInterceptors(options)
 
     let dispatcher = getDispatcher(options)
 
     // id, data, vars, etc
-    processIdAndData(options, dispatcher)
-
+    processIdAndData(options, !!dispatcher)
     // dispatcher
     dispatcher && processDispatcher(options, dispatcher)
-
     // authorization
-    processAuthorization(options, dispatcher)
+    processAuthorization(options)
 
+    // interceptor for response
+    let responseInterceptors = this.interceptors.response
     // 只返回 axios 构造的返回值中的 data 部分
     return new Promise((resolve, reject) => {
-      axios(getConfigForAxios(options)).then((response) => {
-        resolve(response.data)
-      }, (response) => {
-        reject(response.data)
+      axios(getConfigForAxios(options))
+      .then(({ data }) => {
+        resolve(responseInterceptors(data))
+      }, ({ data }) => {
+        reject(responseInterceptors(data))
       })
     })
   }
@@ -132,7 +138,7 @@ const encode = window.encodeURIComponent
 
 const addParams = (url, params, hasDispatcher) => {
   let arr = Object.keys(params).map((key) => {
-    return encode(key) + '=' + (hasDispatcher ? ('{' + encode(key) + '}') : encode(params[key]))
+    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : encode(params[key]))
   }).join('&')
 
   if (!arr) {
@@ -174,8 +180,9 @@ const processIdAndData = (options, dispatcher) => {
 
   if (typeof id !== 'undefined') {
     if (dispatcher) {
+      api += '/{' + options.idVar + '}'
       // 保存到 vars
-      vars.idVar = id
+      vars[options.idVar] = id
     } else {
       api += '/' + id
     }
@@ -183,7 +190,7 @@ const processIdAndData = (options, dispatcher) => {
 
   if (data) {
     if (/^GET|DELETE$/i.test(method)) {
-      api = addParams(api, data, !!dispatcher)
+      api = addParams(api, data, dispatcher)
 
       if (dispatcher) {
         vars = { ...vars, ...data }
@@ -191,12 +198,6 @@ const processIdAndData = (options, dispatcher) => {
     } else {
       options.data = JSON.stringify(data)
     }
-  }
-
-  if (vars && !dispatcher) {
-    Object.keys(vars).forEach((key) => {
-      api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
-    })
   }
 
   // disable cache
@@ -220,8 +221,9 @@ const processDispatcher = (options, dispatcher) => {
 
   headers.Dispatcher = JSON.stringify({
     ...res,
-    'api': encode(api),
-    'var': vars
+    api: encode(api),
+    // use vars, NOT var any more
+    vars: vars
   })
 
   // disable cache
@@ -237,7 +239,14 @@ const processDispatcher = (options, dispatcher) => {
 }
 
 const processAuthorization = (options) => {
-  let { res, api, headers, method } = options
+  let { res, api, vars, method, headers } = options
+
+  // always replace vars at last
+  if (vars) {
+    Object.keys(vars).forEach((key) => {
+      api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
+    })
+  }
 
   // has uc tokens
   if (auth.isLogin()) {
@@ -247,10 +256,12 @@ const processAuthorization = (options) => {
         method, '/' + res.ver + api, res.host
       )
   }
+
+  options.api = api
 }
 
 const getConfigForAxios = (options) => {
-  let { res, api, method, data, headers } = options
+  let { res, api, data, method, headers } = options
 
   return {
     url: res.protocol + res.host + '/' + res.ver + api,

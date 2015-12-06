@@ -27,5 +27,3 @@ $ npm start
 - 所有路由在 `routes` 目录下，为了实现异步加载，对应的 component 以 `.async.js(x)` 结尾
 
 [![](teto.png)](http://seiga.nicovideo.jp/seiga/im2044734)
-
-# router-loader
