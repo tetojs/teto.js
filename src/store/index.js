@@ -5,7 +5,6 @@ import { persistState } from 'redux-devtools'
 // todo: only dev
 import logger from 'redux-logger'
 import promise from './middlewares/promise'
-import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 let finalCreateStore = applyMiddleware(promise(1000), logger())(createStore)
 
@@ -30,10 +29,6 @@ export const appendReducer = (newReducers) => {
   return store
 }
 
-const ACTION_TYPE_EXPR = new RegExp('^(.+?)(?:_(' +
-  [PENDING, SUCCESS, FAILURE, FINALLY].join('|').replace(/^\||\|$/g, '') +
-  ')?)?$')
-
 /**
  * 将原始 reducer 转成新的 reducer
  * @param  {Function}   reducer     原始 reducer
@@ -46,17 +41,15 @@ export const modifyReducer = (reducer, translate = (payload) => {
 }) => {
   return (state, action) => {
     let { type, error = false, meta = {}, payload = {} } = action
-    let [ _, _type = '', _state = '' ] = type.match(ACTION_TYPE_EXPR)
 
-    meta.state = _state
-    meta.message = error && translate(payload) || _state
+    meta.message = error && translate(payload) || meta.state
 
     // use flux standard action
     return reducer(state, {
-      type: _type,
-      error: error,
-      meta: meta,
-      payload: payload
+      type,
+      error,
+      meta,
+      payload
     })
   }
 }

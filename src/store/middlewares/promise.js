@@ -1,9 +1,5 @@
 import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
-const createTypeWithState = (type, state) => {
-  return state ? type + '_' + state : type
-}
-
 const isPromise = (val) => {
   return val && typeof val.then === 'function'
 }
@@ -22,31 +18,46 @@ const promise = (delay) => ({ dispatch }) => {
     }
 
     dispatch({
-      type: createTypeWithState(type, PENDING)
+      type,
+      meta: {
+        state: PENDING
+      }
     })
 
     return payload
       .then(
         result => dispatch({
           payload: result,
-          type: createTypeWithState(type, SUCCESS)
+          type,
+          meta: {
+            state: SUCCESS
+          }
         }),
         error => dispatch({
           error: true,
           payload: error,
-          type: createTypeWithState(type, FAILURE)
+          type,
+          meta: {
+            state: FAILURE
+          }
         })
       )
       .catch(
         error => dispatch({
           error: true,
           payload: error,
-          type: createTypeWithState(type, FAILURE)
+          type,
+          meta: {
+            state: FAILURE
+          }
         })
       )
       .finally(() => {
         setTimeout(() => dispatch({
-          type: createTypeWithState(type, FINALLY)
+          type,
+          meta: {
+            state: FINALLY
+          }
         }), delay)
       })
   }
