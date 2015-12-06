@@ -3,7 +3,7 @@ import REST from 'utils/rest'
 
 export default class extends REST {
 
-  __resource = {
+  resource = {
     res: ENV.MB_RES,
     api: '/timelines/{timeline_name}',
     vars: {

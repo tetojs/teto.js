@@ -1,14 +1,14 @@
-import { argv }      from 'yargs';
-import config        from './config';
-import webpackConfig from '../webpack.config';
+import { argv } from 'yargs'
+import config from './config'
+import webpackConfig from '../webpack.config'
 
-const KARMA_ENTRY_FILE = 'karma.entry.js';
+const KARMA_ENTRY_FILE = 'karma.entry.js'
 
 function makeDefaultConfig () {
   const karma = {
     files : [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      './tests/**/*.js',
+      `./${config.get('dir_test')}/**/*.js`,
       './' + KARMA_ENTRY_FILE
     ],
     singleRun  : !argv.watch,
@@ -35,18 +35,18 @@ function makeDefaultConfig () {
     coverageReporter : {
       reporters : config.get('coverage_reporters')
     }
-  };
-
-  if (config.get('coverage_enabled')) {
-    karma.reporters.push('coverage');
-    karma.webpack.module.preLoaders = [{
-      test    : /\.(js|jsx)$/,
-      include : /src/,
-      loader  : 'isparta'
-    }];
   }
 
-  return karma;
+  if (config.get('coverage_enabled')) {
+    karma.reporters.push('coverage')
+    karma.webpack.module.preLoaders = [{
+      test    : /\.(js|jsx)$/,
+      include : new RegExp(config.get('dir_client')),
+      loader  : 'isparta'
+    }]
+  }
+
+  return karma
 }
 
-export default (karmaConfig) => karmaConfig.set(makeDefaultConfig());
+export default (karmaConfig) => karmaConfig.set(makeDefaultConfig())

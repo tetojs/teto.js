@@ -7,15 +7,8 @@ import { Form, Input, Button } from 'antd'
 
 import md5 from 'utils/md5'
 import Message from 'utils/message'
-import STATES from 'utils/states'
 import auth from 'utils/auth'
-
-const {
-  PENDING,
-  SUCCESS,
-  FAILURE,
-  FINALLY
-} = STATES
+import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 import * as tokenActions from '../../actions/tokens'
 
@@ -27,41 +20,32 @@ import * as tokenActions from '../../actions/tokens'
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string.isRequired,
-    message: PropTypes.string,
-    // others
-    login_name: PropTypes.string,
-    access_token: PropTypes.string,
-    expires_at: PropTypes.string,
-    mac_algorithm: PropTypes.string,
-    mac_key: PropTypes.string,
-    refresh_token: PropTypes.string,
-    server_time: PropTypes.string,
-    user_id: PropTypes.number
+    meta: PropTypes.object,
+    token: PropTypes.object,
+    postToken: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
     super(props, context)
 
     this.state = {
-      login_name: props.login_name,
+      login_name: 'admin@ndtest',
       password: ''
     }
   }
 
   componentWillReceiveProps (props) {
-    switch (props.state) {
+    // token:
+    //   access_token
+    //   expires_at
+    //   mac_algorithm
+    //   mac_key
+    //   refresh_token
+    //   server_time
+    //   user_id
+    switch (props.meta.state) {
       case SUCCESS:
-        auth.setTokens({
-          access_token: props.access_token,
-          expires_at: props.expires_at,
-          mac_algorithm: props.mac_algorithm,
-          mac_key: props.mac_key,
-          refresh_token: props.refresh_token,
-          server_time: props.server_time,
-          user_id: props.user_id
-        })
-
+        auth.setTokens(props.token)
     }
   }
 
@@ -89,17 +73,15 @@ export default class extends Component {
   }
 
   render () {
-    let { login_name, password } = this.state
-    let { state, message } = this.props
     return (
       <Form horizontal onSubmit={this.handleSubmit}>
-        <Message state={ state } message={ message } />
+        <Message meta={this.props.meta} />
         <Form.Item
           id="login_name"
           label="帐号">
           <Input placeholder="请输入帐号"
             id="login_name" name="login_name"
-            value={login_name}
+            value={this.state.login_name}
             onChange={this.setValue} />
         </Form.Item>
         <Form.Item
@@ -107,7 +89,7 @@ export default class extends Component {
           label="密码">
           <Input type="password" placeholder="请输入密码"
             id="password" name="password"
-            value={password}
+            value={this.state.password}
             onChange={this.setValue} />
         </Form.Item>
         <p>

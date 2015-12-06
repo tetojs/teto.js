@@ -1,2 +1,2 @@
-require('babel/register');
-module.exports = require('./build/karma');
+require('babel/register')
+module.exports = require('./.build/karma')

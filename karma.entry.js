@@ -1,3 +1,3 @@
-// Require all files in ~/src, excluding app.js
-var srcContext = require.context('./src', true, /^((?!app).)*\.(js|jsx)/);
-srcContext.keys().forEach(srcContext);
+// Require all files in ~/src, excluding index.jsx
+var srcContext = require.context('./src', true, /^((?!index).)*\.(js|jsx)/)
+srcContext.keys().forEach(srcContext)

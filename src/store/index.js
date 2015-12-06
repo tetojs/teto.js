@@ -2,65 +2,12 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import { persistState } from 'redux-devtools'
 
 // middlewares
+// todo: only dev
 import logger from 'redux-logger'
+import promise from './middlewares/promise'
+import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
-import extend from 'extend'
-import STATES from 'utils/states'
-
-const {
-  PENDING,
-  SUCCESS,
-  FAILURE,
-  FINALLY
-} = STATES
-
-function createTypeWithState (type, state) {
-  return state ? type + '_' + state : type
-}
-
-function isPromise (val) {
-  return val && typeof val.then === 'function'
-}
-
-function promise ({ dispatch }) {
-  return next => action => {
-    const { type, payload } = action
-
-    if (!payload || !isPromise(payload)) {
-      return next(action)
-    }
-
-    dispatch({
-      type: createTypeWithState(type, PENDING)
-    })
-
-    return payload
-      .then(
-        result => dispatch({
-          // axios wraps responses in data
-          payload: result,
-          type: createTypeWithState(type, SUCCESS)
-        }),
-        error => dispatch({
-          // axios wraps responses in data
-          payload: error,
-          type: createTypeWithState(type, FAILURE)
-        })
-      )
-      .catch(
-        error => dispatch({
-          // axios wraps responses in data
-          payload: error,
-          type: createTypeWithState(type, FAILURE)
-        })
-      )
-      .finally(() => dispatch({
-        type: createTypeWithState(type, FINALLY)
-      }))
-  }
-}
-
-let finalCreateStore = applyMiddleware(promise, logger())(createStore)
+let finalCreateStore = applyMiddleware(promise(1000), logger())(createStore)
 
 if (__DEV__) {
   finalCreateStore = compose(
@@ -72,14 +19,13 @@ if (__DEV__) {
 
 let reducers = {}
 
-let reducer = function () {
+let store = finalCreateStore(() => {
   // console.log('reducer', arguments)
-}
+})
 
-let store = finalCreateStore(reducer)
-
-export function appendReducer (newReducer) {
-  store.replaceReducer(combineReducers(extend(reducers, newReducer)))
+export const appendReducer = (newReducers) => {
+  reducers = { ...reducers, ...newReducers }
+  store.replaceReducer(combineReducers(reducers))
 
   return store
 }
@@ -88,12 +34,30 @@ const ACTION_TYPE_EXPR = new RegExp('^(.+?)(?:_(' +
   [PENDING, SUCCESS, FAILURE, FINALLY].join('|').replace(/^\||\|$/g, '') +
   ')?)?$')
 
-export function actionTypeTransformer (orininalActionType) {
-  let matched = orininalActionType.match(ACTION_TYPE_EXPR)
+/**
+ * 将原始 reducer 转成新的 reducer
+ * @param  {Function}   reducer     原始 reducer
+ * @param  {Function}   translate   翻译错误提示
+ * @return {Function}   reducer     新的 reducer
+ */
+export const modifyReducer = (reducer, translate = (payload) => {
+  // todo: translate from payload.code
+  return payload.message
+}) => {
+  return (state, action) => {
+    let { type, error = false, meta = {}, payload = {} } = action
+    let [ _, _type = '', _state = '' ] = type.match(ACTION_TYPE_EXPR)
 
-  return {
-    actionType: matched[1],
-    actionState: matched[2]
+    meta.state = _state
+    meta.message = error && translate(payload) || _state
+
+    // use flux standard action
+    return reducer(state, {
+      type: _type,
+      error: error,
+      meta: meta,
+      payload: payload
+    })
   }
 }
 

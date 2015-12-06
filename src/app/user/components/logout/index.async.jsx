@@ -3,17 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import md5 from 'utils/md5'
 import Message from 'utils/message'
-import STATES from 'utils/states'
 import auth from 'utils/auth'
-
-const {
-  PENDING,
-  SUCCESS,
-  FAILURE,
-  FINALLY
-} = STATES
+import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 import * as tokenActions from '../../actions/tokens'
 
@@ -25,8 +17,8 @@ import * as tokenActions from '../../actions/tokens'
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string.isRequired,
-    message: PropTypes.string,
+    meta: PropTypes.object,
+    token: PropTypes.object,
     deleteToken: PropTypes.func.isRequired
   }
 
@@ -35,7 +27,7 @@ export default class extends Component {
   // }
 
   componentDidMount () {
-    let accessToken = auth.getTokens('access_token')
+    const accessToken = auth.getTokens('access_token')
 
     if (accessToken) {
       this.props.deleteToken(accessToken)
@@ -45,7 +37,7 @@ export default class extends Component {
   }
 
   componentWillReceiveProps (props) {
-    switch (props.state) {
+    switch (props.meta.state) {
       case SUCCESS:
         auth.destroy()
     }
@@ -54,9 +46,7 @@ export default class extends Component {
   render () {
     let { state, message } = this.props
     return (
-      <div>
-        <Message state={ state } message={ message } />
-      </div>
+      <Message meta={this.props.meta} />
     )
   }
 

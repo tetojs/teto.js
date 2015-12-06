@@ -1,7 +1,6 @@
 import webpack from 'webpack'
+import cssnano from 'cssnano'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import autoprefixer from 'autoprefixer'
-
 import config from '../config'
 
 const paths = config.get('utils_paths')
@@ -31,14 +30,14 @@ const webpackConfig = {
   target: 'web',
   entry: {
     app: [
-      `./${src}/index.jsx`
+      `${paths.base(src)}/index.jsx`
     ],
     vendor: config.get('vendor_dependencies')
   },
   output: {
     filename: `${dist}/[name].[hash].js`,
     chunkFilename: `${dist}/[id].[chunkhash].js`,
-    path: paths.project(),
+    path: paths.base(),
     publicPath: '/'
   },
   plugins: [
@@ -50,7 +49,7 @@ const webpackConfig = {
       template: paths.src('static/templates/index.tmpl'),
       hash: false,
       filename: 'index.html',
-      title: config.get('pkg').name || 'i am very title',
+      title: 'i am very title',
       favicon: paths.src('static/favicon/favicon.png'),
       inject: false,
       minify: {
@@ -83,8 +82,8 @@ const webpackConfig = {
         test: /\.scss$/,
         loaders: [
           'style',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'sass?includePaths[]=' + __dirname + 'node_modules/compass-mixins/lib',
+          'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'sass',
           'postcss'
         ]
       },
@@ -118,11 +117,22 @@ const webpackConfig = {
     ]
   },
   sassLoader: {
-    includePaths: paths.src('styles')
+    includePaths: [
+      paths.base('node_modules/compass-mixins/lib'),
+      paths.src('static/themes/default/styles')
+    ]
   },
   postcss: [
-    autoprefixer({
-      browsers: ['last 2 versions']
+    cssnano({
+      sourcemap: true,
+      autoprefixer: {
+        add: true,
+        remove: true,
+        browsers: ['last 2 versions']
+      },
+      discardComments: {
+        removeAll: true
+      }
     })
   ]
 }
