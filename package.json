@@ -68,6 +68,7 @@
     "less-loader": "^2.2.2",
     "loader-utils": "^0.2.12",
     "mocha": "^2.2.5",
+    "node-sass": "^3.4.2",
     "phantomjs": "^1.9.17",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.8.0",
