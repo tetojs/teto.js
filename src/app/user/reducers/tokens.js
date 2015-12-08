@@ -8,6 +8,11 @@ const tokens = modifyReducer((state = {
   token: null
 }, action) => {
   switch (action.type) {
+    case 'USER_LOGIN':
+      return {
+        meta: action.meta,
+        token: action.payload
+      }
     case 'POST_TOKEN':
       return {
         meta: action.meta,

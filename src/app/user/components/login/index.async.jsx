@@ -10,19 +10,19 @@ import Message from 'utils/message'
 import auth from 'utils/auth'
 import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
-import * as tokenActions from '../../actions/tokens'
+import { userLogin } from '../../actions/tokens'
 
-@connect(state => ({
-  ...state.tokens
+@connect(({ tokens }) => ({
+  ...tokens
 }), dispatch => ({
-  ...bindActionCreators(tokenActions, dispatch)
+  ...bindActionCreators({ userLogin }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
-    meta: PropTypes.object,
-    token: PropTypes.object,
-    postToken: PropTypes.func.isRequired
+    tokens: PropTypes.object,
+    users: PropTypes.object,
+    userLogin: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -55,7 +55,7 @@ export default class extends Component {
 
     let { login_name, password } = this.state
 
-    this.props.postToken({
+    this.props.userLogin({
       data: {
         login_name: login_name,
         password: md5(password)
