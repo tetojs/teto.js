@@ -55,7 +55,7 @@ export default class extends Component {
 
     let { login_name, password } = this.state
 
-    this.props.postToken({
+    this.props.userLogin({
       data: {
         login_name: login_name,
         password: md5(password)

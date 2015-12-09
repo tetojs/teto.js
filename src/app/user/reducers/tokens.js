@@ -18,6 +18,11 @@ const tokens = modifyReducer((state = {
         meta: action.meta,
         token: null
       }
+    case 'USER_LOGIN':
+      return {
+        meta: action.meta,
+        token: action.payload
+      }
     default:
       return state
   }
