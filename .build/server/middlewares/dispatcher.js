@@ -5,9 +5,11 @@ const dispatcherMiddleware = (options) => {
 
   let cached = null
 
-  const url = 'http://101uccenter.beta.web.sdp.101.com/v0.93'
+  //const url = 'http://101uccenter.beta.web.sdp.101.com/v0.93'
 
-  const { login_name, password } = options
+  const url = 'https://ucbetapi.101.com/v0.93'
+
+  const { login_name, password, user_id } = options
 
   if (!login_name || !password) {
     throw new Error('need login_name and password')
@@ -80,16 +82,17 @@ const dispatcherMiddleware = (options) => {
 
       if (vars) {
         Object.keys(vars).forEach((key) => {
-          api = api.replace(new RegExp('{' + key + '}', 'img'), vars[key])
+          let encodeKey = key.replace(/\$/g, '\\$')
+          api = api.replace(new RegExp('{' + encodeKey + '}', 'img'), vars[key])
         })
       }
 
       if (api.indexOf('?') !== -1) {
         api += '&orgId=' + user.org_exinfo.org_id +
-          '&suid=' + token.user_id
+          '&suid=' + user_id
       } else {
         api += '?orgId=' + user.org_exinfo.org_id +
-          '&suid=' + token.user_id
+          '&suid=' + user_id
       }
 
       const responder = ({ data, status }) => {
