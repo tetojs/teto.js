@@ -1,7 +1,6 @@
 [![Build Status](https://img.shields.io/travis/tetojs/teto.js.svg?style=flat-square)](https://travis-ci.org/tetojs/teto.js)
-![David](http://img.shields.io/david/tetojs/teto.js.svg?style=flat-square)
-![David](http://img.shields.io/david/dev/tetojs/teto.js.svg?style=flat-square)
-![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)
+[![Dependency Status](https://david-dm.org/tetojs/teto.js.svg?style=flat-square)](https://david-dm.org/tetojs/teto.js)
+[![devDependency Status](https://david-dm.org/erikras/tetojs/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/tetojs/teto.js#info=devDependencies)
 
 ## Installation
 
