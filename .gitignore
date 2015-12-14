@@ -18,3 +18,4 @@ npm-debug.log*
 *.un~
 *.swp
 *.swo
+.idea
