@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
+import Logo from './logo'
 import Navbar from './navbar'
+import User from './user'
 
 import styles from '../themes/styles/header.scss'
 
@@ -16,7 +18,9 @@ export default class extends Component {
   render () {
     return (
       <header className={styles.ns}>
+        <Logo />
         <Navbar />
+        <User />
       </header>
     )
   }
