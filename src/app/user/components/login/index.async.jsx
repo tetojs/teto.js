@@ -6,26 +6,24 @@ import autobind from 'autobind-decorator'
 import { Form, Input, Button } from 'antd'
 
 import md5 from 'utils/md5'
-import Message from 'utils/message'
-import auth from 'utils/auth'
-import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
+import history from 'utils/history'
+// import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 import { userLogin } from '../../actions/tokens'
 
-@connect(({ tokens }) => ({
-  ...tokens
+@connect(state => ({
+  ...state.tokens
 }), dispatch => ({
   ...bindActionCreators({ userLogin }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
-    tokens: PropTypes.object,
-    users: PropTypes.object,
+    access_token: PropTypes.string,
     userLogin: PropTypes.func.isRequired
   }
 
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
 
     this.state = {
@@ -35,17 +33,8 @@ export default class extends Component {
   }
 
   componentWillReceiveProps (props) {
-    // token:
-    //   access_token
-    //   expires_at
-    //   mac_algorithm
-    //   mac_key
-    //   refresh_token
-    //   server_time
-    //   user_id
-    switch (props.meta.state) {
-      case SUCCESS:
-        auth.setTokens(props.token)
+    if (props.access_token) {
+      history.replaceState(null, '/')
     }
   }
 
@@ -53,7 +42,7 @@ export default class extends Component {
   handleSubmit (event) {
     event.preventDefault()
 
-    let { login_name, password } = this.state
+    const { login_name, password } = this.state
 
     this.props.userLogin({
       data: {
@@ -75,7 +64,6 @@ export default class extends Component {
   render () {
     return (
       <Form horizontal onSubmit={this.handleSubmit}>
-        <Message meta={this.props.meta} />
         <Form.Item
           id="login_name"
           label="帐号">

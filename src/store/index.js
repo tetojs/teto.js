@@ -1,28 +1,24 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
-import { persistState } from 'redux-devtools'
+import persistState from 'redux-localstorage'
 
 // middlewares
 // todo: only dev
+import promise from 'redux-promise'
 import logger from 'redux-logger'
-import promise from './middlewares/promise'
+// import promise from './middlewares/promise'
 
-let finalCreateStore = applyMiddleware(promise(1000), logger())(createStore)
+const finalCreateStore = compose(
+  applyMiddleware(promise, logger()),
+  persistState(/*paths, config*/)
+)(createStore)
 
-if (__DEV__) {
-  finalCreateStore = compose(
-    // Lets you write ?debug_session=<name>
-    // in address bar to persist debug sessions
-    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-  )(finalCreateStore)
-}
+const store = finalCreateStore(state => state, {
+  // tokens: {}
+})
 
 let reducers = {}
 
-let store = finalCreateStore(() => {
-  // console.log('reducer', arguments)
-})
-
-export const appendReducer = (newReducers) => {
+export const appendReducer = newReducers => {
   reducers = { ...reducers, ...newReducers }
   store.replaceReducer(combineReducers(reducers))
 
@@ -35,12 +31,12 @@ export const appendReducer = (newReducers) => {
  * @param  {Function}   translate   翻译错误提示
  * @return {Function}   reducer     新的 reducer
  */
-export const modifyReducer = (reducer, translate = (payload) => {
-  // todo: translate from payload.code
+export const modifyReducer = (reducer, translate = payload => {
+  // maybe need translate from payload.code
   return payload.message
 }) => {
   return (state, action) => {
-    let { type, error = false, meta = {}, payload = {} } = action
+    let { type, error = false, meta = {}, payload } = action
 
     meta.message = error && translate(payload) || meta.state
 

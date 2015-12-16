@@ -1,25 +1,23 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import autobind from 'autobind-decorator'
 
-import Message from 'utils/message'
-import auth from 'utils/auth'
-import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
+// import Message from 'utils/message'
+// import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
+import history from 'utils/history'
 
-import * as tokenActions from '../../actions/tokens'
+import { userLogout } from '../../actions/tokens'
 
 @connect(state => ({
   ...state.tokens
 }), dispatch => ({
-  ...bindActionCreators(tokenActions, dispatch)
+  ...bindActionCreators({ userLogout }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
-    meta: PropTypes.object,
-    token: PropTypes.object,
-    deleteToken: PropTypes.func.isRequired
+    access_token: PropTypes.string,
+    userLogout: PropTypes.func.isRequired
   }
 
   // constructor(props, context) {
@@ -27,26 +25,18 @@ export default class extends Component {
   // }
 
   componentDidMount () {
-    const accessToken = auth.getTokens('access_token')
+    const { access_token } = this.props
 
-    if (accessToken) {
-      this.props.deleteToken(accessToken)
+    if (access_token) {
+      this.props.userLogout(access_token)
     } else {
-      alert('你还没登录')
-    }
-  }
-
-  componentWillReceiveProps (props) {
-    switch (props.meta.state) {
-      case SUCCESS:
-        auth.destroy()
+      history.replaceState(null, '/')
     }
   }
 
   render () {
-    let { state, message } = this.props
     return (
-      <Message meta={this.props.meta} />
+      <div>...</div>
     )
   }
 

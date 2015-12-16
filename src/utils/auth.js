@@ -3,12 +3,14 @@ import Storage from 'utils/storage'
 
 const storage = new Storage('AUTH')
 const tokensKey = 'TOKENS'
+const usersKey = 'USERS'
 
 let tokensObj
+let usersObj
 
 function nonce (diff) {
   function rnd (min, max) {
-    let arr = [
+    const arr = [
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
       'a', 'b', 'c', 'd', 'e', 'f', 'g',
       'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -20,10 +22,10 @@ function nonce (diff) {
       'U', 'V', 'W', 'X', 'Y', 'Z'
     ]
 
-    let range = max ? max - min : min
+    const range = max ? max - min : min
     let str = ''
     let i
-    let length = arr.length - 1
+    const length = arr.length - 1
 
     for (i = 0; i < range; i++) {
       str += arr[Math.round(Math.random() * length)]
@@ -37,11 +39,11 @@ function nonce (diff) {
 
 export default {
 
-  isLogin: function () {
+  isLogin () {
     return !!this.getTokens()
   },
 
-  getTokens: function (key) {
+  getTokens (key) {
     let tokens = tokensObj
 
     if (!tokens) {
@@ -69,17 +71,17 @@ export default {
 
   /**
    * 设置或清除 tokens
-   * @param {object} tokens token值
+   * @param {object} tokens token 值
    * @returns {undefined} undefined
    */
-  setTokens: function (tokens) {
+  setTokens (tokens) {
     tokensObj = tokens
 
     if (tokens === null) {
       storage.remove(tokensKey)
     } else {
-      let serverTime = new Date(tokens.server_time)
-      let expiresAt = new Date(tokens.expires_at)
+      const serverTime = new Date(tokens.server_time)
+      const expiresAt = new Date(tokens.expires_at)
 
       tokens.diff = serverTime - new Date()
 
@@ -87,31 +89,66 @@ export default {
     }
   },
 
-  destroy: function () {
-    this.setTokens(null)
+  getUsers (key) {
+    let users = usersObj
+
+    if (!users) {
+      // 本地存储
+      users = storage.get(usersKey)
+    }
+
+    if (users) {
+      usersObj = users
+    }
+
+    if (key && users) {
+      return users[key]
+    }
+
+    return users
   },
 
-  getAccessToken: function () {
+  /**
+   * 设置或清除 users
+   * @param {object} users user 值
+   * @returns {undefined} undefined
+   */
+  setUsers (users) {
+    usersObj = users
+
+    if (users === null) {
+      storage.remove(usersKey)
+    } else {
+      storage.set(usersKey, users)
+    }
+  },
+
+  destroy () {
+    this.setTokens(null)
+    this.setUsers(null)
+  },
+
+  getAccessToken () {
     return this.getTokens('access_token')
   },
 
-  getAuthentization: function (method, url, host) {
+  getAuthentization (method, url, host) {
     return ['MAC id="' + this.getAccessToken() + '"',
       'nonce="' + this._getNonce() + '"',
       'mac="' + this._getMac(method, url, host) + '"'
     ].join(',')
   },
 
-  _getMacContent: function (method, url, host) {
+  _getMacContent (method, url, host) {
     return [this.nonce, method, url, host, ''].join('\n')
   },
 
-  _getMac: function (method, url, host) {
+  _getMac (method, url, host) {
     return new Sha(this._getMacContent(method, url, host), 'TEXT')
       .getHMAC(this.getTokens('mac_key'), 'TEXT', 'SHA-256', 'B64')
   },
 
-  _getNonce: function () {
+  _getNonce () {
     return (this.nonce = nonce(this.getTokens('diff')))
   }
 

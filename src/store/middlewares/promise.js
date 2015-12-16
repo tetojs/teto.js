@@ -9,7 +9,7 @@ const isPromise = (val) => {
  * @param  {number} delay)  finally dispatch 的延迟时间
  * @return {function}       redux middleware
  */
-const promise = (delay) => ({ dispatch }) => {
+const promise = delay => ({ dispatch }) => {
   return next => action => {
     const { type, payload } = action
 
