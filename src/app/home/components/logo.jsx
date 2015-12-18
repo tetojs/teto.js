@@ -3,9 +3,6 @@ import { IndexLink } from 'react-router'
 
 export default React.createClass({
 
-  // propTypes: {
-  // }
-
   render () {
     return (
       <h1>
