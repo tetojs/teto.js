@@ -1,5 +1,6 @@
-import chalk from 'chalk'
 import axios from 'axios'
+
+const debug = require('debug')('app:server:dispatcher')
 
 const dispatcherMiddleware = (options) => {
 
@@ -114,8 +115,7 @@ const dispatcherMiddleware = (options) => {
 }
 
 export default (options) => {
-  console.log(chalk.blue('Dispatcher middleware is enabled.'))
+  debug('Enable Dispatcher middleware.')
 
   return dispatcherMiddleware(options)
 }
-

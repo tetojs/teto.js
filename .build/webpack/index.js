@@ -1,3 +1,4 @@
-const config = require('../config')
+import config from '../config'
+import base from './_base'
 
-module.exports = require('./' + config.get('env'))
+export default require(`./_${config.env}`)(base)

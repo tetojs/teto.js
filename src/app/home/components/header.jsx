@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Logo from './logo'
-import Navbar from './navbar'
+import Nav from './nav'
 import User from './user'
 
 import styles from '../themes/styles/header.scss'
@@ -19,7 +19,7 @@ export default class extends Component {
     return (
       <header className={styles.ns}>
         <Logo />
-        <Navbar />
+        <Nav />
         <User />
       </header>
     )
