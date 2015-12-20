@@ -5,6 +5,14 @@ import { handleActions } from 'redux-actions'
 
 const tokens = handleActions({
 
+  USER_TOKEN: (state, action) => ({
+    ...state, ...action.payload
+  }),
+
+  USER_FETCH: (state, action) => ({
+    ...state, ...action.payload
+  }),
+
   USER_LOGIN: (state, action) => ({
     ...action.payload
   }),

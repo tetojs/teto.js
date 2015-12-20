@@ -1,22 +1,36 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import persistState from 'redux-localstorage'
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
 
 // middlewares
-// todo: only dev
 import promise from 'redux-promise'
 import logger from 'redux-logger'
-// import promise from './middlewares/promise'
 
-const finalCreateStore = compose(
-  applyMiddleware(promise, logger()),
-  persistState(/*paths, config*/)
-)(createStore)
+import history from 'utils/history'
 
-const store = finalCreateStore(state => state, {
+let finalCreateStore
+
+if (__DEBUG__) {
+  finalCreateStore = compose(
+    applyMiddleware(promise, logger()),
+    persistState(/*paths, config*/)
+  )(createStore)
+} else {
+  finalCreateStore = compose(
+    applyMiddleware(promise),
+    persistState(/*paths, config*/)
+  )(createStore)
+}
+
+let reducers = {
+  routing: routeReducer
+}
+
+const store = finalCreateStore(combineReducers(reducers), {
   // tokens: {}
 })
 
-let reducers = {}
+syncReduxAndRouter(history, store)
 
 export const appendReducer = newReducers => {
   reducers = { ...reducers, ...newReducers }

@@ -2,8 +2,7 @@ import axios from 'axios'
 
 const debug = require('debug')('app:server:dispatcher')
 
-const dispatcherMiddleware = (options) => {
-
+const dispatcherMiddleware = options => {
   let cached = null
 
   const url = 'http://101uccenter.beta.web.sdp.101.com/v0.93'
@@ -42,13 +41,13 @@ const dispatcherMiddleware = (options) => {
             'Content-Type': 'application/json; charset=utf-8',
             Authorization: 'Bearer "' + data.access_token + '"'
           }
-        }).then(({ data }) => {
-          cached.user = data
+        }).then(({ _data }) => {
+          cached.user = _data
           resolve(cached)
-        }, ({ data }) => {
+        }, () => {
           reject((cached = null))
         })
-      }, ({ data }) => {
+      }, () => {
         reject((cached = null))
       })
     })
@@ -73,14 +72,13 @@ const dispatcherMiddleware = (options) => {
     // }
 
     getBearerToken().then(({ token, user }) => {
-
-      let { dispatcher } = req.headers
-
-      let { module, protocol, host, ver, api, vars } = JSON.parse(dispatcher)
+      const { dispatcher } = req.headers
+      const { protocol, host, ver, vars } = JSON.parse(dispatcher)
+      let { api } = JSON.parse(dispatcher)
       api = decodeURIComponent(api)
 
       if (vars) {
-        Object.keys(vars).forEach((key) => {
+        Object.keys(vars).forEach(key => {
           api = api.replace(new RegExp('{' + key + '}', 'img'), vars[key])
         })
       }
@@ -94,7 +92,6 @@ const dispatcherMiddleware = (options) => {
       }
 
       const responder = ({ data, status }) => {
-        // res.set('Content-Type', 'application/json; charset=utf-8')
         res.status(status).json(data)
       }
 
@@ -107,14 +104,13 @@ const dispatcherMiddleware = (options) => {
           Authorization: 'Bearer "' + token.access_token + '"'
         }
       }).then(responder, responder)
-
     }, () => {
       console.log('ERROR')
     })
   }
 }
 
-export default (options) => {
+export default options => {
   debug('Enable Dispatcher middleware.')
 
   return dispatcherMiddleware(options)

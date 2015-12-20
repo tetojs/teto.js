@@ -9,18 +9,19 @@ import md5 from 'utils/md5'
 import history from 'utils/history'
 // import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
-import { userLogin } from '../../actions/tokens'
+import { userToken, userFetch } from '../../actions/tokens'
 
 @connect(state => ({
   ...state.tokens
 }), dispatch => ({
-  ...bindActionCreators({ userLogin }, dispatch)
+  ...bindActionCreators({ userToken, userFetch }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
     access_token: PropTypes.string,
-    userLogin: PropTypes.func.isRequired
+    userToken: PropTypes.func.isRequired,
+    userFetch: PropTypes.func.isRequired
   }
 
   constructor (props, context) {
@@ -33,8 +34,13 @@ export default class extends Component {
   }
 
   componentWillReceiveProps (props) {
+    debugger
     if (props.access_token) {
-      history.replaceState(null, '/')
+      if (props.org_exinfo) {
+        history.replaceState(null, '/')
+      } else {
+        this.props.userFetch(props.user_id)
+      }
     }
   }
 
@@ -44,7 +50,7 @@ export default class extends Component {
 
     const { login_name, password } = this.state
 
-    this.props.userLogin({
+    this.props.userToken({
       data: {
         login_name: login_name,
         password: md5(password)

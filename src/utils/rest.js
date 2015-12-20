@@ -20,124 +20,10 @@ import auth from 'utils/auth'
  * }
  */
 
-export default class REST {
-
-  /**
-   * @private
-   */
-  // __cache = null
-
-  /**
-   * @abstract
-   */
-  __resource = {
-    // res: {
-    //   protocol
-    //   host
-    //   ver
-    // }
-    // api
-    // vars
-    // id
-    idVar: 'id'
-  }
-
-  get resource () {
-    return this.__resource
-  }
-
-  set resource (val) {
-    this.__resource = { ...this.__resource, ...val }
-  }
-
-  __interceptors = {
-    options: (options) => options,
-    response: (response) => response
-  }
-
-  get interceptors () {
-    return this.__interceptors
-  }
-
-  set interceptors (val) {
-    this.__interceptors = { ...this.__interceptors, ...val }
-  }
-
-  /**
-   * @protected
-   */
-  // parser = JSON
-
-  /**
-   * @protected
-   */
-  request (options, method) {
-    // 转换直接传入 ID 值的情况
-    if (typeof options === 'string' || typeof options === 'number') {
-      options = {
-        id: options
-      }
-    }
-
-    options = Object.assign({
-      method: method,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
-    }, this.resource, options)
-
-    // interceptor for options
-    let optionsInterceptors = this.interceptors.options
-    options = optionsInterceptors(options)
-
-    let dispatcher = getDispatcher(options)
-
-    // id, data, vars, etc
-    processIdAndData(options, !!dispatcher)
-    // dispatcher
-    dispatcher && processDispatcher(options, dispatcher)
-    // authorization
-    processAuthorization(options)
-
-    // interceptor for response
-    let responseInterceptors = this.interceptors.response
-    // 只返回 axios 构造的返回值中的 data 部分
-    return new Promise((resolve, reject) => {
-      axios(getConfigForAxios(options))
-      .then(({ data }) => {
-        resolve(responseInterceptors(data))
-      }, ({ data }) => {
-        reject(responseInterceptors(data))
-      })
-    })
-  }
-
-  DELETE (options) {
-    return this.request(options, 'DELETE')
-  }
-
-  GET (options) {
-    return this.request(options, 'GET')
-  }
-
-  PATCH (options) {
-    return this.request(options, 'PATCH')
-  }
-
-  POST (options) {
-    return this.request(options, 'POST')
-  }
-
-  PUT (options) {
-    return this.request(options, 'PUT')
-  }
-
-}
-
 const encode = window.encodeURIComponent
 
 const addParams = (url, params, hasDispatcher) => {
-  let arr = Object.keys(params).map((key) => {
+  const arr = Object.keys(params).map(key => {
     return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : encode(params[key]))
   }).join('&')
 
@@ -148,7 +34,7 @@ const addParams = (url, params, hasDispatcher) => {
   return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr
 }
 
-const getDispatcher = (options) => {
+const getDispatcher = options => {
   // 未开启代理
   if (!ENV.DISPATCHER) {
     return false
@@ -176,7 +62,8 @@ const getDispatcher = (options) => {
 }
 
 const processIdAndData = (options, dispatcher) => {
-  let { api, id, data, method, vars = {}, res } = options
+  const { id, data, method } = options
+  let { api, vars = {} } = options
 
   if (typeof id !== 'undefined') {
     if (dispatcher) {
@@ -217,7 +104,7 @@ const processIdAndData = (options, dispatcher) => {
 }
 
 const processDispatcher = (options, dispatcher) => {
-  let { res, api, vars, headers } = options
+  const { res, api, vars, headers } = options
 
   headers.Dispatcher = JSON.stringify({
     ...res,
@@ -238,21 +125,24 @@ const processDispatcher = (options, dispatcher) => {
   options.api = '/' + dispatcher.api + api
 }
 
-const processAuthorization = (options) => {
-  let { res, api, vars, method, headers } = options
+const processAuthorization = options => {
+  const { res, vars, method, headers } = options
+  let { api } = options
 
   // always replace vars at last
   if (vars) {
-    Object.keys(vars).forEach((key) => {
+    Object.keys(vars).forEach(key => {
       api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
     })
   }
 
+  console.log('auth', auth)
+
   // has uc tokens
-  if (auth.isLogin()) {
+  if (auth.hasAuthorization) {
     // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'
     headers.Authorization =
-      auth.getAuthentization(
+      auth.getAuthorization(
         method, '/' + res.ver + api, res.host
       )
   }
@@ -260,8 +150,8 @@ const processAuthorization = (options) => {
   options.api = api
 }
 
-const getConfigForAxios = (options) => {
-  let { res, api, data, method, headers } = options
+const getConfigForAxios = options => {
+  const { res, api, data, method, headers } = options
 
   return {
     url: res.protocol + res.host + '/' + res.ver + api,
@@ -269,4 +159,124 @@ const getConfigForAxios = (options) => {
     data,
     headers
   }
+}
+
+export default class REST {
+
+  /**
+   * @private
+   */
+  // __cache = null
+
+  /**
+   * @abstract
+   */
+  __resource = {
+    // res: {
+    //   protocol
+    //   host
+    //   ver
+    // }
+    // api
+    // vars
+    // id
+    idVar: 'id'
+  }
+
+  get resource () {
+    return this.__resource
+  }
+
+  set resource (val) {
+    this.__resource = { ...this.__resource, ...val }
+  }
+
+  __interceptors = {
+    options: options => options,
+    response: response => response
+  }
+
+  get interceptors () {
+    return this.__interceptors
+  }
+
+  set interceptors (val) {
+    this.__interceptors = { ...this.__interceptors, ...val }
+  }
+
+  /**
+   * @protected
+   */
+  // parser = JSON
+
+  /**
+   * @protected
+   */
+  request (_options, method) {
+    let options = {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    }
+
+    Object.assign(options, this.resource)
+
+    // 转换直接传入 ID 值的情况
+    if (typeof _options === 'string' || typeof _options === 'number') {
+      options.id = _options
+    } else {
+      Object.assign(options, _options)
+    }
+
+    // interceptor for options
+    const optionsInterceptors = this.interceptors.options
+    options = optionsInterceptors(options)
+
+    const dispatcher = getDispatcher(options)
+
+    // id, data, vars, etc
+    processIdAndData(options, !!dispatcher)
+
+    // dispatcher
+    if (dispatcher) {
+      processDispatcher(options, dispatcher)
+    }
+
+    // authorization
+    processAuthorization(options)
+
+    // interceptor for response
+    const responseInterceptors = this.interceptors.response
+    // 只返回 axios 构造的返回值中的 data 部分
+    return new Promise((resolve, reject) => {
+      axios(getConfigForAxios(options))
+      .then(({ data }) => {
+        resolve(responseInterceptors(data))
+      }, ({ data }) => {
+        reject(responseInterceptors(data))
+      })
+    })
+  }
+
+  DELETE (options) {
+    return this.request(options, 'DELETE')
+  }
+
+  GET (options) {
+    return this.request(options, 'GET')
+  }
+
+  PATCH (options) {
+    return this.request(options, 'PATCH')
+  }
+
+  POST (options) {
+    return this.request(options, 'POST')
+  }
+
+  PUT (options) {
+    return this.request(options, 'PUT')
+  }
+
 }
