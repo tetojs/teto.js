@@ -1,13 +1,10 @@
 import React, { PropTypes } from 'react'
 
-import route from 'utils/route'
-
 export default React.createClass({
 
-  propTypes: {
-    scope: PropTypes.string.isRequired,
-    children: PropTypes.element
-  },
+  // propTypes: {
+  //   children: PropTypes.element
+  // },
 
   // constructor(props, context) {
   //   super(props, context)
@@ -17,7 +14,6 @@ export default React.createClass({
     return (
       <aside>
         <nav>
-          { route.getLinks('/' + this.props.scope + '/', false) }
         </nav>
       </aside>
     )

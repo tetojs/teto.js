@@ -24,7 +24,7 @@ const LOC_HOSTNAME = location.hostname
 /**
  * @constant {number} ENV
  */
-const ENV = (function () {
+const ENV = (() => {
   switch (LOC_HOSTNAME) {
     case '127.0.0.1':
       return SIMULATION
@@ -195,7 +195,7 @@ const DISPATCHER = {
   // 只代理白名单资源
   // 设置为 null 则全部走代理
   // whitelist: [UC_RES],
-  // whitelist: [MB_RES],
+  whitelist: [MB_RES],
   res: LOC_RES,
   api: 'dispatcher'
 }

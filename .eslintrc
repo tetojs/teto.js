@@ -44,7 +44,10 @@
     "babel"
   ],
   globals: {
-    "__DEV__": true
+    "__DEV__": false,
+    "__PROD__": false,
+    "__DEBUG__": false,
+    "__DEBUG_NEW_WINDOW__": false
   },
   "rules": {
     "no-console": 0,
