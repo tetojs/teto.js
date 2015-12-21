@@ -20,11 +20,11 @@ export default class extends Component {
     const { user_id, nick_name, org_exinfo } = this.props
 
     return (
-      <div>
-        <p>{ user_id }</p>
-        <p>{ nick_name }</p>
-        <p>{ `${org_exinfo.org_user_code}@${org_exinfo.org_name}` }</p>
-      </div>
+      <ul>
+        <li>{ user_id }</li>
+        <li>{ nick_name }</li>
+        <li>{ `${org_exinfo.org_user_code}@${org_exinfo.org_name}` }</li>
+      </ul>
     )
   }
 
