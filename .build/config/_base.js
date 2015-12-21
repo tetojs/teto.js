@@ -120,18 +120,4 @@ config.utils_paths = (() => {
   }
 })()
 
-// ------------------------------------
-// Aliases
-// ------------------------------------
-config.utils_aliases = [
-  'app',
-  'components',
-  'decorators',
-  'debugger',
-  'routes',
-  'static',
-  'store',
-  'utils'
-].reduce((acc, dir) => ((acc[dir] = config.utils_paths.client(dir)) && acc), {})
-
 export default config

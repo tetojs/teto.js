@@ -34,7 +34,6 @@ export default class extends Component {
   }
 
   componentWillReceiveProps (props) {
-    debugger
     if (props.access_token) {
       if (props.org_exinfo) {
         history.replaceState(null, '/')

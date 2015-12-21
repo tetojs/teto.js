@@ -9,16 +9,14 @@ import history from 'utils/history'
 
 import App from 'app'
 
-import styles from 'static/themes/default/styles/index.scss'
-
 const asyncLoader = component => (location, cb) => {
-  require(`app/${component}`)(function (c) {
+  require(`app/${component}`)(c => {
     cb(null, c)
   })
 }
 
-const walkRoutes = (sets) =>
-  Object.keys(sets).map((path) => {
+const walkRoutes = sets =>
+  Object.keys(sets).map(path => {
     const value = sets[path]
 
     return (
@@ -31,10 +29,6 @@ const walkRoutes = (sets) =>
     )
   })
 
-const container = document.getElementById('app')
-
-container.className = styles.app
-
 render(
   <Provider key="provider" store={store}>
     <Router history={history}>
@@ -43,5 +37,5 @@ render(
       </Route>
     </Router>
   </Provider>
-  , container
+  , document.getElementById('app')
 )

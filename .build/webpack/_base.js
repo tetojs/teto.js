@@ -74,8 +74,7 @@ const webpackConfig = {
   ],
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.json', '.js', '.jsx', '.async.js', '.async.jsx'],
-    alias: config.utils_aliases
+    extensions: ['', '.json', '.js', '.jsx', '.async.js', '.async.jsx']
   },
   module: {
     preLoaders: [
@@ -89,17 +88,12 @@ const webpackConfig = {
       {
         test: /\.async\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'bundle',
-          'babel?' + JSON.stringify(babelLoaderQuery)
-        ]
+        loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel?' + JSON.stringify(babelLoaderQuery)
-        ]
+        loader: 'babel?' + JSON.stringify(babelLoaderQuery)
       },
       {
         test: /\.json$/,

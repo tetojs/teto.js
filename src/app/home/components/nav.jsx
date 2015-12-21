@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Menu, Icon } from 'antd'
+import { Menu } from 'antd'
 
 export default class extends Component {
 

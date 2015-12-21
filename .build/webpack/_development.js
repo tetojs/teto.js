@@ -5,7 +5,7 @@ import _debug from 'debug'
 
 const debug = _debug('app:webpack:development')
 
-export default (webpackConfig) => {
+export default webpackConfig => {
   debug('Create configuration.')
 
   debug('Override devtool with cheap-module-eval-source-map.')
@@ -33,10 +33,15 @@ export default (webpackConfig) => {
     // configuration will break other tasks such as test:unit because Webpack
     // HMR is not enabled there, and these transforms require it.
     webpackConfig.module.loaders = webpackConfig.module.loaders.map(loader => {
-      if (/babel/.test(loader.loader)) {
+      const splitter = 'babel?'
+
+      if (loader.loader && loader.loader.indexOf(splitter) !== -1) {
         debug('Apply react-transform-hmr to babel development transforms')
 
-        if (loader.query.env.development.plugins[0][0] !== 'react-transform') {
+        const arr = loader.loader.split(splitter)
+        arr[1] = JSON.parse(arr[1])
+
+        if (arr[1].env.development.plugins[0][0] !== 'react-transform') {
           debug('ERROR: react-transform must be the first plugin')
           return loader
         }
@@ -46,13 +51,19 @@ export default (webpackConfig) => {
           imports   : ['react'],
           locals    : ['module']
         }
-        loader.query.env.development.plugins[0][1].transforms
+
+        arr[1].env.development.plugins[0][1].transforms
           .push(reactTransformHmr)
+
+        arr[1] = JSON.stringify(arr[1])
+        loader.loader = arr.join(splitter)
       }
 
       return loader
     })
   }
+
+  console.log('webpackConfig', webpackConfig)
 
   return webpackConfig
 }
