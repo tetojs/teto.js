@@ -1,12 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { combineReducers, bindActionCreators } from 'redux'
-
-import Message from 'utils/message'
-// import STATES from 'utils/states'
+import { bindActionCreators } from 'redux'
 
 import * as weiboActions from '../../actions/weibo'
-import styles from '../../themes/styles/index.scss'
 
 import Item from './item'
 
@@ -18,8 +14,6 @@ import Item from './item'
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string.isRequired,
-    message: PropTypes.string,
     items: PropTypes.array,
     fetchWeibos: PropTypes.func.isRequired
   }
@@ -34,14 +28,13 @@ export default class extends Component {
   }
 
   render () {
-    let { state, message, items } = this.props
+    const { items } = this.props
     return (
-      <div className={styles.ns}>
-        <header className={styles.header}>
+      <div>
+        <header>
           Weibos:
         </header>
-        <section className={styles.weibo}>
-          <Message state={ state } message={ message } />
+        <section>
           {
             items && items.map(
               item => <Item key={item.mid} { ...item } />

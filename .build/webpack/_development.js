@@ -63,7 +63,5 @@ export default webpackConfig => {
     })
   }
 
-  console.log('webpackConfig', webpackConfig)
-
   return webpackConfig
 }

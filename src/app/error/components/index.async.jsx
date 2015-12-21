@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Alert } from 'utils/antd'
 
 export default class extends Component {
 
@@ -8,7 +9,9 @@ export default class extends Component {
 
   render () {
     return (
-      <div>404</div>
+      <Alert message="404"
+        description="101*4"
+        type="error" />
     )
   }
 

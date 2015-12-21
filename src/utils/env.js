@@ -191,14 +191,15 @@ const RBAC_ENABLED = false
 /**
  * @constant {object} 接口请求代理配置，设置为 null 不走代理
  */
-const DISPATCHER = {
-  // 只代理白名单资源
-  // 设置为 null 则全部走代理
-  // whitelist: [UC_RES],
-  whitelist: [MB_RES],
-  res: LOC_RES,
-  api: 'dispatcher'
-}
+const DISPATCHER = null
+// {
+//   // 只代理白名单资源
+//   // 设置为 null 则全部走代理
+//   // whitelist: [UC_RES],
+//   whitelist: [MB_RES],
+//   res: LOC_RES,
+//   api: 'dispatcher'
+// }
 
 /**
  * @constant {string} DATETIME_FORMAT 默认的时间日期格式

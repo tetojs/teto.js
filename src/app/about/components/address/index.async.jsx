@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { combineReducers, bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
 import * as aboutActions from '../../actions/about'
-import styles from '../../themes/styles/address.scss'
 
 @connect(state => ({
   ...state.about
@@ -19,7 +18,7 @@ export default class extends Component {
     modifyAbout: PropTypes.func.isRequired
   }
 
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
 
     this.state = {
@@ -64,20 +63,20 @@ export default class extends Component {
   }
 
   render () {
-    let { address } = this.state
+    const { address } = this.state
     return (
-      this.state.editing ?
-      <textarea className={styles.editing}
+      this.state.editing
+       ? <textarea
         onBlur={this.onBlur}
         onChange={this.onChange}
-        value={this.state.address} /> :
-      <div>
-        <div className={styles.comment}>
+        value={address} />
+       : <div>
+        <div>
           Double click below to edit
         </div>
-        <div className={styles.readonly}
+        <div
           onDoubleClick={this.onDoubleClick}>
-          {this.state.address || 'Woops!'}
+          {address || 'Woops!'}
         </div>
       </div>
     )

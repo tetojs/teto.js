@@ -38,7 +38,9 @@ const config = {
     colors : true
   },
   compiler_vendor : [
-    'antd',
+    'utils/antd',
+    'utils/env',
+    'utils/rest',
     'autobind-decorator',
     'axios',
     'extend',

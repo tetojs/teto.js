@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { combineReducers, bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button } from 'utils/antd'
 
-import history from 'utils/history'
-import Message from 'utils/message'
+// import history from 'utils/history'
 
 import * as weiboActions from '../../actions/weibo'
-import styles from '../../themes/styles/add.scss'
 
 @connect(state => ({
   ...state.weibo
@@ -19,8 +17,6 @@ import styles from '../../themes/styles/add.scss'
 export default class extends Component {
 
   static propTypes = {
-    state: PropTypes.string.isRequired,
-    message: PropTypes.string,
     createWeibo: PropTypes.func.isRequired
   }
 
@@ -59,14 +55,12 @@ export default class extends Component {
   }
 
   render () {
-    let { state, message } = this.props
     return (
       <Form horizontal onSubmit={this.onSubmit}>
-        <Message state={ state } message={ message } />
-        <Form.Item className={styles.field}>
+        <Form.Item>
           <Input onChange={this.onChange.bind(this, 'content')} type="textarea"  />
         </Form.Item>
-        <div className={styles.button}>
+        <div>
           <Button type="primary" htmlType="submit">Submit</Button>
         </div>
       </Form>

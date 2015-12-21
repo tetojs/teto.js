@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Menu, Dropdown, Button, Icon } from 'antd'
+import { Menu, Dropdown, Button, Icon } from 'utils/antd'
 
 @connect(state => ({
   tokens: state.tokens

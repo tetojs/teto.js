@@ -4,8 +4,6 @@ import Logo from './logo'
 import Nav from './nav'
 import User from './user'
 
-import styles from '../themes/styles/header.scss'
-
 export default class extends Component {
 
   // static propTypes = {
@@ -15,12 +13,18 @@ export default class extends Component {
   //   super(props, context)
   // }
 
+  componentDidMount () {
+    this.setState({
+      a: 1
+    })
+  }
+
   render () {
     return (
-      <header className={styles.ns}>
+      <header className="app-home-header">
         <Logo />
-        <Nav />
         <User />
+        <Nav />
       </header>
     )
   }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import styles from '../themes/styles/footer.scss'
-
 export default class extends Component {
 
   // static propTypes = {
@@ -13,7 +11,7 @@ export default class extends Component {
 
   render () {
     return (
-      <footer className={styles.ns}>
+      <footer className="app-home-footer">
         &copy; {new Date().toISOString()}
       </footer>
     )

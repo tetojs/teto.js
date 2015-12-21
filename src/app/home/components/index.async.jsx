@@ -4,8 +4,6 @@ import React, { Component, PropTypes } from 'react'
 import Header from './header'
 import Footer from './footer'
 
-import styles from '../themes/styles/main.scss'
-
 // @connect(state => ({
 //   tokens: state.tokens
 // }))
@@ -21,9 +19,9 @@ export default class extends Component {
 
   render () {
     return (
-      <div className={styles.ns}>
+      <div className="app-home">
         <Header />
-        <main className={styles.main}>
+        <main className="app-home-main">
           {this.props.children}
         </main>
         <Footer />

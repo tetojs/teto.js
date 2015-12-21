@@ -3,12 +3,9 @@ import React, { PropTypes } from 'react'
 // Append current reducers to store
 import '../reducers/weibo'
 
-// import Aside from './aside'
-
 export default React.createClass({
 
   propTypes: {
-    // route: PropTypes.object.isRequired,
     children: PropTypes.element
   },
 
@@ -17,7 +14,6 @@ export default React.createClass({
   // }
 
   render () {
-    // <Aside scope={this.props.route.path} />
     return (
       <div>
         {this.props.children}

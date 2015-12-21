@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Menu } from 'antd'
+import { Menu } from 'utils/antd'
 
 export default class extends Component {
 

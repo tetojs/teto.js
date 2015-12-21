@@ -7,6 +7,8 @@ import store from 'store'
 import routes from 'routes'
 import history from 'utils/history'
 
+import 'static/themes/default/styles/index.less'
+
 import App from 'app'
 
 const asyncLoader = component => (location, cb) => {
