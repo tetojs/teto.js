@@ -1,25 +1,27 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { pushPath } from 'redux-simple-router'
 import autobind from 'autobind-decorator'
 
 import { Form, Input, Button } from 'utils/antd'
 
 import md5 from 'utils/md5'
-import history from 'utils/history'
-// import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
 import { userToken, userFetch } from '../../actions/tokens'
+
+const goHome = path => pushPath('/')
 
 @connect(state => ({
   ...state.tokens
 }), dispatch => ({
-  ...bindActionCreators({ userToken, userFetch }, dispatch)
+  ...bindActionCreators({ userToken, userFetch, goHome }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
     access_token: PropTypes.string,
+    goHome: PropTypes.func.isRequired,
     userToken: PropTypes.func.isRequired,
     userFetch: PropTypes.func.isRequired
   }
@@ -36,7 +38,7 @@ export default class extends Component {
   componentWillReceiveProps (props) {
     if (props.access_token) {
       if (props.org_exinfo) {
-        history.replaceState(null, '/')
+        this.props.goHome()
       } else {
         this.props.userFetch(props.user_id)
       }

@@ -136,8 +136,6 @@ const processAuthorization = options => {
     })
   }
 
-  console.log('auth', auth)
-
   // has uc tokens
   if (auth.hasAuthorization) {
     // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'

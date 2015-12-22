@@ -81,8 +81,6 @@ export default {
   get hasAuthorization () {
     const { tokens } = store.getState()
 
-    console.log('tokens', tokens)
-
     if (tokens) {
       const { access_token, mac_key, diff = 0, expires_at } = tokens
 
