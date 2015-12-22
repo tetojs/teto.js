@@ -13,7 +13,10 @@ let finalCreateStore
 if (__DEBUG__) {
   finalCreateStore = compose(
     applyMiddleware(promise, logger()),
-    persistState(/* paths, config */)
+    persistState(null, {
+      serialize: obj => JSON.stringify(obj),
+      deserialize: str => JSON.parse(str)
+    })
   )(createStore)
 } else {
   finalCreateStore = compose(
@@ -22,22 +25,16 @@ if (__DEBUG__) {
   )(createStore)
 }
 
-const initialState = {
-  // routing: {}
-  // tokens: {}
-}
-
 let reducers = {
   routing: routeReducer,
-  tokens: state => state || initialState
+  tokens: state => state || {}
 }
 
-const store = finalCreateStore(combineReducers(reducers), initialState)
+const store = finalCreateStore(combineReducers(reducers), {})
 
 syncReduxAndRouter(history, store)
 
 export const appendReducer = newReducers => {
-  console.log('[newReducers]', newReducers)
   reducers = { ...reducers, ...newReducers }
   store.replaceReducer(combineReducers(reducers))
 

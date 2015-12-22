@@ -1,10 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-// import Message from 'utils/message'
-// import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
-import history from 'utils/history'
+import { replacePath } from 'redux-simple-router'
 
 import { userLogout } from '../../actions/tokens'
 
@@ -30,7 +27,7 @@ export default class extends Component {
     if (access_token) {
       this.props.userLogout(access_token)
     } else {
-      history.replaceState(null, '/')
+      replacePath('/')
     }
   }
 

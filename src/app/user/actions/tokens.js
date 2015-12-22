@@ -11,19 +11,8 @@ export const userFetch = createAction('USER_FETCH', payload => {
   return new Users().GET(payload)
 })
 
-export const userLogin = createAction('USER_LOGIN', payload => {
-  return new Tokens().POST(payload)
-    .then(result => new Users().GET(result.user_id)
-      .then(_result => {
-        return {
-          ...result,
-          ..._result
-        }
-      }))
-})
-
-export const userLogout = createAction('USER_LOGIN', payload => {
+export const userLogout = createAction('USER_LOGOUT', payload => {
   return new Tokens().DELETE(payload)
     // 设置为 null，以清除本地缓存
-    .then(result => null)
+    .then(() => null)
 })

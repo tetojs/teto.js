@@ -13,12 +13,6 @@ export default class extends Component {
   //   super(props, context)
   // }
 
-  componentDidMount () {
-    this.setState({
-      a: 1
-    })
-  }
-
   render () {
     return (
       <header className="app-home-header">

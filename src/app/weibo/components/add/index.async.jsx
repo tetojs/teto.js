@@ -1,17 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+// import { pushPath } from 'redux-simple-router'
 import autobind from 'autobind-decorator'
 
 import { Form, Input, Button } from 'utils/antd'
 
-// import history from 'utils/history'
-
 import * as weiboActions from '../../actions/weibo'
 
-@connect(state => ({
-  ...state.weibo
-}), dispatch => ({
+@connect(null, dispatch => ({
   ...bindActionCreators(weiboActions, dispatch)
 }))
 export default class extends Component {

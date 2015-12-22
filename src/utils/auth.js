@@ -84,7 +84,7 @@ export default {
     console.log('tokens', tokens)
 
     if (tokens) {
-      const { access_token, mac_key, diff, expires_at } = tokens
+      const { access_token, mac_key, diff = 0, expires_at } = tokens
 
       if (!expires_at) {
         return false
@@ -95,7 +95,7 @@ export default {
         return true
       }
 
-      if (new Date(tokens.expires_at) > Date.now()) {
+      if (new Date(tokens.expires_at) > Date.now() + diff) {
         this.configure(access_token, mac_key, diff, expires_at)
         return true
       }
