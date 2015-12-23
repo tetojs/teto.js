@@ -1,6 +1,7 @@
 import store from 'store'
+import Sha from 'jssha'
 
-const Sha = require('nd-sha')
+// const Sha = require('nd-sha')
 
 function getNonce (diff) {
   function rnd (min, max) {
@@ -32,8 +33,10 @@ function getNonce (diff) {
 }
 
 function getMac (nonce, method, url, host, key) {
-  return new Sha([nonce, method, url, host, ''].join('\n'), 'TEXT')
-    .getHMAC(key, 'TEXT', 'SHA-256', 'B64')
+  const sha = new Sha('SHA-256', 'TEXT')
+  sha.setHMACKey(key, 'TEXT')
+  sha.update([nonce, method, url, host, ''].join('\n'))
+  return sha.getHMAC('B64')
 }
 
 export default {
