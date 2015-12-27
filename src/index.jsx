@@ -3,9 +3,9 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 
-import store from 'store'
-import routes from 'routes'
+import store from 'rdx/store'
 import history from 'utils/history'
+import routes from 'routes'
 
 import 'static/themes/default/styles/index.less'
 
@@ -32,7 +32,7 @@ const walkRoutes = sets =>
   })
 
 render(
-  <Provider key="provider" store={store}>
+  <Provider store={store}>
     <Router history={history}>
       <Route component={App}>
         { walkRoutes(routes) }

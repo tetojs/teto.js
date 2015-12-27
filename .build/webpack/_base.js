@@ -58,8 +58,6 @@ const webpackConfig = {
   plugins: [
     new webpack.DefinePlugin(config.globals),
     // new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new HtmlWebpackPlugin({
       template: paths.client('static/templates/index.tmpl'),
       hash: false,

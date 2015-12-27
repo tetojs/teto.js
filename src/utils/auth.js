@@ -1,4 +1,4 @@
-import store from 'store'
+import store from 'rdx/store'
 import Sha from 'jssha'
 
 // const Sha = require('nd-sha')

@@ -43,7 +43,7 @@
     "standard",
     "babel"
   ],
-  globals: {
+  "globals": {
     "__DEV__": false,
     "__PROD__": false,
     "__DEBUG__": false,
@@ -57,7 +57,9 @@
     "arrow-parens": [2, "as-needed"],
     "comma-dangle": 2,
     "eqeqeq": 2,
-    "indent": [1, 2, {"SwitchCase": 1}],
+    "indent": [1, 2, {
+      "SwitchCase": 1
+    }],
     "linebreak-style": [2, "unix"],
     "prefer-arrow-callback": 2,
     "prefer-const": 1,

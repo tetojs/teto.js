@@ -5,7 +5,7 @@ import _debug from 'debug'
 
 const debug = _debug('app:webpack:production')
 
-export default (webpackConfig) => {
+export default webpackConfig => {
   debug('Create configuration.')
 
   if (config.compiler_source_maps) {
@@ -34,6 +34,8 @@ export default (webpackConfig) => {
     new ExtractTextPlugin('[name].[contenthash].css', {
       allChunks: true
     }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         unused: true,

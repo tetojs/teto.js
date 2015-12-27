@@ -20,11 +20,17 @@ import auth from 'utils/auth'
  * }
  */
 
+const DELETE = 'DELETE'
+const GET = 'GET'
+const PATCH = 'PATCH'
+const POST = 'POST'
+const PUT = 'PUT'
+
 const encode = window.encodeURIComponent
 
 const addParams = (url, params, hasDispatcher) => {
   const arr = Object.keys(params).map(key => {
-    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : encode(params[key]))
+    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : params[key])
   }).join('&')
 
   if (!arr) {
@@ -61,12 +67,12 @@ const getDispatcher = options => {
   return ENV.DISPATCHER
 }
 
-const processIdAndData = (options, dispatcher) => {
+const processIdAndData = (options, hasDispatcher) => {
   const { id, data, method } = options
   let { api, vars = {} } = options
 
   if (typeof id !== 'undefined') {
-    if (dispatcher) {
+    if (hasDispatcher) {
       api += '/{' + options.idVar + '}'
       // 保存到 vars
       vars[options.idVar] = id
@@ -77,9 +83,9 @@ const processIdAndData = (options, dispatcher) => {
 
   if (data) {
     if (/^GET|DELETE$/i.test(method)) {
-      api = addParams(api, data, dispatcher)
+      api = addParams(api, data, hasDispatcher)
 
-      if (dispatcher) {
+      if (hasDispatcher) {
         vars = { ...vars, ...data }
       }
     } else {
@@ -89,7 +95,7 @@ const processIdAndData = (options, dispatcher) => {
 
   // disable cache
   if (!ENV.CACHE_ENABLED) {
-    if (dispatcher) {
+    if (hasDispatcher) {
       // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
     } else {
       // waf DOES NOT support cors Cache-Control header currently
@@ -189,6 +195,14 @@ export default class REST {
     this.__resource = { ...this.__resource, ...val }
   }
 
+  get defaults () {
+    return this.__defaults
+  }
+
+  set defaults (val) {
+    this.__defaults = { ...this.__defaults, ...val }
+  }
+
   __interceptors = {
     options: options => options,
     response: response => response
@@ -215,7 +229,8 @@ export default class REST {
       method: method,
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
-      }
+      },
+      data: {}
     }
 
     Object.assign(options, this.resource)
@@ -224,12 +239,24 @@ export default class REST {
     if (typeof _options === 'string' || typeof _options === 'number') {
       options.id = _options
     } else {
-      Object.assign(options, _options)
+      const finalData = {}
+
+      if (method === GET) {
+        Object.assign(finalData, this.defaults)
+      }
+
+      if (_options) {
+        const { data, ...rest } = _options
+        Object.assign(options, rest)
+        Object.assign(finalData, data)
+      }
+
+      Object.assign(options.data, finalData)
     }
 
     // interceptor for options
-    const optionsInterceptors = this.interceptors.options
-    options = optionsInterceptors(options)
+    const optionsInterceptor = this.interceptors.options
+    options = optionsInterceptor(options)
 
     const dispatcher = getDispatcher(options)
 
@@ -257,24 +284,24 @@ export default class REST {
     })
   }
 
-  DELETE (options) {
-    return this.request(options, 'DELETE')
+  [DELETE] (options) {
+    return this.request(options, DELETE)
   }
 
-  GET (options) {
-    return this.request(options, 'GET')
+  [GET] (options) {
+    return this.request(options, GET)
   }
 
-  PATCH (options) {
-    return this.request(options, 'PATCH')
+  [PATCH] (options) {
+    return this.request(options, PATCH)
   }
 
-  POST (options) {
-    return this.request(options, 'POST')
+  [POST] (options) {
+    return this.request(options, POST)
   }
 
-  PUT (options) {
-    return this.request(options, 'PUT')
+  [PUT] (options) {
+    return this.request(options, PUT)
   }
 
 }
