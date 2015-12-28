@@ -12,6 +12,11 @@ export default handleActions({
   FETCH_USERS: (state, action) => ({
     ...state,
     ...arr2obj(action.payload.items, 'user_id')
+  }),
+
+  FETCH_USERS_RESTFUL: (state, action) => ({
+    ...state,
+    ...action.payload
   })
 
 }, {})

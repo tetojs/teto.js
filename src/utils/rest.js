@@ -8,8 +8,8 @@ import auth from 'utils/auth'
  * {
  *   // 提交数据
  *   data: {
- *     page: 1,
- *     size: 20
+ *     $offset: 0,
+ *     $limit: 20
  *   },
  *   // 根据 REST 规范，直接添加到 uri 末尾
  *   id: 123,
@@ -30,7 +30,7 @@ const encode = window.encodeURIComponent
 
 const addParams = (url, params, hasDispatcher) => {
   const arr = Object.keys(params).map(key => {
-    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : params[key])
+    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : encode(params[key]))
   }).join('&')
 
   if (!arr) {
@@ -89,7 +89,7 @@ const processIdAndData = (options, hasDispatcher) => {
         vars = { ...vars, ...data }
       }
     } else {
-      options.data = JSON.stringify(data)
+      // options.data = JSON.stringify(data)
     }
   }
 
@@ -167,14 +167,6 @@ const getConfigForAxios = options => {
 
 export default class REST {
 
-  /**
-   * @private
-   */
-  // __cache = null
-
-  /**
-   * @abstract
-   */
   __resource = {
     // res: {
     //   protocol
@@ -215,11 +207,6 @@ export default class REST {
   set interceptors (val) {
     this.__interceptors = { ...this.__interceptors, ...val }
   }
-
-  /**
-   * @protected
-   */
-  // parser = JSON
 
   /**
    * @protected
@@ -273,8 +260,16 @@ export default class REST {
 
     // interceptor for response
     const responseInterceptors = this.interceptors.response
+
+    const NP = driver => {
+      const promise = new Promise(driver)
+      promise.$limit = options.data.$limit
+      promise.$offset = options.data.$offset
+      return promise
+    }
+
     // 只返回 axios 构造的返回值中的 data 部分
-    return new Promise((resolve, reject) => {
+    return new NP((resolve, reject) => {
       axios(getConfigForAxios(options))
       .then(({ data }) => {
         resolve(responseInterceptors(data))
