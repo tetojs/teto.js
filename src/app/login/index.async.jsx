@@ -12,15 +12,16 @@ import { login } from 'rdx/actions/tokens'
 import { fetchUser } from 'rdx/actions/users'
 
 @connect(state => ({
-  ...state.tokens,
-  ...state.users
+  user_id: state.tokens.user_id,
+  entities: state.users.entities
 }), dispatch => ({
   ...bindActionCreators({ login, fetchUser, redirect }, dispatch)
 }))
 export default class extends Component {
 
   static propTypes = {
-    // user_id: PropTypes.number,
+    user_id: PropTypes.number,
+    entities: PropTypes.object,
     redirect: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     fetchUser: PropTypes.func.isRequired
@@ -35,16 +36,24 @@ export default class extends Component {
     }
   }
 
-  componentWillReceiveProps (props) {
+  _checkProps (props) {
     // from tokens
     if (props.user_id) {
       // from users
-      if (props[props.user_id]) {
-        this.props.redirect('/')
+      if (props.entities[props.user_id]) {
+        props.redirect('/')
       } else {
-        this.props.fetchUser(props.user_id)
+        props.fetchUser(props.user_id)
       }
     }
+  }
+
+  componentDidMount () {
+    this._checkProps(this.props)
+  }
+
+  componentWillReceiveProps (props) {
+    this._checkProps(props)
   }
 
   @autobind

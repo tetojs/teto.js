@@ -1,12 +1,12 @@
-import ENV from 'utils/env'
+import CONFIG from 'utils/config'
 import REST from 'utils/rest'
 
 export default class extends REST {
 
   resource = {
-    res: ENV.UC_RES,
+    res: CONFIG.UC_RES,
     api: '/organizations/{org_id}/users',
-    idVar: 'user_id'
+    key: 'user_id'
   }
 
   defaults = {

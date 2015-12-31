@@ -1,8 +1,6 @@
 import store from 'rdx/store'
 import Sha from 'jssha'
 
-// const Sha = require('nd-sha')
-
 function getNonce (diff) {
   function rnd (min, max) {
     const arr = [

@@ -5,7 +5,7 @@ const debug = require('debug')('app:server:dispatcher')
 const dispatcherMiddleware = options => {
   let cached = null
 
-  const url = 'http://101uccenter.beta.web.sdp.101.com/v0.93'
+  const url = 'https://ucbetapi.101.com/v0.93'
 
   const { login_name, password } = options
 
@@ -41,8 +41,8 @@ const dispatcherMiddleware = options => {
             'Content-Type': 'application/json; charset=utf-8',
             Authorization: 'Bearer "' + data.access_token + '"'
           }
-        }).then(({ _data }) => {
-          cached.user = _data
+        }).then(res => {
+          cached.user = res.data
           resolve(cached)
         }, () => {
           reject((cached = null))
@@ -73,8 +73,9 @@ const dispatcherMiddleware = options => {
 
     getBearerToken().then(({ token, user }) => {
       const { dispatcher } = req.headers
-      const { protocol, host, ver, vars } = JSON.parse(dispatcher)
-      let { api } = JSON.parse(dispatcher)
+      const _dispatcher = JSON.parse(dispatcher)
+      const { protocol, host, ver, vars } = _dispatcher
+      let { api } = _dispatcher
       api = decodeURIComponent(api)
 
       if (vars) {
@@ -105,7 +106,7 @@ const dispatcherMiddleware = options => {
         }
       }).then(responder, responder)
     }, () => {
-      console.log('ERROR')
+      debug('Dispatcher ERROR')
     })
   }
 }

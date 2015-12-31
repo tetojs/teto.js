@@ -65,54 +65,32 @@ const LOC_RES = {
  * @constant {object} CS_RES
  */
 
-let UC_RES
-let CS_RES
+let UC_RES = {
+  module: 'uc',
+  protocol: 'https://',
+  ver: 'v0.9'
+}
+let CS_RES = {
+  module: 'cs',
+  protocol: 'https://',
+  ver: 'v0.1'
+}
 
 switch (ENV) {
   case DEVELOPMENT:
   case DEBUG:
   case PREPRODUCTION:
   case PRESSURE:
-    UC_RES = {
-      module: 'uc',
-      protocol: 'http://',
-      host: '101uccenter.beta.web.sdp.101.com',
-      ver: 'v0.9'
-    }
-    CS_RES = {
-      module: 'cs',
-      protocol: 'http://',
-      host: 'betacs.101.com',
-      ver: 'v0.1'
-    }
+    UC_RES.host = 'ucbetapi.101.com'
+    CS_RES.host = 'betacs.101.com'
     break
   case PRODUCTION:
-    UC_RES = {
-      module: 'uc',
-      protocol: 'https://',
-      host: 'aqapi.101.com',
-      ver: 'v0.9'
-    }
-    CS_RES = {
-      module: 'cs',
-      protocol: 'http://',
-      host: 'cs.101.com',
-      ver: 'v0.1'
-    }
+    UC_RES.host = 'aqapi.101.com'
+    CS_RES.host = 'cs.101.com'
     break
   case AWS:
-    UC_RES = {
-      module: 'uc',
-      protocol: 'https://',
-      host: 'awsuc.101.com',
-      ver: 'v0.9'
-    }
-    CS_RES = {
-      module: 'cs',
-      protocol: 'https://',
-      host: 'awscs.101.com',
-      ver: 'v0.1'
-    }
+    UC_RES.host = 'awsuc.101.com'
+    CS_RES.host = 'awscs.101.com'
     break
   default:
     UC_RES = LOC_RES
@@ -123,56 +101,30 @@ switch (ENV) {
  * @constant {object} MB_RES
  */
 
-let MB_RES
+let MB_RES = {
+  module: 'microblog',
+  protocol: 'http://',
+  ver: 'v0.1'
+}
 
 switch (ENV) {
   case DEVELOPMENT:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.dev.web.nd',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.dev.web.nd'
     break
   case DEBUG:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.debug.web.nd',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.debug.web.nd'
     break
   case PRODUCTION:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.web.sdp.101.com',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.web.sdp.101.com'
     break
   case AWS:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.aws.101.com',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.aws.101.com'
     break
   case PREPRODUCTION:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.beta.web.sdp.101.com',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.beta.web.sdp.101.com'
     break
   case PRESSURE:
-    MB_RES = {
-      module: 'microblog',
-      protocol: 'http://',
-      host: 'microblog.qa.web.sdp.101.com',
-      ver: 'v0.1'
-    }
+    MB_RES.host = 'microblog.qa.web.sdp.101.com'
     break
   default:
     MB_RES = LOC_RES
@@ -191,15 +143,13 @@ const RBAC_ENABLED = false
 /**
  * @constant {object} 接口请求代理配置，设置为 null 不走代理
  */
-const DISPATCHER = null
-// {
-//   // 只代理白名单资源
-//   // 设置为 null 则全部走代理
-//   // whitelist: [UC_RES],
-//   whitelist: [MB_RES],
-//   res: LOC_RES,
-//   api: 'dispatcher'
-// }
+const DISPATCHER = {
+  // 不走代理的资源
+  ignore: [CS_RES],
+  res: LOC_RES,
+  ver: 'v0.1',
+  api: 'dispatcher'
+}
 
 /**
  * @constant {string} DATETIME_FORMAT 默认的时间日期格式

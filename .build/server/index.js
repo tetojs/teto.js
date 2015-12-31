@@ -7,7 +7,7 @@ const debug = require('debug')('app:server')
 const paths = config.utils_paths
 
 server.use(historyApiFallback({
-  verbose : false
+  verbose: false
 }))
 
 // Serve app with Webpack if HMR is enabled
@@ -15,6 +15,10 @@ if (config.compiler_enable_hmr) {
   const webpack = require('webpack')
   const webpackConfig = require('../webpack')
   const compiler = webpack(webpackConfig)
+  const bodyParser = require('body-parser')
+
+  // parse request body
+  server.use(bodyParser.json())
 
   // dispatcher for cross domain
   // `.shouldnotpublic` is a module

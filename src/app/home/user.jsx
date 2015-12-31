@@ -4,19 +4,24 @@ import { Link } from 'react-router'
 import { Menu, Dropdown, Icon } from 'utils/antd'
 
 @connect(state => ({
-  ...state.tokens,
-  ...state.users
+  user_id: state.tokens.user_id,
+  entities: state.users.entities
 }))
 export default class extends Component {
 
   static propTypes = {
     user_id: PropTypes.number,
-    users: PropTypes.string
+    entities: PropTypes.object
   }
 
   render () {
-    const { user_id } = this.props
-    const { nick_name } = this.props[user_id]
+    const { user_id, entities } = this.props
+
+    let nick_name
+
+    if (user_id && entities[user_id]) {
+      nick_name = entities[user_id].nick_name
+    }
 
     let Element
 
@@ -27,7 +32,7 @@ export default class extends Component {
           <Link to={link}>资料</Link>
         </Menu.Item>
         <Menu.Item>
-          <Link to="/user/logout">退出</Link>
+          <Link to="/logout">退出</Link>
         </Menu.Item>
       </Menu>
 
@@ -40,7 +45,7 @@ export default class extends Component {
     } else {
       Element =
         <h4>
-          <Link to="/user/login">登录</Link>
+          <Link to="/login">登录</Link>
         </h4>
     }
 

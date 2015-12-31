@@ -1,4 +1,4 @@
-import ENV from 'utils/env'
+import CONFIG from 'utils/config'
 import REST from 'utils/rest'
 
 import Promise from 'promise'
@@ -6,9 +6,9 @@ import Promise from 'promise'
 export default class extends REST {
 
   resource = {
-    res: ENV.UC_RES,
+    res: CONFIG.UC_RES,
     api: '/users',
-    idVar: 'user_id'
+    key: 'user_id'
   }
 
   /**

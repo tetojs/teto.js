@@ -7,4 +7,5 @@ export const fetchUser = createAction('FETCH_USER',
   payload => new Users().GET(payload))
 
 export const fetchUsers = createAction('FETCH_USERS',
-  payload => new OrganizationUsers().GET(payload))
+  payload => new OrganizationUsers().GET(payload),
+  ({ data = {} }) => data)

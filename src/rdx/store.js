@@ -3,7 +3,6 @@ import persistState from 'redux-localstorage'
 import { syncReduxAndRouter } from 'redux-simple-router'
 
 // middlewares
-import restful from './middlewares/restful'
 import promise from 'redux-promise'
 import logger from 'redux-logger'
 
@@ -15,7 +14,7 @@ let finalCreateStore
 
 if (__DEBUG__) {
   finalCreateStore = compose(
-    applyMiddleware(restful, promise, logger()),
+    applyMiddleware(promise, logger()),
     persistState(null, {
       serialize: obj => JSON.stringify(obj),
       deserialize: str => JSON.parse(str)
@@ -23,7 +22,7 @@ if (__DEBUG__) {
   )(createStore)
 } else {
   finalCreateStore = compose(
-    applyMiddleware(restful, promise),
+    applyMiddleware(promise),
     persistState(/* paths, config */)
   )(createStore)
 }

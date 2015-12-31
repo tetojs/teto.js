@@ -19,11 +19,9 @@ export default class extends Component {
 
     return (
       <li>
-        <ul>
-          <li>{ user_id }</li>
-          <li>{ nick_name }</li>
-          <li>{ `${org_user_code}@${org_name}` }</li>
-        </ul>
+        <p>{ user_id }</p>
+        <p>{ nick_name }</p>
+        <p>{ `${org_user_code}@${org_name}` }</p>
       </li>
     )
   }

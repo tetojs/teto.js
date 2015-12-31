@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Promise from 'promise'
-import ENV from 'utils/env'
+import CONFIG from 'utils/config'
 import auth from 'utils/auth'
 
 /**
@@ -28,9 +28,9 @@ const PUT = 'PUT'
 
 const encode = window.encodeURIComponent
 
-const addParams = (url, params, hasDispatcher) => {
+const addParams = (url, params) => {
   const arr = Object.keys(params).map(key => {
-    return encode(key) + '=' + (hasDispatcher ? ('{' + key + '}') : encode(params[key]))
+    return key + '=' + '{' + key + '}'
   }).join('&')
 
   if (!arr) {
@@ -40,76 +40,61 @@ const addParams = (url, params, hasDispatcher) => {
   return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr
 }
 
-const getDispatcher = options => {
-  // 未开启代理
-  if (!ENV.DISPATCHER) {
-    return false
-  }
-
-  // 模拟环境下，跳过代理
-  if (ENV.ENV === ENV.SIMULATION) {
-    return false
-  }
-
-  // 本地接口，跳过代理
-  if (ENV.DISPATCHER.res === options.res) {
-    return false
-  }
-
-  // 存在白名单
-  if (ENV.DISPATCHER.whitelist) {
-    // 不在白名单
-    if (ENV.DISPATCHER.whitelist.indexOf(options.res) === -1) {
-      return false
-    }
-  }
-
-  return ENV.DISPATCHER
-}
-
-const processIdAndData = (options, hasDispatcher) => {
+const configStraight = options => {
   const { id, data, method } = options
   let { api, vars = {} } = options
 
   if (typeof id !== 'undefined') {
-    if (hasDispatcher) {
-      api += '/{' + options.idVar + '}'
-      // 保存到 vars
-      vars[options.idVar] = id
-    } else {
-      api += '/' + id
-    }
+    api += '/{' + options.key + '}'
+    // 保存到 vars
+    vars[options.key] = id
   }
 
   if (data) {
     if (/^GET|DELETE$/i.test(method)) {
-      api = addParams(api, data, hasDispatcher)
-
-      if (hasDispatcher) {
-        vars = { ...vars, ...data }
-      }
+      api = addParams(api, data)
+      vars = { ...vars, ...data }
     } else {
       // options.data = JSON.stringify(data)
     }
   }
 
   // disable cache
-  if (!ENV.CACHE_ENABLED) {
-    if (hasDispatcher) {
-      // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
-    } else {
-      // waf DOES NOT support cors Cache-Control header currently
-      // would be REMOVED after waf updated
-      api += api.indexOf('?') === -1 ? '?' : '&'
-      api += '_=' + new Date().getTime()
-    }
+  if (!CONFIG.CACHE_ENABLED) {
+    // options.headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
+    // waf DOES NOT support cors Cache-Control header currently
+    // would be REMOVED after waf updated
+    api += api.indexOf('?') === -1 ? '?' : '&'
+    api += '_=' + new Date().getTime()
   }
 
   options.api = api
   options.vars = vars
 }
 
-const processDispatcher = (options, dispatcher) => {
+const configDispatcher = options => {
+  const dispatcher = CONFIG.DISPATCHER
+
+  // 未开启代理
+  if (!dispatcher) {
+    return
+  }
+
+  // 模拟环境下，跳过代理
+  if (CONFIG.ENV === CONFIG.SIMULATION) {
+    return
+  }
+
+  // 本地接口，跳过代理
+  if (dispatcher.res === options.res) {
+    return
+  }
+
+  // 不在白名单
+  if (dispatcher.ignore.indexOf(options.res) !== -1) {
+    return
+  }
+
   const { res, api, vars, headers } = options
 
   headers.Dispatcher = JSON.stringify({
@@ -119,19 +104,17 @@ const processDispatcher = (options, dispatcher) => {
     vars: vars
   })
 
-  // disable cache
-  // if (!ENV.CACHE_ENABLED) {
-    // headers[Browser.browser === 'IE' ? 'Pragma' : 'Cache-Control'] = 'no-cache'
-  // }
-
   // 修改 res
   options.res = dispatcher.res
+
+  // 修改 ver
+  options.ver = dispatcher.ver
 
   // 修改 api
   options.api = '/' + dispatcher.api + api
 }
 
-const processAuthorization = options => {
+const configAuthorization = options => {
   const { res, vars, method, headers } = options
   let { api } = options
 
@@ -154,7 +137,7 @@ const processAuthorization = options => {
   options.api = api
 }
 
-const getConfigForAxios = options => {
+const configRequest = options => {
   const { res, api, data, method, headers } = options
 
   return {
@@ -176,7 +159,7 @@ export default class REST {
     // api
     // vars
     // id
-    idVar: 'id'
+    key: 'id'
   }
 
   get resource () {
@@ -186,6 +169,8 @@ export default class REST {
   set resource (val) {
     this.__resource = { ...this.__resource, ...val }
   }
+
+  __defaults = null
 
   get defaults () {
     return this.__defaults
@@ -245,36 +230,25 @@ export default class REST {
     const optionsInterceptor = this.interceptors.options
     options = optionsInterceptor(options)
 
-    const dispatcher = getDispatcher(options)
-
     // id, data, vars, etc
-    processIdAndData(options, !!dispatcher)
+    configStraight(options)
 
     // dispatcher
-    if (dispatcher) {
-      processDispatcher(options, dispatcher)
-    }
+    configDispatcher(options)
 
     // authorization
-    processAuthorization(options)
+    configAuthorization(options)
 
     // interceptor for response
-    const responseInterceptors = this.interceptors.response
-
-    const NP = driver => {
-      const promise = new Promise(driver)
-      promise.$limit = options.data.$limit
-      promise.$offset = options.data.$offset
-      return promise
-    }
+    const responseInterceptor = this.interceptors.response
 
     // 只返回 axios 构造的返回值中的 data 部分
-    return new NP((resolve, reject) => {
-      axios(getConfigForAxios(options))
+    return new Promise((resolve, reject) => {
+      axios(configRequest(options))
       .then(({ data }) => {
-        resolve(responseInterceptors(data))
+        resolve(responseInterceptor(data))
       }, ({ data }) => {
-        reject(responseInterceptors(data))
+        reject(responseInterceptor(data))
       })
     })
   }
