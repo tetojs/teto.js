@@ -107,9 +107,6 @@ const configDispatcher = options => {
   // 修改 res
   options.res = dispatcher.res
 
-  // 修改 ver
-  options.ver = dispatcher.ver
-
   // 修改 api
   options.api = '/' + dispatcher.api + api
 }
@@ -122,7 +119,7 @@ const configAuthorization = options => {
   if (vars) {
     Object.keys(vars).forEach(key => {
       api = api.replace(
-        new RegExp('{' + key.replace(/([\^\$])/g, '\\$1') + '}', 'img'),
+        new RegExp('{' + key.replace(/([\^\$\\])/g, '\\$1') + '}', 'img'),
         encode(vars[key])
       )
     })
@@ -173,6 +170,9 @@ export default class REST {
     this.__resource = { ...this.__resource, ...val }
   }
 
+  /**
+   * default request data
+   */
   __defaults = null
 
   get defaults () {

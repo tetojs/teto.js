@@ -147,7 +147,6 @@ const DISPATCHER = {
   // 不走代理的资源
   ignore: [CS_RES],
   res: LOC_RES,
-  ver: 'v0.1',
   api: 'dispatcher'
 }
 
