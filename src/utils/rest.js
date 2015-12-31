@@ -121,7 +121,10 @@ const configAuthorization = options => {
   // always replace vars at last
   if (vars) {
     Object.keys(vars).forEach(key => {
-      api = api.replace(new RegExp('{' + key + '}', 'img'), encode(vars[key]))
+      api = api.replace(
+        new RegExp('{' + key.replace(/([\^\$])/g, '\\$1') + '}', 'img'),
+        encode(vars[key])
+      )
     })
   }
 

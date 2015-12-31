@@ -80,7 +80,10 @@ const dispatcherMiddleware = options => {
 
       if (vars) {
         Object.keys(vars).forEach(key => {
-          api = api.replace(new RegExp('{' + key + '}', 'img'), vars[key])
+          api = api.replace(
+            new RegExp('{' + key.replace(/([\^\$])/g, '\\$1') + '}', 'img'),
+            vars[key]
+          )
         })
       }
 
