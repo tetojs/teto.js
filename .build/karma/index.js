@@ -1,12 +1,12 @@
 import { argv } from 'yargs'
 import config from '../config'
-import webpackConfig from './webpack'
+import webpackConfig from '../webpack'
 
 const debug = require('debug')('app:karma')
 debug('Create configuration.')
 
 const karmaConfig = {
-  basePath: '../', // project root in relation to bin/karma.js
+  basePath: '../', // project root in relation to .bin/karma.js
   files: [
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     {
