@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import config from '../../config'
+import config from '../config'
 import _debug from 'debug'
 
 const debug = _debug('app:webpack:production')

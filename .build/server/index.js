@@ -10,20 +10,21 @@ server.use(historyApiFallback({
   verbose: false
 }))
 
+const bodyParser = require('body-parser')
+
+// parse request body
+server.use(bodyParser.json())
+
+// dispatcher for cross domain
+// `.shouldnotpublic` is a module
+// that returns `login_name` and `password`
+server.use(require('./middlewares/dispatcher')(require('../../.shouldnotpublic')))
+
 // Serve app with Webpack if HMR is enabled
 if (config.compiler_enable_hmr) {
   const webpack = require('webpack')
   const webpackConfig = require('../webpack')
   const compiler = webpack(webpackConfig)
-  const bodyParser = require('body-parser')
-
-  // parse request body
-  server.use(bodyParser.json())
-
-  // dispatcher for cross domain
-  // `.shouldnotpublic` is a module
-  // that returns `login_name` and `password`
-  server.use(require('./middlewares/dispatcher')(require('../../.shouldnotpublic')))
 
   server.use(require('./middlewares/webpack-dev')({
     compiler,
