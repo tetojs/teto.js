@@ -1,7 +1,7 @@
-[![Build Status](https://img.shields.io/travis/crossjs/teto.js.svg?style=flat-square)](https://travis-ci.org/crossjs/teto.js)
-![David](http://img.shields.io/david/crossjs/teto.js.svg?style=flat-square)
-![David](http://img.shields.io/david/dev/crossjs/teto.js.svg?style=flat-square)
-![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)
+[![Build Status](https://travis-ci.org/crossjs/teto.js.svg?style=flat-square)](https://travis-ci.org/crossjs/teto.js)
+[![dependencies](https://david-dm.org/crossjs/teto.js.svg?style=flat-square)](https://david-dm.org/crossjs/teto.js)
+[![devDependency Status](https://david-dm.org/crossjs/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/crossjs/teto.js#info=devDependencies)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
 ## Installation
 
