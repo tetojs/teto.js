@@ -12,7 +12,7 @@ export default class extends Component {
   static propTypes = {
     user_id: PropTypes.number,
     entities: PropTypes.object
-  }
+  };
 
   render () {
     const { user_id, entities } = this.props

@@ -2,7 +2,6 @@
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
-    "airbnb",
     "standard",
     "standard-react"
   ],
@@ -43,11 +42,12 @@
     "standard",
     "babel"
   ],
-  "globals": {
-    "__DEV__": false,
-    "__PROD__": false,
-    "__DEBUG__": false,
-    "__DEBUG_NEW_WINDOW__": false
+  "globals" : {
+    "__DEV__" : false,
+    "__PROD__" : false,
+    "__DEBUG__" : false,
+    "__DEBUG_NEW_WINDOW__" : false,
+    "__BASENAME__" : false
   },
   "rules": {
     "no-console": 0,

@@ -10,10 +10,17 @@ export default class extends Component {
   // }
 
   render () {
+    const styles = {
+      backgroundColor: '#ddd',
+      borderRadius: '1em',
+      padding: '0.5em',
+      textAlign: 'center'
+    }
+
     return (
-      <footer className="app-home-footer">
-        &copy; {new Date().toISOString()}
-      </footer>
+      <article style={styles}>
+        react
+      </article>
     )
   }
 

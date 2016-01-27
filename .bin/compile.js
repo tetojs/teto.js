@@ -1,11 +1,11 @@
 require('babel-register')
 
-const config = require('../.build/config')
+const config = require('../config')
 const debug = require('debug')('app:bin:compile')
 
 debug('Create webpack compiler.')
 
-const compiler = require('webpack')(require('../.build/webpack'))
+const compiler = require('webpack')(require('../webpack'))
 
 compiler.run((err, stats) => {
   const jsonStats = stats.toJson()

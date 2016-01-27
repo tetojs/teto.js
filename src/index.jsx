@@ -1,10 +1,9 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 
-import store from 'rdx/store'
-import history from 'utils/history'
+// import store from 'redux/store'
+// import history from 'utils/history'
 import routes from 'routes'
 
 import 'static/themes/default/styles/index.less'
@@ -31,13 +30,46 @@ const walkRoutes = sets =>
     )
   })
 
-render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route component={App}>
-        { walkRoutes(routes) }
-      </Route>
-    </Router>
-  </Provider>
-  , document.getElementById('app')
-)
+export default class extends Component {
+
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
+  };
+
+  get content () {
+    return (
+      <Router history={this.props.history}>
+        <Route component={App}>
+          { walkRoutes(routes) }
+        </Route>
+      </Router>
+    )
+  }
+
+  get devTools () {
+    if (__DEBUG__) {
+      if (__DEBUG_NEW_WINDOW__) {
+        if (!window.devToolsExtension) {
+          require('debugger/create-dev-tools-window').default(this.props.store)
+        } else {
+          window.devToolsExtension.open()
+        }
+      } else if (!window.devToolsExtension) {
+        const DevTools = require('debugger/dev-tools')/* .default */
+        return <DevTools />
+      }
+    }
+  }
+
+  render () {
+    return (
+      <Provider store={this.props.store}>
+        <div style={{ height: '100%' }}>
+          {this.content}
+          {this.devTools}
+        </div>
+      </Provider>
+    )
+  }
+}

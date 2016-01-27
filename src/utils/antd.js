@@ -2,7 +2,7 @@ const loadLib = path => require(`../../node_modules/antd/lib/${path}/index`)
 
 export default {
   Affix: loadLib('affix'),
-  Datepicker: loadLib('datepicker'),
+  DatePicker: loadLib('date-picker'),
   Tooltip: loadLib('tooltip'),
   Carousel: loadLib('carousel'),
   Tabs: loadLib('tabs'),
@@ -41,5 +41,5 @@ export default {
   Form: loadLib('form'),
   Input: loadLib('input'),
   Calendar: loadLib('calendar'),
-  Timepicker: loadLib('timepicker')
+  TimePicker: loadLib('time-picker')
 }

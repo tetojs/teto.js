@@ -4,7 +4,7 @@ export default class extends Component {
 
   static propTypes = {
     user: PropTypes.object
-  }
+  };
 
   // constructor(props, context) {
   //   super(props, context)

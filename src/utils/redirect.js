@@ -1,3 +1,3 @@
-import { pushPath } from 'redux-simple-router'
+import { push } from 'react-router-redux'
 
-export default (path = '/') => pushPath(path)
+export default (path = '/') => push(path)

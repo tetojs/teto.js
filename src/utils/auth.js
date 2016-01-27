@@ -1,4 +1,4 @@
-import store from 'rdx/store'
+import store from 'redux/store'
 import Sha from 'jssha'
 
 function getNonce (diff) {

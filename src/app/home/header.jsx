@@ -7,7 +7,7 @@ import User from './user'
 export default class extends Component {
 
   // static propTypes = {
-  // }
+  // };
 
   // constructor(props, context) {
   //   super(props, context)

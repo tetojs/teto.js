@@ -6,6 +6,10 @@ export default class extends Component {
     children: PropTypes.element
   };
 
+  // constructor(props, context) {
+  //   super(props, context)
+  // }
+
   render () {
     return (
       <div>

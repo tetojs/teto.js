@@ -1,7 +1,7 @@
 require('babel-register')
 
-const config = require('../.build/config')
-const server = require('../.build/server')
+const config = require('../config')
+const server = require('../server')
 const debug = require('debug')('app:bin:server')
 
 const host = config.server_host

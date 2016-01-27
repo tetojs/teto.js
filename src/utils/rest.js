@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Promise from 'promise'
 import CONFIG from 'utils/config'
 import auth from 'utils/auth'
 
@@ -160,7 +159,7 @@ export default class REST {
     // vars
     // id
     key: 'id'
-  }
+  };
 
   get resource () {
     return this.__resource
@@ -173,7 +172,7 @@ export default class REST {
   /**
    * default request data
    */
-  __defaults = null
+  __defaults = null;
 
   get defaults () {
     return this.__defaults
@@ -186,7 +185,7 @@ export default class REST {
   __interceptors = {
     options: options => options,
     response: response => response
-  }
+  };
 
   get interceptors () {
     return this.__interceptors
@@ -246,14 +245,11 @@ export default class REST {
     const responseInterceptor = this.interceptors.response
 
     // 只返回 axios 构造的返回值中的 data 部分
-    return new Promise((resolve, reject) => {
-      axios(configRequest(options))
-      .then(({ data }) => {
-        resolve(responseInterceptor(data))
-      }, ({ data }) => {
-        reject(responseInterceptor(data))
-      })
-    })
+    return axios(configRequest(options))
+      .then(
+        ({ data }) => responseInterceptor(data),
+        ({ data }) => responseInterceptor(data)
+      )
   }
 
   [DELETE] (options) {
