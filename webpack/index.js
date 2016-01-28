@@ -115,22 +115,30 @@ const babelLoaderQuery = {
 // ------------------------------------
 // Loaders
 // ------------------------------------
-// JavaScript / JSON
-webpackConfig.module.loaders = [{
-  test: /\/app\/.+\/index\.(js|jsx)$/,
-  exclude: /node_modules/,
-  loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
-},
-{
+
+webpackConfig.module.loaders = []
+
+// JavaScript
+if (!__TEST__) {
+  webpackConfig.module.loaders.push({
+    test: /\/app\/.+\/index\.(js|jsx)$/,
+    exclude: /node_modules/,
+    loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
+  })
+}
+
+webpackConfig.module.loaders.push({
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   loader: 'babel',
   query: babelLoaderQuery
-},
-{
+})
+
+// JSON
+webpackConfig.module.loaders.push({
   test: /\.json$/,
   loader: 'json'
-}]
+})
 
 // Styles
 const cssLoader = !config.compiler_css_modules

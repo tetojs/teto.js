@@ -15,7 +15,7 @@ try {
   fs.lstatSync(`${__dirname}/${overridesFilename}.js`)
   hasOverridesFile = true
 } catch (e) {
-  debug(e)
+  // debug(e)
 }
 
 // Overrides file exists, so we can attempt to require it.

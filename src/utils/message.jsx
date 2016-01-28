@@ -6,7 +6,7 @@ export default class extends Component {
 
   static propTypes = {
     meta: PropTypes.object.isRequired
-  }
+  };
 
   // constructor(props, context) {
   //   super(props, context)

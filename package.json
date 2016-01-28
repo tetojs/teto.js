@@ -5,15 +5,39 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf webapp/*",
-    "lint": "eslint src",
-    "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "node -r dotenv/config --harmony .bin/compile",
-    "start": "npm run dev",
-    "dev": "node -r dotenv/config .bin/server --hot",
+    "lint": "eslint . ./",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "better-npm-run start",
+    "dev": "better-npm-run dev",
+    "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
-    "test": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma",
+    "test": "better-npm-run test",
     "test:dev": "npm run test -- --watch",
-    "deploy": "npm run lint && npm run test && npm run clean && npm run compile"
+    "deploy": "better-npm-run deploy"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "nodemon -r dotenv/config .bin/server",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "deploy": {
+      "command": "npm run clean && npm run compile",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "start": {
+      "command": "node -r dotenv/config .bin/server"
+    },
+    "test": {
+      "command": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -63,6 +87,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.4.3",
     "babel-runtime": "^6.3.19",
+    "better-npm-run": "0.0.5",
     "bundle-loader": "^0.5.4",
     "chai-as-promised": "^5.2.0",
     "compass-mixins": "^0.12.7",
@@ -93,7 +118,7 @@
     "karma-coverage": "^0.5.0",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.3",
-    "karma-sinon-chai": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.7.0",
     "koa": "^2.0.0-alpha.3",
@@ -106,6 +131,7 @@
     "loader-utils": "^0.2.12",
     "mocha": "^2.4.2",
     "node-sass": "^3.4.2",
+    "nodemon": "^1.8.1",
     "phantomjs": "^2.1.2",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.8.0",

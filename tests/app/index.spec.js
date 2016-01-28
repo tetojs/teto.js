@@ -1,6 +1,6 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import CoreLayout from 'layouts/CoreLayout'
+import Index from 'app/index'
 
 function shallowRender (component) {
   const renderer = TestUtils.createRenderer()
@@ -10,16 +10,16 @@ function shallowRender (component) {
 }
 
 function shallowRenderWithProps (props = {}) {
-  return shallowRender(<CoreLayout {...props} />)
+  return shallowRender(<Index {...props} />)
 }
 
-describe('(Layout) Core', function () {
+describe('(App) Index', () => {
   let _component
   let _props
   let _child
 
-  beforeEach(function () {
-    _child = <h1 className='child'>Child</h1>
+  beforeEach(() => {
+    _child = <h1 className="child">Child</h1>
     _props = {
       children: _child
     }
@@ -27,7 +27,7 @@ describe('(Layout) Core', function () {
     _component = shallowRenderWithProps(_props)
   })
 
-  it('Should render as a <div>.', function () {
+  it('Should render as a <div>.', () => {
     expect(_component.type).to.equal('div')
   })
 })
