@@ -19,7 +19,7 @@ Storage.prototype = {
 
   constructor: Storage,
 
-  makeKey: function (key) {
+  makeKey: key => {
     return this.prefix + key
   },
 
@@ -27,15 +27,13 @@ Storage.prototype = {
    * 获取所有的本地存储数据对应的 key
    * @returns {array} keys
    */
-  keys: function () {
-    let keys = Object.keys(this.driver)
+  keys: () => {
+    const keys = Object.keys(this.driver)
 
     if (this.prefix) {
-      let index = this.prefix.length
+      const index = this.prefix.length
 
-      return keys.map(function (key) {
-        return key.substring(index)
-      })
+      return keys.map(key => key.substring(index))
     }
 
     return keys
@@ -44,22 +42,22 @@ Storage.prototype = {
   /**
    * 移除某一项本地存储的数据
    */
-  remove: function (key) {
+  remove: key => {
     this.driver.removeItem(this.makeKey(key))
   },
 
   /**
    * 清除所有本地存储的数据
    */
-  clear: function () {
+  clear: () => {
     this.driver.clear()
   },
 
   /**
    * 将数据进行本地存储
    */
-  set: function (key, value, expire) {
-    let data = {
+  set: (key, value, expire) => {
+    const data = {
       value: value,
       expire: expire
     }
@@ -78,7 +76,7 @@ Storage.prototype = {
   /**
    * 提取本地存储的数据
    */
-  get: function (key) {
+  get: key => {
     let data = this.driver.getItem(this.makeKey(key))
 
     if (data) {

@@ -1,14 +1,12 @@
-require('babel/register')
+require('babel-register')
 
-const chalk = require('chalk')
-const server = require('../.build/server')
-const config = require('../.build/config')
+const config = require('../config')
+const server = require('../server')
+const debug = require('debug')('app:bin:server')
 
-const host = config.get('server_host')
-const port = config.get('server_port')
+const host = config.server_host
+const port = config.server_port
 
-server.listen(port, host, function () {
-  console.log(chalk.green(
-    `Server is now running at ${host}:${port}.`
-  ))
+server.listen(port, host, () => {
+  debug('Server is now running at ' + host + ':' + port + '.')
 })
