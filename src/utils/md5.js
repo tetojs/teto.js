@@ -4,7 +4,7 @@
  */
 
 'use strict'
-
+/*eslint-disable*/
 const hex_chr = '0123456789abcdef'
 
 function rhex(num) {
@@ -139,3 +139,4 @@ function getMD5Value (data) {
 }
 
 export default getMD5Value
+/*eslint-enable*/

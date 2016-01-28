@@ -1,19 +1,22 @@
-import user from './user'
-import weibo from './weibo'
-import about from './about'
+import users from './users'
 
 export default {
-  ...user,
   '/': {
     title: '首页',
-    icon: 'home',
-    component: 'home/components/index',
-    indexroute: 'home/components/_indexroute/index',
+    component: 'home/index',
+    indexroute: 'home/_indexroute/index',
     childroutes: {
-      ...weibo,
-      ...about,
+      login: {
+        title: '登录',
+        component: 'login/index'
+      },
+      logout: {
+        title: '退出',
+        component: 'logout/index'
+      },
+      ...users,
       '*': {
-        component: 'error/components/index'
+        component: 'error/index'
       }
     }
   }

@@ -18,5 +18,3 @@ npm-debug.log*
 *.un~
 *.swp
 *.swo
-# webstorm
-.idea

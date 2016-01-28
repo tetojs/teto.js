@@ -1,7 +1,7 @@
-const PENDING = 'PENDING'
-const SUCCESS = 'SUCCESS'
-const FAILURE = 'FAILURE'
-const FINALLY = ''
+const PENDING = 1
+const SUCCESS = 2
+const FAILURE = 4
+const FINALLY = 8
 
 export default {
   PENDING,

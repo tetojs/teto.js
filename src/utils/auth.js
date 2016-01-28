@@ -1,14 +1,9 @@
-const Sha = require('nd-sha')
-import Storage from 'utils/storage'
+import store from 'redux/store'
+import Sha from 'jssha'
 
-const storage = new Storage('AUTH')
-const tokensKey = 'TOKENS'
-
-let tokensObj
-
-function nonce (diff) {
+function getNonce (diff) {
   function rnd (min, max) {
-    let arr = [
+    const arr = [
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
       'a', 'b', 'c', 'd', 'e', 'f', 'g',
       'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -20,10 +15,10 @@ function nonce (diff) {
       'U', 'V', 'W', 'X', 'Y', 'Z'
     ]
 
-    let range = max ? max - min : min
+    const range = max ? max - min : min
     let str = ''
     let i
-    let length = arr.length - 1
+    const length = arr.length - 1
 
     for (i = 0; i < range; i++) {
       str += arr[Math.round(Math.random() * length)]
@@ -35,84 +30,93 @@ function nonce (diff) {
   return new Date().getTime() + (diff || 0) + ':' + rnd(8)
 }
 
+function getMac (nonce, method, url, host, key) {
+  const sha = new Sha('SHA-256', 'TEXT')
+  sha.setHMACKey(key, 'TEXT')
+  sha.update([nonce, method, url, host, ''].join('\n'))
+  return sha.getHMAC('B64')
+}
+
 export default {
 
-  isLogin: function () {
-    return !!this.getTokens()
+  __access_token: null,
+
+  get accessToken () {
+    return this.__access_token
   },
 
-  getTokens: function (key) {
-    let tokens = tokensObj
+  set accessToken (val) {
+    this.__access_token = val
+  },
 
-    if (!tokens) {
-      // 本地存储
-      tokens = storage.get(tokensKey)
-    }
+  __mac_key: null,
+
+  get macKey () {
+    return this.__mac_key
+  },
+
+  set macKey (val) {
+    this.__mac_key = val
+  },
+
+  __diff: null,
+
+  get diff () {
+    return this.__diff
+  },
+
+  set diff (val) {
+    this.__diff = val
+  },
+
+  __expire_at: null,
+
+  get expireAt () {
+    return this.__expire_at
+  },
+
+  set expireAt (val) {
+    this.__expire_at = val
+  },
+
+  get hasAuthorization () {
+    const { tokens } = store.getState()
 
     if (tokens) {
-      // 失效判断
-      if (new Date(tokens.expires_at) <= new Date()) {
-        this.setTokens(tokens = null)
+      const { access_token, mac_key, diff = 0, expires_at } = tokens
+
+      if (!expires_at) {
+        return false
+      }
+
+      // cached timestamp
+      if (expires_at === this.exipresAt) {
+        return true
+      }
+
+      if (new Date(tokens.expires_at) > Date.now() + diff) {
+        this.configure(access_token, mac_key, diff, expires_at)
+        return true
       }
     }
 
-    if (tokens) {
-      tokensObj = tokens
-    }
-
-    if (key && tokens) {
-      return tokens[key]
-    }
-
-    return tokens
+    return false
   },
 
-  /**
-   * 设置或清除 tokens
-   * @param {object} tokens token值
-   * @returns {undefined} undefined
-   */
-  setTokens: function (tokens) {
-    tokensObj = tokens
-
-    if (tokens === null) {
-      storage.remove(tokensKey)
-    } else {
-      let serverTime = new Date(tokens.server_time)
-      let expiresAt = new Date(tokens.expires_at)
-
-      tokens.diff = serverTime - new Date()
-
-      storage.set(tokensKey, tokens, expiresAt - serverTime)
-    }
+  configure (accessToken, macKey, diff, exipresAt) {
+    this.accessToken = accessToken
+    this.macKey = macKey
+    this.diff = diff
+    this.exipresAt = exipresAt
   },
 
-  destroy: function () {
-    this.setTokens(null)
-  },
+  getAuthorization (method, url, host) {
+    const nonce = getNonce(this.diff)
 
-  getAccessToken: function () {
-    return this.getTokens('access_token')
-  },
-
-  getAuthentization: function (method, url, host) {
-    return ['MAC id="' + this.getAccessToken() + '"',
-      'nonce="' + this._getNonce() + '"',
-      'mac="' + this._getMac(method, url, host) + '"'
+    return ['MAC id="' + this.accessToken + '"',
+      'nonce="' + nonce + '"',
+      'mac="' + getMac(nonce, method, url, host, this.macKey) + '"'
     ].join(',')
-  },
-
-  _getMacContent: function (method, url, host) {
-    return [this.nonce, method, url, host, ''].join('\n')
-  },
-
-  _getMac: function (method, url, host) {
-    return new Sha(this._getMacContent(method, url, host), 'TEXT')
-      .getHMAC(this.getTokens('mac_key'), 'TEXT', 'SHA-256', 'B64')
-  },
-
-  _getNonce: function () {
-    return (this.nonce = nonce(this.getTokens('diff')))
   }
 
 }
