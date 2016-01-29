@@ -88,6 +88,7 @@
     "babel-runtime": "^6.3.19",
     "better-npm-run": "0.0.5",
     "bundle-loader": "^0.5.4",
+    "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
     "compass-mixins": "^0.12.7",
     "connect-history-api-fallback": "^1.1.0",
