@@ -15,8 +15,4 @@ script:
   - NODE_ENV=development npm run deploy
   - NODE_ENV=staging npm run deploy
   - NODE_ENV=production npm run deploy
-after_script:
-  - ./node_modules/karma/bin/karma start
-  - istanbul cover ./node_modules/mocha/bin/_mocha server/api/**/*.spec.js
-  - cat ./coverage/lcov.info ./coverage/karma/**/*.info > lcov.info
-  - node node_modules/lcov-filter/index.js lcov.info config | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+after_success: 'npm run coveralls'
