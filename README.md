@@ -5,7 +5,6 @@
 [![bitHound Code](https://www.bithound.io/github/kagawagao/teto.js/badges/code.svg)](https://www.bithound.io/github/kagawagao/teto.js)
 [![Coverage Status](https://coveralls.io/repos/github/kagawagao/teto.js/badge.svg?branch=master)](https://coveralls.io/github/kagawagao/teto.js?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
-
 [![dependencies](https://david-dm.org/kagawagao/teto.js.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js)
 [![devDependency Status](https://david-dm.org/kagawagao/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js#info=devDependencies)
 
