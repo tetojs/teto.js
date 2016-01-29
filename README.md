@@ -6,8 +6,8 @@
 [![Coveralls](https://img.shields.io/coveralls/crossjs/teto.js.svg?style=flat-square)](https://github.com/crossjs/teto.js)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
-[![dependencies](https://david-dm.org/kagawafao/teto.js.svg?style=flat-square)](https://david-dm.org/crossjs/teto.js)
-[![devDependency Status](https://david-dm.org/kagawafao/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/crossjs/teto.js#info=devDependencies)
+[![dependencies](https://david-dm.org/kagawagao/teto.js.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js)
+[![devDependency Status](https://david-dm.org/kagawagao/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js#info=devDependencies)
 
 ## Installation
 
