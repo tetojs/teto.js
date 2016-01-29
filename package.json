@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf webapp/*",
+<<<<<<< HEAD
     "lint": "eslint src",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "node -r dotenv/config --harmony .bin/compile",
@@ -14,6 +15,41 @@
     "test": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma",
     "test:dev": "npm run test -- --watch",
     "deploy": "npm run lint && npm run test && npm run clean && npm run compile"
+=======
+    "compile": "node -r dotenv/config --harmony .bin/compile",
+    "lint": "eslint . ./",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "better-npm-run start",
+    "dev": "better-npm-run dev",
+    "dev:nw": "npm run dev -- --nw",
+    "dev:no-debug": "npm run dev -- --no_debug",
+    "test": "better-npm-run test",
+    "test:dev": "npm run test -- --watch",
+    "deploy": "better-npm-run deploy"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "nodemon -r dotenv/config .bin/server",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "deploy": {
+      "command": "npm run clean && npm run compile",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "start": {
+      "command": "node -r dotenv/config .bin/server"
+    },
+    "test": {
+      "command": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+>>>>>>> crossjsMaster/master
   },
   "repository": {
     "type": "git",
@@ -63,6 +99,10 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.4.3",
     "babel-runtime": "^6.3.19",
+<<<<<<< HEAD
+=======
+    "better-npm-run": "0.0.5",
+>>>>>>> crossjsMaster/master
     "bundle-loader": "^0.5.4",
     "chai-as-promised": "^5.2.0",
     "compass-mixins": "^0.12.7",
@@ -93,7 +133,11 @@
     "karma-coverage": "^0.5.0",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.3",
+<<<<<<< HEAD
     "karma-sinon-chai": "^1.0.0",
+=======
+    "karma-sourcemap-loader": "^0.3.7",
+>>>>>>> crossjsMaster/master
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.7.0",
     "koa": "^2.0.0-alpha.3",
@@ -106,8 +150,14 @@
     "loader-utils": "^0.2.12",
     "mocha": "^2.4.2",
     "node-sass": "^3.4.2",
+<<<<<<< HEAD
+    "phantomjs": "^2.1.3",
+=======
+    "nodemon": "^1.8.1",
     "phantomjs": "^2.1.2",
+>>>>>>> crossjsMaster/master
     "phantomjs-polyfill": "0.0.1",
+    "phantomjs-prebuilt": "^2.1.3",
     "postcss-loader": "^0.8.0",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.6",
