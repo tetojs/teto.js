@@ -15,11 +15,7 @@ try {
   fs.lstatSync(`${__dirname}/${overridesFilename}.js`)
   hasOverridesFile = true
 } catch (e) {
-<<<<<<< HEAD
-  debug(e)
-=======
   // debug(e)
->>>>>>> crossjsMaster/master
 }
 
 // Overrides file exists, so we can attempt to require it.
