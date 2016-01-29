@@ -1,4 +1,8 @@
 [![Travis](https://img.shields.io/travis/crossjs/teto.js.svg?style=flat-square)](https://github.com/crossjs/teto.js)
+[![bitHound Overall Score](https://www.bithound.io/github/kawagagao/teto.js/badges/score.svg)](https://www.bithound.io/github/kawagagao/teto.js)
+[![bitHound Dependencies](https://www.bithound.io/github/kawagagao/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/kawagagao/teto.js/badges/devDependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/kawagagao/teto.js/badges/code.svg)](https://www.bithound.io/github/kawagagao/teto.js)
 [![Coveralls](https://img.shields.io/coveralls/crossjs/teto.js.svg?style=flat-square)](https://github.com/crossjs/teto.js)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
