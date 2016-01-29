@@ -115,6 +115,7 @@ const babelLoaderQuery = {
 // ------------------------------------
 // Loaders
 // ------------------------------------
+<<<<<<< HEAD
 // JavaScript / JSON
 webpackConfig.module.loaders = [{
   test: /\/app\/.+\/index\.(js|jsx)$/,
@@ -122,15 +123,40 @@ webpackConfig.module.loaders = [{
   loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
 },
 {
+=======
+
+webpackConfig.module.loaders = []
+
+// JavaScript
+if (!__TEST__) {
+  webpackConfig.module.loaders.push({
+    test: /\/app\/.+\/index\.(js|jsx)$/,
+    exclude: /node_modules/,
+    loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
+  })
+}
+
+webpackConfig.module.loaders.push({
+>>>>>>> crossjsMaster/master
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   loader: 'babel',
   query: babelLoaderQuery
+<<<<<<< HEAD
 },
 {
   test: /\.json$/,
   loader: 'json'
 }]
+=======
+})
+
+// JSON
+webpackConfig.module.loaders.push({
+  test: /\.json$/,
+  loader: 'json'
+})
+>>>>>>> crossjsMaster/master
 
 // Styles
 const cssLoader = !config.compiler_css_modules
