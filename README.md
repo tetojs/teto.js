@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+[![Build Status](https://travis-ci.org/kagawagao/teto.js.svg?branch=master)](https://travis-ci.org/kagawagao/teto.js)
 [![bitHound Overall Score](https://www.bithound.io/github/kagawagao/teto.js/badges/score.svg)](https://www.bithound.io/github/kawagagao/teto.js)
 [![bitHound Dependencies](https://www.bithound.io/github/kagawagao/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/kagawagao/teto.js/badges/devDependencies.svg)](https://www.bithound.io/github/kagawagao/teto.js/master/dependencies/npm)
