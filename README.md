@@ -14,7 +14,7 @@ $ npm install
 ## Running Dev Server
 
 ```
-$ npm start
+$ npm run dev
 ```
 
 ## Tips

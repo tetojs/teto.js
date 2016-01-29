@@ -6,13 +6,13 @@ import { Router, Route, IndexRoute } from 'react-router'
 // import history from 'utils/history'
 import routes from 'routes'
 
-import 'static/themes/default/styles/index.less'
+import 'styles/index.less'
 
 import App from 'app'
 
 const asyncLoader = component => (location, cb) => {
   require(`app/${component}`)(c => {
-    cb(null, c)
+    cb(null, c.default)
   })
 }
 
@@ -56,7 +56,7 @@ export default class extends Component {
           window.devToolsExtension.open()
         }
       } else if (!window.devToolsExtension) {
-        const DevTools = require('debugger/dev-tools')/* .default */
+        const DevTools = require('debugger/dev-tools').default
         return <DevTools />
       }
     }

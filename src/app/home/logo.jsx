@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { IndexLink } from 'react-router'
 
-export default React.createClass({
+export default class extends Component {
 
   render () {
     return (
@@ -11,4 +11,4 @@ export default React.createClass({
     )
   }
 
-})
+}

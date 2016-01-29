@@ -1,6 +1,6 @@
 {
   "name": "teto",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "teto.js",
   "main": "index.js",
   "scripts": {
@@ -92,6 +92,7 @@
     "chai-as-promised": "^5.2.0",
     "compass-mixins": "^0.12.7",
     "connect-history-api-fallback": "^1.1.0",
+    "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "cssnano": "^3.3.2",
     "cssnext-loader": "^1.0.1",
@@ -132,8 +133,8 @@
     "mocha": "^2.4.2",
     "node-sass": "^3.4.2",
     "nodemon": "^1.8.1",
-    "phantomjs": "^2.1.2",
     "phantomjs-polyfill": "0.0.1",
+    "phantomjs-prebuilt": "^2.1.3",
     "postcss-loader": "^0.8.0",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.6",

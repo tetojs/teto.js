@@ -5,7 +5,6 @@ logs
 
 node_modules
 
-dist
 coverage
 
 npm-debug.log*
