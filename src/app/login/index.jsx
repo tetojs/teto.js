@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import autobind from 'autobind-decorator'
 
-import { Form, Input, Button } from 'utils/antd'
+import { Form, Input, Button } from 'antd'
 
 import md5 from 'utils/md5'
 import redirect from 'utils/redirect'

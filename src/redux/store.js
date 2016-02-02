@@ -7,7 +7,7 @@ import reducer from './reducer'
 function withDevTools (middleware) {
   const devTools = window.devToolsExtension
     ? window.devToolsExtension()
-    : require('debugger/dev-tools').instrument()
+    : require('debugger/dev-tools').default.instrument()
   return compose(middleware, devTools)
 }
 

@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import cssnano from 'cssnano'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config from '../config'
 import _debug from 'debug'
@@ -47,7 +48,7 @@ webpackConfig.output = {
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
   new HtmlWebpackPlugin({
-    template: paths.client('static/index.tmpl'),
+    template: paths.client('templates/index.tmpl'),
     hash: false,
     favicon: paths.client('static/favicon.ico'),
     filename: 'index.html',
@@ -55,6 +56,15 @@ webpackConfig.plugins = [
     minify: {
       collapseWhitespace: true
     }
+  }),
+  new CopyWebpackPlugin([
+    {
+      from: 'static'
+    }
+  ], {
+    ignore: [
+      '*.ico'
+    ]
   })
 ]
 
@@ -90,7 +100,7 @@ if (!__TEST__) {
 // Pre-Loaders
 // ------------------------------------
 webpackConfig.module.preLoaders = [{
-  test: /\.(js|jsx)$/,
+  test: /\.jsx?$/,
   loader: 'eslint',
   exclude: /node_modules/
 }]
@@ -103,8 +113,8 @@ webpackConfig.eslint = {
 const babelLoaderQuery = {
   cacheDirectory: true,
   plugins: [
+    // 'add-module-exports',
     'transform-runtime',
-    'add-module-exports',
     'transform-decorators-legacy'
   ],
   presets: __DEV__
@@ -121,14 +131,14 @@ webpackConfig.module.loaders = []
 // JavaScript
 if (!__TEST__) {
   webpackConfig.module.loaders.push({
-    test: /\/app\/.+\/index\.(js|jsx)$/,
+    test: /[\/\\]app[\/\\].+[\/\\]index\.jsx?$/,
     exclude: /node_modules/,
     loader: 'bundle!babel?' + JSON.stringify(babelLoaderQuery)
   })
 }
 
 webpackConfig.module.loaders.push({
-  test: /\.(js|jsx)$/,
+  test: /\.jsx?$/,
   exclude: /node_modules/,
   loader: 'babel',
   query: babelLoaderQuery
@@ -239,13 +249,34 @@ webpackConfig.postcss = [
 // File loaders
 /* eslint-disable */
 webpackConfig.module.loaders.push(
-  { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
-  { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
-  { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
-  { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
-  { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
-  { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+  {
+    test: /\.woff(\?.*)?$/,
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff'
+  },
+  {
+    test: /\.woff2(\?.*)?$/,
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2'
+  },
+  {
+    test: /\.otf(\?.*)?$/,
+    loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype'
+  },
+  {
+    test: /\.ttf(\?.*)?$/,
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream'
+  },
+  {
+    test: /\.eot(\?.*)?$/,
+    loader: 'file?prefix=fonts/&name=[path][name].[ext]'
+  },
+  {
+    test: /\.svg(\?.*)?$/,
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml'
+  },
+  {
+    test: /\.(png|jpg)$/,
+    loader: 'url?limit=8192'
+  }
 )
 /* eslint-enable */
 
@@ -257,8 +288,7 @@ webpackConfig.module.loaders.push(
 // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
 if (!__DEV__) {
   debug('Apply ExtractTextPlugin to CSS loaders.')
-  webpackConfig.module.loaders.filter(loader =>
-    loader.loaders && loader.loaders.find(name => /css/.test(name.split('?')[0]))
+  webpackConfig.module.loaders.filter(loader => loader.loaders && loader.loaders.find(name => /css/.test(name.split('?')[0]))
   ).forEach(loader => {
     const [first, ...rest] = loader.loaders
     loader.loader = ExtractTextPlugin.extract(first, rest.join('!'))

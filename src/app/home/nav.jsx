@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-import { Menu } from 'utils/antd'
+import { Menu } from 'antd'
 
 export default class extends Component {
 

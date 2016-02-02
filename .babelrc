@@ -5,8 +5,8 @@
     "stage-0"
   ],
   "plugins": [
-    "transform-runtime",
     "add-module-exports",
+    "transform-runtime",
     "transform-decorators-legacy"
   ]
 }

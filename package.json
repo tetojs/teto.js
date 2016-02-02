@@ -1,6 +1,6 @@
 {
   "name": "teto",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "teto.js",
   "main": "index.js",
   "scripts": {
@@ -92,6 +92,7 @@
     "chai-as-promised": "^5.2.0",
     "compass-mixins": "^0.12.7",
     "connect-history-api-fallback": "^1.1.0",
+    "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
