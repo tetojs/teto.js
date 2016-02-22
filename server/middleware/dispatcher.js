@@ -54,23 +54,12 @@ const dispatcherMiddleware = options => {
     })
   }
 
-  return (req, res, next) => {
+  return async (ctx, next) => {
+    const req = ctx.request
     if (!/\/dispatcher\//.test(req.url) ||
       !req.headers.dispatcher) {
       return next()
     }
-
-    // {
-    //   "module": "microblog",
-    //   "protocol": "http://",
-    //   "host": "microblog.debug.web.nd",
-    //   "ver": "v0.1",
-    //   "api": "%2Ftimelines%2F%7Btimeline_name%7D",
-    //   "vars": {
-    //     "timeline_name": "square",
-    //     "id": 0
-    //   }
-    // }
 
     getBearerToken().then(({ token, user }) => {
       const { dispatcher } = req.headers
@@ -97,9 +86,11 @@ const dispatcherMiddleware = options => {
       }
 
       const responder = ({ data, status }) => {
-        res.status(status).json(data)
+        console.log(data)
+        console.log(status)
+        ctx.status = status
+        ctx.body = data
       }
-
       axios({
         url: protocol + host + '/' + ver + api,
         method: req.method,
@@ -121,15 +112,15 @@ export default options => {
   return dispatcherMiddleware(options)
 }
 
-export default options => {
-  debug('Enable Dispatcher.')
+// export default options => {
+//   debug('Enable Dispatcher.')
 
-  const middleware = dispatcherMiddleware(options)
-  return async function koaDispatcher (ctx, next) {
-    let hasNext = await applyExpressMiddleware(middleware, ctx.req, ctx.res)
+//   const middleware = dispatcherMiddleware(options)
+//   return async function koaDispatcher (ctx, next) {
+//     const hasNext = await applyExpressMiddleware(middleware, ctx.req, ctx.res)
 
-    if (hasNext && next) {
-      await next()
-    }
-  }
-}
+//     if (hasNext && next) {
+//       await next()
+//     }
+//   }
+// }

@@ -53,7 +53,7 @@
 
     "camelcase": 0,
 
-    "arrow-parens": [2, "as-needed"],
+    "arrow-parens": 0,
     "comma-dangle": 2,
     "eqeqeq": 2,
     "indent": [1, 2, {

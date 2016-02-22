@@ -3,7 +3,7 @@ import convert from 'koa-convert'
 import webpack from 'webpack'
 import webpackConfig from '../webpack'
 import historyApiFallback from 'koa-connect-history-api-fallback'
-// import bodyParser from 'koa-bodyparser'
+import bodyParser from 'koa-bodyparser'
 import serve from 'koa-static'
 import _debug from 'debug'
 import config from '../config'
@@ -28,8 +28,8 @@ if (config.env === 'development') {
   // Enable webpack-dev and webpack-hot middleware
   const { publicPath } = webpackConfig.output
 
-  // app.use(bodyParser())
-  // app.use(require('./middleware/dispatcher')(require('../.shouldnotpublic')))
+  app.use(bodyParser())
+  app.use(require('./middleware/dispatcher')(require('../.shouldnotpublic')))
   app.use(require('./middleware/webpack-dev')(compiler, publicPath))
   app.use(require('./middleware/webpack-hmr')(compiler))
 
@@ -38,6 +38,15 @@ if (config.env === 'development') {
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
   app.use(convert(serve(paths.client('static'))))
+  app.use(async (ctx, next) => {
+    try {
+      await next() // next is now a function
+      ctx.body = 'hello world'
+    } catch (err) {
+      ctx.body = { message: err.message }
+      ctx.status = err.status || 500
+    }
+  })
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +
