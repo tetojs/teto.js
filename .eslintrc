@@ -39,7 +39,8 @@
     "react",
     "import",
     "standard",
-    "babel"
+    "babel",
+    "promise"
   ],
   "globals" : {
     "__DEV__" : false,
