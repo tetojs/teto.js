@@ -79,6 +79,7 @@
     "no-var": 2,
     "no-warning-comments": 1,
 
-    "react/jsx-uses-react": 2
+    "react/jsx-uses-react": 2,
+    "react/jsx-curly-spacing": 0
   }
 }
