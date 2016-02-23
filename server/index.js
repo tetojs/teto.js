@@ -38,15 +38,6 @@ if (config.env === 'development') {
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
   app.use(convert(serve(paths.client('static'))))
-  app.use(async (ctx, next) => {
-    try {
-      await next() // next is now a function
-      ctx.body = 'hello world'
-    } catch (err) {
-      ctx.body = { message: err.message }
-      ctx.status = err.status || 500
-    }
-  })
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +

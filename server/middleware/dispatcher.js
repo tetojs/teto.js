@@ -54,8 +54,8 @@ const dispatcherMiddleware = options => {
     })
   }
 
-  return async (ctx, next) => {
-    const req = ctx.request
+  return (req, res, next) => {
+    // const req = ctx.request
     if (!/\/dispatcher\//.test(req.url) ||
       !req.headers.dispatcher) {
       return next()
@@ -86,10 +86,8 @@ const dispatcherMiddleware = options => {
       }
 
       const responder = ({ data, status }) => {
-        console.log(data)
-        console.log(status)
-        ctx.status = status
-        ctx.body = data
+        res.status = status
+        res.body = data
       }
       axios({
         url: protocol + host + '/' + ver + api,
@@ -106,21 +104,20 @@ const dispatcherMiddleware = options => {
   }
 }
 
-export default options => {
-  debug('Enable Dispatcher middleware.')
-
-  return dispatcherMiddleware(options)
-}
-
 // export default options => {
-//   debug('Enable Dispatcher.')
+//   debug('Enable Dispatcher middleware.')
 
-//   const middleware = dispatcherMiddleware(options)
-//   return async function koaDispatcher (ctx, next) {
-//     const hasNext = await applyExpressMiddleware(middleware, ctx.req, ctx.res)
-
-//     if (hasNext && next) {
-//       await next()
-//     }
-//   }
+//   return dispatcherMiddleware(options)
 // }
+
+export default options => {
+  debug('Enable Dispatcher.')
+
+  const middleware = dispatcherMiddleware(options)
+  return async function koaDispatcher (ctx, next) {
+    const hasNext = await applyExpressMiddleware(middleware, ctx.request, ctx.response)
+    if (hasNext && next) {
+      await next()
+    }
+  }
+}

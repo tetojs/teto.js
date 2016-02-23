@@ -1,6 +1,6 @@
 import { useRouterHistory } from 'react-router'
-import { createHistory } from 'history'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 
 const historyConfig = { basename: __BASENAME__ }
 
-export default useRouterHistory(createHistory)(historyConfig)
+export default useRouterHistory(createBrowserHistory)(historyConfig)
