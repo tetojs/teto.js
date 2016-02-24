@@ -42,7 +42,7 @@ export default class extends Component {
       // from users
       if (props.entities[props.user_id]) {
         console.log(props)
-        props.redirect('/')
+        props.history.replace('/')
       } else {
         props.fetchUser(props.user_id)
       }
