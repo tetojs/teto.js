@@ -41,6 +41,7 @@ export default class extends Component {
     if (props.user_id) {
       // from users
       if (props.entities[props.user_id]) {
+        console.log(props)
         props.redirect('/')
       } else {
         props.fetchUser(props.user_id)

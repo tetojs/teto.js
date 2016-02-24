@@ -1,3 +1,6 @@
 webpack.*
-server.js
+server
 dist
+webpack
+.bin
+karma

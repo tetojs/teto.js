@@ -1,15 +1,13 @@
 import axios from 'axios'
-import applyExpressMiddleware from '../lib/apply-express-middleware'
-
 const debug = require('debug')('app:server:dispatcher')
 
-const dispatcherMiddleware = options => {
+export default options => {
+  debug('Enable Dispatcher middleware.')
   let cached = null
 
   const url = 'https://ucbetapi.101.com/v0.93'
 
   const { login_name, password } = options
-
   if (!login_name || !password) {
     throw new Error('need login_name and password')
   }
@@ -19,7 +17,6 @@ const dispatcherMiddleware = options => {
       if (cached) {
         return resolve(cached)
       }
-
       axios({
         url: url + '/bearer_tokens',
         data: {
@@ -34,7 +31,6 @@ const dispatcherMiddleware = options => {
         cached = {
           token: data
         }
-
         axios({
           url: url + '/users/' + data.user_id,
           method: 'GET',
@@ -54,20 +50,19 @@ const dispatcherMiddleware = options => {
     })
   }
 
-  return (req, res, next) => {
-    // const req = ctx.request
-    if (!/\/dispatcher\//.test(req.url) ||
-      !req.headers.dispatcher) {
+  return async (ctx, next) => {
+    const req = ctx.request
+
+    if (!/\/dispatcher\//.test(req.url) || !req.headers.dispatcher) {
       return next()
     }
 
-    getBearerToken().then(({ token, user }) => {
+    await getBearerToken().then(({ token, user }) => {
       const { dispatcher } = req.headers
       const _dispatcher = JSON.parse(dispatcher)
       const { protocol, host, ver, vars } = _dispatcher
       let { api } = _dispatcher
       api = decodeURIComponent(api)
-
       if (vars) {
         Object.keys(vars).forEach(key => {
           api = api.replace(
@@ -76,7 +71,6 @@ const dispatcherMiddleware = options => {
           )
         })
       }
-
       if (api.indexOf('?') !== -1) {
         api += '&orgId=' + user.org_exinfo.org_id +
           '&suid=' + token.user_id
@@ -86,10 +80,10 @@ const dispatcherMiddleware = options => {
       }
 
       const responder = ({ data, status }) => {
-        res.status = status
-        res.body = data
+        ctx.status = status
+        ctx.body = data
       }
-      axios({
+      return axios({
         url: protocol + host + '/' + ver + api,
         method: req.method,
         data: req.body,
@@ -101,23 +95,5 @@ const dispatcherMiddleware = options => {
     }, () => {
       debug('Dispatcher ERROR')
     })
-  }
-}
-
-// export default options => {
-//   debug('Enable Dispatcher middleware.')
-
-//   return dispatcherMiddleware(options)
-// }
-
-export default options => {
-  debug('Enable Dispatcher.')
-
-  const middleware = dispatcherMiddleware(options)
-  return async function koaDispatcher (ctx, next) {
-    const hasNext = await applyExpressMiddleware(middleware, ctx.request, ctx.response)
-    if (hasNext && next) {
-      await next()
-    }
   }
 }
