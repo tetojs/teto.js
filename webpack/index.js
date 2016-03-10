@@ -17,7 +17,7 @@ const webpackConfig = {
   devtool: config.compiler_devtool,
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', '.json']
   },
   module: {}
 }
@@ -112,14 +112,30 @@ webpackConfig.eslint = {
 
 const babelLoaderQuery = {
   cacheDirectory: true,
-  plugins: [
-    // 'add-module-exports',
-    'transform-runtime',
-    'transform-decorators-legacy'
-  ],
-  presets: __DEV__
-    ? ['es2015', 'react', 'stage-0', 'react-hmre']
-    : ['es2015', 'react', 'stage-0']
+  plugins: ['transform-runtime', 'transform-decorators-legacy'],
+  presets: ['es2015', 'react', 'stage-0'],
+  env: {
+    development: {
+      plugins: [
+        ['react-transform', {
+          transforms: [{
+            transform: 'react-transform-hmr',
+            imports: ['react'],
+            locals: ['module']
+          }, {
+            transform: 'react-transform-catch-errors',
+            imports: ['react', 'redbox-react']
+          }]
+        }]
+      ]
+    },
+    production: {
+      plugins: [
+        'transform-react-remove-prop-types',
+        'transform-react-constant-elements'
+      ]
+    }
+  }
 }
 
 // ------------------------------------

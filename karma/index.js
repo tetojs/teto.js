@@ -21,7 +21,7 @@ const karmaConfig = {
   preprocessors: {
     [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap']
   },
-  reporters: ['spec'],
+  reporters: ['spec', 'coverage', 'coveralls'],
   browsers: ['PhantomJS'],
   webpack: {
     devtool: 'inline-source-map',

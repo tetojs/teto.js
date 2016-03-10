@@ -1,6 +1,6 @@
 import { PENDING, SUCCESS, FAILURE, FINALLY } from 'utils/states'
 
-const isPromise = (val) => {
+const isPromise = val => {
   return val && typeof val.then === 'function'
 }
 

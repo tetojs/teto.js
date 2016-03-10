@@ -3,7 +3,6 @@
  * @author lzhengms <lzhengms@gmail.com>
  */
 
-'use strict'
 /*eslint-disable*/
 const hex_chr = '0123456789abcdef'
 

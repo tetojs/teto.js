@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import Header from './header'
 import Footer from './footer'
 
-export default class extends Component {
+export default class Home extends Component {
 
   static propTypes = {
     children: PropTypes.element
