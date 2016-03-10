@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default React.createClass({
+export default class App extends Component {
 
-  propTypes: {
+  static propTypes = {
     children: PropTypes.element
-  },
+  };
 
   render () {
     return (
@@ -14,4 +14,4 @@ export default React.createClass({
     )
   }
 
-})
+}
