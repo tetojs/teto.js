@@ -12,7 +12,7 @@ function withDevTools (middleware) {
   return compose(middleware, devTools)
 }
 
-function configureStore ({ initialState = {}, history }) {
+function configureStore (initialState = {}, history) {
   // Sync with router via history instance (main.js)
   // const routerMiddleware = syncHistoryWithStore(history)
 
@@ -35,4 +35,4 @@ function configureStore ({ initialState = {}, history }) {
 }
 
 const initialState = window.__INITIAL_STATE__
-export default configureStore({ initialState, browserHistory })
+export default configureStore(initialState, browserHistory)

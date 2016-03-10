@@ -27,9 +27,12 @@ export default class extends Component {
     fetchUser: PropTypes.func.isRequired
   };
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   constructor (props, context) {
     super(props, context)
-
     this.state = {
       login_name: 'admin@ndtest',
       password: ''
@@ -41,8 +44,7 @@ export default class extends Component {
     if (props.user_id) {
       // from users
       if (props.entities[props.user_id]) {
-        console.log(props)
-        props.history.replace('/')
+        this.context.router.push('/')
       } else {
         props.fetchUser(props.user_id)
       }
