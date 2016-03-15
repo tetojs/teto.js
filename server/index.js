@@ -8,6 +8,7 @@ import serve from 'koa-static'
 import _debug from 'debug'
 import config from '../config'
 import dispatcher from './middleware/dispatcher'
+import mockMiddleware from './middleware/webpack-mock'
 import dispatcherConfig from '../.shouldnotpublic'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
@@ -36,7 +37,13 @@ if (config.env === 'development') {
   app.use(dispatcher(dispatcherConfig))
   app.use(webpackDevMiddleware(compiler, publicPath))
   app.use(webpackHMRMiddleware(compiler))
-
+  // Serve api mocks from ~/mocks
+  app.use(mockMiddleware(paths.base('mocks'), {
+    // match non dispatcher requests
+    matcher: /^\/v\d+(\.\d+)+(?!\/dispatcher\/)/,
+    // trim version in request path
+    reducer: /^\/v\d+(\.\d+)\/+/
+  }))
   // Serve static assets from ~/src/static since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist

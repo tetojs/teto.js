@@ -4,7 +4,7 @@ const debug = require('debug')('app:server:dispatcher')
 export default options => {
   debug('Enable Dispatcher middleware.')
   let cached = null
-
+  const cachedSuid = {}
   const url = 'https://ucbetapi.101.com/v0.93'
 
   const { login_name, password } = options
@@ -50,6 +50,57 @@ export default options => {
     })
   }
 
+
+  const getSuid = (authorization, host, method, api) => {
+    if (authorization) {
+      return new Promise((resolve, reject) => {
+        const macToken = {}
+
+        authorization.trim().split(',').forEach(s => {
+          const index = s.indexOf('=')
+          if (index > -1) {
+            const key = s.substring(0, index).trim()
+            let value = s.substring(index + 1).trim()
+            value = value.substring(1, value.length - 1)
+            macToken[key] = value
+          }
+        })
+
+        const accessToken = macToken['MAC id']
+        const mac = macToken.mac
+        const nonce = macToken.nonce
+        let suid = cachedSuid[accessToken]
+
+        if (suid) {
+          return resolve(suid)
+        }
+        axios({
+          url: url + '/tokens/' + accessToken + '/actions/valid',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          },
+          data: {
+            mac,
+            host,
+            nonce,
+            http_method: method,
+            request_uri: '/v0.1/dispatcher' + api
+          }
+        }).then(({data, status}) => {
+          cachedSuid[accessToken] = data.user_id
+          resolve(data.user_id)
+        }, ({data, status}) => {
+          reject(false)
+        })
+      })
+    } else {
+      return new Promise(resolve => {
+        return resolve(false)
+      })
+    }
+  }
+
   return async (ctx, next) => {
     const req = ctx.request
 
@@ -58,7 +109,8 @@ export default options => {
     }
 
     await getBearerToken().then(({ token, user }) => {
-      const { dispatcher } = req.headers
+      const { dispatcher, authorization } = req.headers
+      const dispatcherHost = req.headers.host
       const _dispatcher = JSON.parse(dispatcher)
       const { protocol, host, ver, vars } = _dispatcher
       let { api } = _dispatcher
@@ -71,27 +123,28 @@ export default options => {
           )
         })
       }
-      if (api.indexOf('?') !== -1) {
-        api += '&orgId=' + user.org_exinfo.org_id +
-          '&suid=' + token.user_id
-      } else {
-        api += '?orgId=' + user.org_exinfo.org_id +
-          '&suid=' + token.user_id
-      }
 
-      const responder = ({ data, status }) => {
-        ctx.status = status
-        ctx.body = data
-      }
-      return axios({
-        url: protocol + host + '/' + ver + api,
-        method: req.method,
-        data: req.body,
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          Authorization: 'Bearer "' + token.access_token + '"'
+      return getSuid(authorization, dispatcherHost, req.method, api).then(suid => {
+        if (suid && api.indexOf('?') === -1) {
+          api += '?suid=' + suid
+        } else if (suid && api.indexOf('?') !== -1) {
+          api += '&suid=' + suid
         }
-      }).then(responder, responder)
+
+        const responder = ({ data, status }) => {
+          ctx.status = status
+          ctx.body = data
+        }
+        return axios({
+          url: protocol + host + '/' + ver + api,
+          method: req.method,
+          data: req.body,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Authorization: 'Bearer "' + token.access_token + '"'
+          }
+        }).then(responder, responder)
+      })
     }, () => {
       debug('Dispatcher ERROR')
     })
