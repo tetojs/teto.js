@@ -71,11 +71,11 @@ export default {
 
   __expire_at: null,
 
-  get expireAt () {
+  get expiresAt () {
     return this.__expire_at
   },
 
-  set expireAt (val) {
+  set expiresAt (val) {
     this.__expire_at = val
   },
 
@@ -90,7 +90,7 @@ export default {
       }
 
       // cached timestamp
-      if (expires_at === this.exipresAt) {
+      if (expires_at === this.expiresAt) {
         return true
       }
 
@@ -103,11 +103,11 @@ export default {
     return false
   },
 
-  configure (accessToken, macKey, diff, exipresAt) {
+  configure (accessToken, macKey, diff, expiresAt) {
     this.accessToken = accessToken
     this.macKey = macKey
     this.diff = diff
-    this.exipresAt = exipresAt
+    this.expiresAt = expiresAt
   },
 
   getAuthorization (method, url, host) {
