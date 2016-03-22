@@ -4,8 +4,8 @@
   "description": "teto.js",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf webapp/*",
-    "compile": "node -r dotenv/config --harmony .bin/compile",
+    "clean": "rm -rf dist",
+    "compile": "babel-node .bin/compile",
     "lint": "eslint . ./",
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
@@ -18,24 +18,30 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodemon -r dotenv/config .bin/server",
+      "command": "nodemon --exec babel-node .bin/server",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
       }
     },
     "deploy": {
       "command": "npm run clean && npm run compile",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
       }
     },
     "start": {
-      "command": "node -r dotenv/config .bin/server"
+      "command": "babel-node .bin/server",
+      "env": {
+        "DEBUG": "app:*"
+      }
     },
     "test": {
-      "command": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma.js",
+      "command": "babel-node ./node_modules/karma/bin/karma start .bin/karma.js",
       "env": {
-        "NODE_ENV": "test"
+        "NODE_ENV": "test",
+        "DEBUG": "app:*"
       }
     }
   },
@@ -70,6 +76,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.2.0",
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0-beta.3",
     "babel-loader": "^6.2.1",
@@ -95,7 +102,6 @@
     "css-loader": "^0.23.1",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
-    "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "eslint": "^2.2.0",
     "eslint-config-standard": "^5.1.0",
