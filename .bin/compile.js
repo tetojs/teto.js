@@ -1,6 +1,3 @@
-require('babel-register')
-
-// const config = require('../config').default
 import config from '../config'
 import webpack from 'webpack'
 import webpackConfig from '../webpack'
@@ -8,7 +5,6 @@ const debug = require('debug')('app:bin:compile')
 
 debug('Create webpack compiler.')
 
-// const compiler = require('webpack')(require('../webpack').default)
 const compiler = webpack(webpackConfig)
 
 compiler.run((err, stats) => {

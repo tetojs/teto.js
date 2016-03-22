@@ -18,7 +18,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodemon .bin/server",
+      "command": "nodemon --exec babel-node .bin/server",
       "env": {
         "NODE_ENV": "development"
       }
@@ -96,7 +96,6 @@
     "css-loader": "^0.23.1",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
-    "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "eslint": "^2.2.0",
     "eslint-config-standard": "^5.1.0",
