@@ -29,7 +29,7 @@ $ npm run dev
 - 组件的 key 参数使用时应避免使用索引值，而应该使用 id 等唯一值
 - 标签的嵌套要注意符合 W3C 规范，比如 button 不能嵌套 button、table 需要 tbody
 - 所有路由在 `routes` 目录下，为了实现异步加载，对应的 component 以 `.async.js(x)` 结尾
-- 关于蚂蚁金服iconfont不能使用的问题，可参考[这里](https://github.com/ant-design/antd-init/tree/master/examples/local-iconfont)
+- 关于蚂蚁金服iconfont不能使用的问题，可参考[这里](https://github.com/ant-design/antd-init/tree/master/examples/local-iconfont)和[这里](https://github.com/ant-design/ant-design/issues/1070)
 
 # node-sass
 
