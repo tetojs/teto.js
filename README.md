@@ -31,6 +31,7 @@ $ npm run dev
 - 标签的嵌套要注意符合 W3C 规范，比如 button 不能嵌套 button、table 需要 tbody
 - 所有路由在 `routes` 目录下
 - 不要轻易升级`redux-promise` ，如果必须升级，升级指南请参考 `utils/rest.js: 247` 以及 `redux/actions.tokens: 7`
+- 关于蚂蚁金服iconfont在本地开发时不能使用的问题，可参考[这里](https://github.com/ant-design/antd-init/tree/master/examples/local-iconfont)和[这里](https://github.com/ant-design/ant-design/issues/1070)
 
 # node-sass
 
