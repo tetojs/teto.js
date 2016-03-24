@@ -25,10 +25,12 @@ $ npm run dev
 - RHL@1.x 会导致 @autobind 不可用，所以采用 2.x
 - 除了 decorator，还可以使用操作符 `::` 来实现 autobind，参见：http://babeljs.io/blog/2015/05/14/function-bind/
 - 开发时不应使用 extract-text-webpack-plugin，因为它让 CSS 无法热替换
+- 开发时应尽量通过`className={style.className}`来设定类名，使得CSS可以模块化
 - Object.assign 与 Array.slice 都不是深拷贝
 - 组件的 key 参数使用时应避免使用索引值，而应该使用 id 等唯一值
 - 标签的嵌套要注意符合 W3C 规范，比如 button 不能嵌套 button、table 需要 tbody
-- 所有路由在 `routes` 目录下，为了实现异步加载，对应的 component 以 `.async.js(x)` 结尾
+- 所有路由在 `routes` 目录下
+- 不要轻易升级`redux-promise` ，如果必须升级，升级指南请参考 `utils/rest.js: 247` 以及 `redux/actions.tokens: 7`
 
 # node-sass
 

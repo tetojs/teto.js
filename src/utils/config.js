@@ -143,7 +143,7 @@ const RBAC_ENABLED = false
 /**
  * @constant {object} 接口请求代理配置，设置为 null 不走代理
  */
-const DISPATCHER = {
+const DISPATCHER = ENV === SIMULATION ? null : {
   // 不走代理的资源
   ignore: [CS_RES],
   res: LOC_RES,

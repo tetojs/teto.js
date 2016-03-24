@@ -244,7 +244,8 @@ export default class REST {
     // interceptor for response
     const responseInterceptor = this.interceptors.response
 
-    // 只返回 axios 构造的返回值中的 data 部分
+    // 只返回 axios 构造的返回值中的 data 部分, 当 redux-promise 升级至最新版本之后, 直接返回 axios，不用等待 resolve 或者 reject
+    // return axios(configRequest(options))
     return axios(configRequest(options))
       .then(
         ({ data }) => responseInterceptor(data),
