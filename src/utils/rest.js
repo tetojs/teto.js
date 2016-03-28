@@ -138,17 +138,6 @@ const configAuthorization = options => {
   options.api = api
 }
 
-const configRequest = options => {
-  const { res, api, data, method, headers } = options
-
-  return {
-    url: res.protocol + res.host + '/' + res.ver + api,
-    method,
-    data,
-    headers
-  }
-}
-
 export default class REST {
 
   __resource = {
@@ -243,18 +232,9 @@ export default class REST {
 
     // authorization
     configAuthorization(options)
-    configRequest(options)
+    // configRequest(options)
 
     callback(options)
-    // interceptor for response
-    // const responseInterceptor = this.interceptors.response
-
-    // 只返回 axios 构造的返回值中的 data 部分
-    // return axios(configRequest(options))
-    //   .then(
-    //     ({ data }) => responseInterceptor(data),
-    //     ({ data }) => responseInterceptor(data)
-    //   )
   }
 
   [DELETE] (options) {
@@ -265,7 +245,7 @@ export default class REST {
         }
         let { api } = options
         const { res, headers } = options
-        const host = res.protocol + res.host + '/'
+        const host = res.protocol + res.host + '/' + res.ver
 
         if (api.indexOf('?') > -1) {
           api = host + api.substring(0, api.indexOf('?'))
@@ -289,7 +269,7 @@ export default class REST {
         }
         let { api } = options
         const { res, headers, data } = options
-        const host = res.protocol + res.host + '/'
+        const host = res.protocol + res.host + '/' + res.ver
 
         if (api.indexOf('?') > -1) {
           api = host + api.substring(0, api.indexOf('?'))
@@ -314,7 +294,7 @@ export default class REST {
         }
         let { api } = options
         const { res, headers, data } = options
-        const host = res.protocol + res.host + '/'
+        const host = res.protocol + res.host + '/' + res.ver
 
         if (api.indexOf('?') > -1) {
           api = host + api.substring(0, api.indexOf('?'))
@@ -339,7 +319,7 @@ export default class REST {
         }
         let { api } = options
         const { res, headers, data } = options
-        const host = res.protocol + res.host + '/'
+        const host = res.protocol + res.host + '/' + res.ver
 
         if (api.indexOf('?') > -1) {
           api = host + api.substring(0, api.indexOf('?'))
@@ -364,7 +344,7 @@ export default class REST {
         }
         let { api } = options
         const { res, headers, data } = options
-        const host = res.protocol + res.host + '/'
+        const host = res.protocol + res.host + '/' + res.ver
 
         if (api.indexOf('?') > -1) {
           api = host + api.substring(0, api.indexOf('?'))
