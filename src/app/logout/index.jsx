@@ -20,7 +20,7 @@ export default class extends Component {
   };
   static contextTypes = {
     router: PropTypes.object.isRequired
-  }
+  };
   // constructor(props, context) {
   //   super(props, context)
   // }

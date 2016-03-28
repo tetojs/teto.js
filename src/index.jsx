@@ -3,7 +3,11 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 import routes from 'routes'
 
-import 'styles/index.less'
+// import 'styles/index.less'
+import 'antd/style/index.less'
+if (__DEV__) {
+  require('styles/index.less')
+}
 
 import App from 'app'
 

@@ -69,14 +69,14 @@ export default {
     this.__diff = val
   },
 
-  __expire_at: null,
+  __expires_at: null,
 
   get expiresAt () {
-    return this.__expire_at
+    return this.__expires_at
   },
 
   set expiresAt (val) {
-    this.__expire_at = val
+    this.__expires_at = val
   },
 
   get hasAuthorization () {
@@ -94,7 +94,7 @@ export default {
         return true
       }
 
-      if (new Date(tokens.expires_at) > Date.now() + diff) {
+      if (new Date(tokens.expires_at).getTime() > Date.now() + diff) {
         this.configure(access_token, mac_key, diff, expires_at)
         return true
       }

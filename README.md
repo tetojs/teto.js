@@ -25,11 +25,18 @@ $ npm run dev
 - RHL@1.x 会导致 @autobind 不可用，所以采用 2.x
 - 除了 decorator，还可以使用操作符 `::` 来实现 autobind，参见：http://babeljs.io/blog/2015/05/14/function-bind/
 - 开发时不应使用 extract-text-webpack-plugin，因为它让 CSS 无法热替换
+- 开发时应尽量通过`className={style.className}`来设定类名，使得CSS可以模块化
 - Object.assign 与 Array.slice 都不是深拷贝
 - 组件的 key 参数使用时应避免使用索引值，而应该使用 id 等唯一值
 - 标签的嵌套要注意符合 W3C 规范，比如 button 不能嵌套 button、table 需要 tbody
-- 所有路由在 `routes` 目录下，为了实现异步加载，对应的 component 以 `.async.js(x)` 结尾
+- 所有路由在 `routes` 目录下
+- 不要轻易升级`redux-promise` ，如果必须升级，升级指南请参考 `utils/rest.js: 247` 以及 `redux/actions.tokens: 7`
 - 关于蚂蚁金服iconfont在本地开发时不能使用的问题，可参考[这里](https://github.com/ant-design/antd-init/tree/master/examples/local-iconfont)和[这里](https://github.com/ant-design/ant-design/issues/1070)
+- 错误的统一处理。错误的统一处理建议采用`middleware`的方式处理。
+- 路由。由于采用的是HTML5特性中的`browserHistory`，因此在配置路由时以服务端的根路由为基准，且严格匹配。
+  - `/`与`/index`是不同路由。
+  - 域名为www.example.com，页面在二级目录xxx下，html文件为index: 则路由地址为： `/xxx/index` 或 `/xxx/`(在有配置`welcome-file`的情况下)。
+- 采用`nd-promise`重写之后兼容到IE8
 
 # node-sass
 
