@@ -126,7 +126,6 @@ const configAuthorization = options => {
       )
     })
   }
-
   // has uc tokens
   if (auth.hasAuthorization) {
     // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'
@@ -244,7 +243,6 @@ export default class REST {
 
     // authorization
     configAuthorization(options)
-
     configRequest(options)
 
     callback(options)

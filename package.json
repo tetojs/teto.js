@@ -73,7 +73,8 @@
     "react-router-redux": "^4.0.0",
     "redux": "^3.0.6",
     "redux-actions": "^0.9.1",
-    "redux-promise": "^0.5.1"
+    "redux-promise": "^0.5.1",
+    "superagent": "^1.8.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.0",
