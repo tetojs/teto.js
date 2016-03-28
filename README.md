@@ -33,7 +33,7 @@ $ npm run dev
 - 不要轻易升级`redux-promise` ，如果必须升级，升级指南请参考 `utils/rest.js: 247` 以及 `redux/actions.tokens: 7`
 - 关于蚂蚁金服iconfont在本地开发时不能使用的问题，可参考[这里](https://github.com/ant-design/antd-init/tree/master/examples/local-iconfont)和[这里](https://github.com/ant-design/ant-design/issues/1070)
 - 错误的统一处理。错误的统一处理建议采用`middleware`的方式处理。
-- 路由。由于采用的是HTML5特性中的browserHistory，因此在配置路由时以服务端的跟路由为基准，且严格匹配。比如 `/`与'/index'是不同路由。
+- 路由。由于采用的是HTML5特性中的`browserHistory`，因此在配置路由时以服务端的跟路由为基准，且严格匹配。比如 `/`与`/index`是不同路由。
 - 采用`nd-promise`重写之后兼容到IE8
 
 # node-sass
