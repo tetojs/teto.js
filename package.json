@@ -64,6 +64,7 @@
     "axios": "^0.9.1",
     "history": "^2.0.0-rc2",
     "jssha": "^2.0.2",
+    "nd-promise": "^3.0.0",
     "promise": "^7.1.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
