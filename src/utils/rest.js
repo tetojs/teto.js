@@ -247,9 +247,7 @@ export default class REST {
         const { res, headers } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .del(api)
@@ -271,9 +269,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .get(api)
@@ -296,9 +292,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .patch(api)
@@ -321,9 +315,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .post(api)
@@ -346,9 +338,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .put(api)
