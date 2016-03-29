@@ -266,14 +266,13 @@ export default class REST {
           return 'option can not be null'
         }
         let { api } = options
-        const { res, headers, data } = options
+        const { res, headers } = options
         const host = res.protocol + res.host + '/' + res.ver
 
         api = host + api
 
         options && httpRequest
         .get(api)
-        .query(data)
         .set(headers)
         .end((err, res) => {
           return !err ? resolve(res.body) : reject(err)

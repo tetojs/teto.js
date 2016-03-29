@@ -1,4 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux'
+import persistState from 'redux-localstorage'
 // import { syncHistory } from 'react-router-redux'
 import promise from 'redux-promise'
 import rootReducer from './reducer'
@@ -21,7 +22,10 @@ function configureStore (initialState = {}, history) {
   if (__DEBUG__) middleware = withDevTools(middleware)
 
   // Create final store and subscribe router in debug env ie. for devtools
-  const store = middleware(createStore)(rootReducer, initialState)
+  const finalCreateStore = compose(
+    persistState()
+  )(middleware(createStore))
+  const store = finalCreateStore(rootReducer, initialState)
   // if (__DEBUG__) routerMiddleware.listenForReplays(store, ({ router }) => router.location)
 
   if (module.hot) {
