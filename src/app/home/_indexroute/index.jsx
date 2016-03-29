@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Icon} from 'antd'
 export default class extends Component {
 
   // static propTypes = {
@@ -19,7 +18,7 @@ export default class extends Component {
 
     return (
       <article style={styles}>
-        react<Icon type="caret-down" />
+        react
       </article>
     )
   }

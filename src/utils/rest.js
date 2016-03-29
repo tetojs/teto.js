@@ -247,9 +247,7 @@ export default class REST {
         const { res, headers } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .del(api)
@@ -268,16 +266,13 @@ export default class REST {
           return 'option can not be null'
         }
         let { api } = options
-        const { res, headers, data } = options
+        const { res, headers } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .get(api)
-        .query(data)
         .set(headers)
         .end((err, res) => {
           return !err ? resolve(res.body) : reject(err)
@@ -296,9 +291,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .patch(api)
@@ -321,9 +314,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .post(api)
@@ -346,9 +337,7 @@ export default class REST {
         const { res, headers, data } = options
         const host = res.protocol + res.host + '/' + res.ver
 
-        if (api.indexOf('?') > -1) {
-          api = host + api.substring(0, api.indexOf('?'))
-        }
+        api = host + api
 
         options && httpRequest
         .put(api)
