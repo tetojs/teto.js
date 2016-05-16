@@ -1,3 +1,3 @@
 require('babel-register')
 
-module.exports = require('../karma')
+module.exports = require('../karma').default

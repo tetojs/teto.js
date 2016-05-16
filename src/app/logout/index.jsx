@@ -18,7 +18,9 @@ export default class extends Component {
     redirect: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired
   };
-
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
   // constructor(props, context) {
   //   super(props, context)
   // }
@@ -27,7 +29,7 @@ export default class extends Component {
     if (access_token) {
       this.props.logout(access_token)
     } else {
-      this.props.redirect('/')
+      this.context.router.push('/')
     }
   }
 

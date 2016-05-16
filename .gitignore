@@ -17,3 +17,7 @@ npm-debug.log*
 *.un~
 *.swp
 *.swo
+
+# dist
+
+dist/

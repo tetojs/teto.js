@@ -1,12 +1,12 @@
 {
   "name": "teto",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "teto.js",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf webapp/*",
-    "compile": "node -r dotenv/config --harmony .bin/compile",
-    "lint": "eslint . ./",
+    "clean": "rm -rf dist",
+    "compile": "babel-node .bin/compile",
+    "lint": "eslint ./src",
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
     "dev": "better-npm-run dev",
@@ -18,24 +18,30 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodemon -r dotenv/config .bin/server",
+      "command": "nodemon --exec babel-node .bin/server",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
       }
     },
     "deploy": {
       "command": "npm run clean && npm run compile",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
       }
     },
     "start": {
-      "command": "node -r dotenv/config .bin/server"
+      "command": "babel-node .bin/server",
+      "env": {
+        "DEBUG": "app:*"
+      }
     },
     "test": {
-      "command": "node -r dotenv/config ./node_modules/karma/bin/karma start .bin/karma.js",
+      "command": "babel-node ./node_modules/karma/bin/karma start .bin/karma.js",
       "env": {
-        "NODE_ENV": "test"
+        "NODE_ENV": "test",
+        "DEBUG": "app:*"
       }
     }
   },
@@ -53,11 +59,12 @@
   },
   "homepage": "https://github.com/crossjs/teto.js",
   "dependencies": {
-    "antd": "^0.12.8",
+    "antd": "^0.12.12",
     "autobind-decorator": "^1.3.3",
     "axios": "^0.9.1",
     "history": "^2.0.0-rc2",
     "jssha": "^2.0.2",
+    "nd-promise": "^3.0.0",
     "promise": "^7.1.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
@@ -66,14 +73,16 @@
     "react-router-redux": "^4.0.0",
     "redux": "^3.0.6",
     "redux-actions": "^0.9.1",
-    "redux-promise": "^0.5.1"
+    "redux-localstorage": "^0.4.0",
+    "redux-promise": "^0.5.1",
+    "superagent": "^1.8.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.0",
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0-beta.3",
     "babel-loader": "^6.2.1",
-    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-react-constant-elements": "^6.5.0-1",
@@ -89,14 +98,15 @@
     "bundle-loader": "^0.5.4",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
+    "chai-enzyme": "^0.4.1",
     "compass-mixins": "^0.12.7",
     "connect-history-api-fallback": "^1.1.0",
     "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
-    "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
+    "enzyme": "^2.2.0",
     "eslint": "^2.2.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-config-standard-react": "^2.3.0",
@@ -111,7 +121,7 @@
     "flux-standard-action": "^0.6.0",
     "html-webpack-plugin": "^2.7.2",
     "isparta-loader": "^2.0.0",
-    "karma": "^0.13.19",
+    "karma": "^0.13.22",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-sinon": "^0.1.5",
@@ -144,7 +154,6 @@
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.2",
-    "redux-promise": "^0.6.0-alpha",
     "sass-loader": "^3.1.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",

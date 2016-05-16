@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
-
-// import store from 'redux/store'
-// import history from 'utils/history'
 import routes from 'routes'
 
-import 'styles/index.less'
+// import 'styles/index.less'
+import 'antd/style/index.less'
+if (__DEV__) {
+  require('styles/index.less')
+}
 
 import App from 'app'
 

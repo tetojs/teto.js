@@ -1,6 +1,7 @@
-import axios from 'axios'
+import httpRequest from 'superagent'
 import CONFIG from 'utils/config'
 import auth from 'utils/auth'
+import Promise from 'nd-promise'
 
 /**
  * options' structure
@@ -24,6 +25,8 @@ const GET = 'GET'
 const PATCH = 'PATCH'
 const POST = 'POST'
 const PUT = 'PUT'
+
+const orgName = CONFIG.ORG_NAME
 
 const encode = window.encodeURIComponent
 
@@ -123,7 +126,6 @@ const configAuthorization = options => {
       )
     })
   }
-
   // has uc tokens
   if (auth.hasAuthorization) {
     // data.headers.Authorization = 'DEBUG userid=220267,realm=***.nd'
@@ -134,17 +136,6 @@ const configAuthorization = options => {
   }
 
   options.api = api
-}
-
-const configRequest = options => {
-  const { res, api, data, method, headers } = options
-
-  return {
-    url: res.protocol + res.host + '/' + res.ver + api,
-    method,
-    data,
-    headers
-  }
 }
 
 export default class REST {
@@ -198,11 +189,12 @@ export default class REST {
   /**
    * @protected
    */
-  request (_options, method) {
+  request (_options, method, callback) {
     let options = {
       method: method,
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
+        'orgname': orgName
       },
       data: {}
     }
@@ -236,40 +228,126 @@ export default class REST {
     configStraight(options)
 
     // dispatcher
-    configDispatcher(options)
+    options.flag !== -1 && configDispatcher(options)
 
     // authorization
     configAuthorization(options)
+    // configRequest(options)
 
-    // interceptor for response
-    const responseInterceptor = this.interceptors.response
-
-    // 只返回 axios 构造的返回值中的 data 部分
-    return axios(configRequest(options))
-      .then(
-        ({ data }) => responseInterceptor(data),
-        ({ data }) => responseInterceptor(data)
-      )
+    callback(options)
   }
 
   [DELETE] (options) {
-    return this.request(options, DELETE)
+    return new Promise((resolve, reject) => {
+      this.request(options, DELETE, (options) => {
+        if (!options) {
+          return 'option can not be null'
+        }
+        let { api } = options
+        const { res, headers } = options
+        const host = res.protocol + res.host + '/' + res.ver
+
+        api = host + api
+
+        options && httpRequest
+        .del(api)
+        .set(headers)
+        .end((err, res) => {
+          return !err ? resolve(res.body) : reject(err)
+        })
+      })
+    })
   }
 
   [GET] (options) {
-    return this.request(options, GET)
+    return new Promise((resolve, reject) => {
+      this.request(options, GET, (options) => {
+        if (!options) {
+          return 'option can not be null'
+        }
+        let { api } = options
+        const { res, headers } = options
+        const host = res.protocol + res.host + '/' + res.ver
+
+        api = host + api
+
+        options && httpRequest
+        .get(api)
+        .set(headers)
+        .end((err, res) => {
+          return !err ? resolve(res.body) : reject(err)
+        })
+      })
+    })
   }
 
   [PATCH] (options) {
-    return this.request(options, PATCH)
+    return new Promise((resolve, reject) => {
+      this.request(options, PATCH, (options) => {
+        if (!options) {
+          return 'option can not be null'
+        }
+        let { api } = options
+        const { res, headers, data } = options
+        const host = res.protocol + res.host + '/' + res.ver
+
+        api = host + api
+
+        options && httpRequest
+        .patch(api)
+        .send(data)
+        .set(headers)
+        .end((err, res) => {
+          return !err ? resolve(res.body) : reject(err)
+        })
+      })
+    })
   }
 
   [POST] (options) {
-    return this.request(options, POST)
+    return new Promise((resolve, reject) => {
+      this.request(options, POST, (options) => {
+        if (!options) {
+          return 'option can not be null'
+        }
+        let { api } = options
+        const { res, headers, data } = options
+        const host = res.protocol + res.host + '/' + res.ver
+
+        api = host + api
+
+        options && httpRequest
+        .post(api)
+        .send(data)
+        .set(headers)
+        .end((err, res) => {
+          return !err ? resolve(res.body) : reject(err)
+        })
+      })
+    })
   }
 
   [PUT] (options) {
-    return this.request(options, PUT)
+    return new Promise((resolve, reject) => {
+      this.request(options, PUT, (options) => {
+        if (!options) {
+          return 'option can not be null'
+        }
+        let { api } = options
+        const { res, headers, data } = options
+        const host = res.protocol + res.host + '/' + res.ver
+
+        api = host + api
+
+        options && httpRequest
+        .put(api)
+        .send(data)
+        .set(headers)
+        .end((err, res) => {
+          return !err ? resolve(res.body) : reject(err)
+        })
+      })
+    })
   }
 
 }
