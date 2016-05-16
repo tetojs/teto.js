@@ -7,7 +7,7 @@ export default config => ({
   coverage_enabled: !argv.watch,
   coverage_reporters: [
     { type: 'text-summary' },
-    { type: 'html', dir: 'coverage' }
+    { type: 'lcov', dir: 'coverage' }
   ],
   coverage_check: {
     global: {
