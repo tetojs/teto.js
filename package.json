@@ -126,7 +126,6 @@
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-sinon": "^0.1.5",
     "karma-coverage": "^0.5.0",
-    "karma-coveralls": "^1.1.2",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
