@@ -16,38 +16,34 @@ const karmaConfig = {
       included: true
     }
   ],
-  singleRun: !argv.watch,
+  singleRun: config.coverage_enabled,
   frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
   preprocessors: {
     [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap']
   },
-  reporters: ['spec', 'coverage', 'coveralls'],
+  reporters: ['spec', 'coverage'],
+  coverageReporter: {
+    reporters: config.coverage_reporters,
+    check: config.coverage_check
+  },
   browsers: ['PhantomJS'],
   webpack: {
-    devtool: 'inline-source-map',
+    devtool: webpackConfig.devtool,
     resolve: webpackConfig.resolve,
     plugins: webpackConfig.plugins,
     module: {
+      preLoaders: [{
+        test: /\.jsx?$/,
+        include: config.utils_paths.client(),
+        loader: 'isparta'
+      }],
       loaders: webpackConfig.module.loaders
     },
     sassLoader: webpackConfig.sassLoader
   },
   webpackMiddleware: {
     noInfo: true
-  },
-  coverageReporter: {
-    reporters: config.coverage_reporters
   }
-}
-
-if (config.coverage_enabled) {
-  karmaConfig.reporters.push('coverage')
-  karmaConfig.webpack.module.preLoaders = [{
-    test: /\.(js|jsx)$/,
-    include: new RegExp(config.dir_client),
-    loader: 'isparta',
-    exclude: /node_modules/
-  }]
 }
 
 export default cfg => cfg.set(karmaConfig)

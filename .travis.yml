@@ -1,13 +1,8 @@
-sudo: false
 language: node_js
+
 node_js:
-  - "5.0"
+  - "5"
 
-install:
-  - npm install
-
-script:
-  - npm run test
-  - NODE_ENV=development npm run deploy
-  - NODE_ENV=staging npm run deploy
-  - NODE_ENV=production npm run deploy
+after_success:
+  - npm i coveralls
+  - cat ./coverage/*/lcov.info | coveralls

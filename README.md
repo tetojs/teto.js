@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.org/kagawagao/teto.js.svg?branch=master)](https://travis-ci.org/kagawagao/teto.js)
-[![bitHound Overall Score](https://www.bithound.io/github/kagawagao/teto.js/badges/score.svg)](https://www.bithound.io/github/kawagagao/teto.js)
-[![bitHound Dependencies](https://www.bithound.io/github/kagawagao/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/kagawagao/teto.js/badges/devDependencies.svg)](https://www.bithound.io/github/kagawagao/teto.js/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/kagawagao/teto.js/badges/code.svg)](https://www.bithound.io/github/kagawagao/teto.js)
-[![Coverage Status](https://coveralls.io/repos/github/kagawagao/teto.js/badge.svg?branch=master)](https://coveralls.io/github/kagawagao/teto.js?branch=master)
+[![Build Status](https://travis-ci.org/tetojs/teto.js.svg?branch=master)](https://travis-ci.org/tetojs/teto.js)
+[![bitHound Overall Score](https://www.bithound.io/github/tetojs/teto.js/badges/score.svg)](https://www.bithound.io/github/kawagagao/teto.js)
+[![bitHound Dependencies](https://www.bithound.io/github/tetojs/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/tetojs/teto.js/badges/devDependencies.svg)](https://www.bithound.io/github/tetojs/teto.js/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/tetojs/teto.js/badges/code.svg)](https://www.bithound.io/github/tetojs/teto.js)
+[![Coverage Status](https://coveralls.io/repos/github/tetojs/teto.js/badge.svg?branch=master)](https://coveralls.io/github/tetojs/teto.js?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
-[![dependencies](https://david-dm.org/kagawagao/teto.js.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js)
-[![devDependency Status](https://david-dm.org/kagawagao/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/kagawagao/teto.js#info=devDependencies)
+[![dependencies](https://david-dm.org/tetojs/teto.js.svg?style=flat-square)](https://david-dm.org/tetojs/teto.js)
+[![devDependency Status](https://david-dm.org/tetojs/teto.js/dev-status.svg?style=flat-square)](https://david-dm.org/tetojs/teto.js#info=devDependencies)
 
 ## Installation
 
