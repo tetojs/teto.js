@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/tetojs/teto.js.svg?branch=master)](https://travis-ci.org/tetojs/teto.js)
-[![bitHound Overall Score](https://www.bithound.io/github/tetojs/teto.js/badges/score.svg)](https://www.bithound.io/github/kawagagao/teto.js)
-[![bitHound Dependencies](https://www.bithound.io/github/tetojs/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/kawagagao/teto.js/master/dependencies/npm)
+[![bitHound Overall Score](https://www.bithound.io/github/tetojs/teto.js/badges/score.svg)](https://www.bithound.io/github/tetojs/teto.js)
+[![bitHound Dependencies](https://www.bithound.io/github/tetojs/teto.js/badges/dependencies.svg)](https://www.bithound.io/github/tetojs/teto.js/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/tetojs/teto.js/badges/devDependencies.svg)](https://www.bithound.io/github/tetojs/teto.js/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/tetojs/teto.js/badges/code.svg)](https://www.bithound.io/github/tetojs/teto.js)
 [![Coverage Status](https://coveralls.io/repos/github/tetojs/teto.js/badge.svg?branch=master)](https://coveralls.io/github/tetojs/teto.js?branch=master)
