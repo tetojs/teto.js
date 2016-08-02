@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute } from 'react-router'
 import routes from 'routes'
 
 // import 'styles/index.less'
-import 'antd/style/index.less'
+import 'antd/lib/style/index.less'
 if (__DEV__) {
   require('styles/index.less')
 }

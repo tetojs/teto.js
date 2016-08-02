@@ -5,7 +5,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config from '../config'
 import _debug from 'debug'
-
+import pkg from '../package.json'
 const debug = _debug('app:webpack:config')
 const paths = config.utils_paths
 const {__DEV__, __PROD__, __TEST__} = config.globals
@@ -53,6 +53,7 @@ webpackConfig.plugins = [
     favicon: paths.client('static/favicon.ico'),
     filename: 'index.html',
     inject: 'body',
+    title: `${pkg.name} - ${pkg.description}`,
     minify: {
       collapseWhitespace: true
     }
@@ -112,7 +113,7 @@ webpackConfig.eslint = {
 
 const babelLoaderQuery = {
   cacheDirectory: true,
-  plugins: ['transform-runtime', 'transform-decorators-legacy'],
+  plugins: ['transform-runtime', 'transform-decorators-legacy', 'antd'],
   presets: ['es2015', 'react', 'stage-0'],
   env: {
     development: {

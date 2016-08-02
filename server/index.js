@@ -7,9 +7,9 @@ import bodyParser from 'koa-bodyparser'
 import serve from 'koa-static'
 import _debug from 'debug'
 import config from '../config'
-import dispatcher from './middleware/dispatcher'
+// import dispatcher from './middleware/dispatcher'
 import mockMiddleware from './middleware/webpack-mock'
-import dispatcherConfig from '../.shouldnotpublic'
+// import dispatcherConfig from '../.shouldnotpublic'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
 
@@ -34,7 +34,7 @@ if (config.env === 'development') {
   const { publicPath } = webpackConfig.output
 
   app.use(bodyParser())
-  app.use(dispatcher(dispatcherConfig))
+  // app.use(dispatcher(dispatcherConfig))
   app.use(webpackDevMiddleware(compiler, publicPath))
   app.use(webpackHMRMiddleware(compiler))
   // Serve api mocks from ~/mocks
